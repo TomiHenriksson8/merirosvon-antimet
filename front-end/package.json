@@ -1,0 +1,19 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server dist -o",
+    "build": "tsc -p . && copy src\\index.html dist\\index.html && xcopy /E /I src\\assets dist\\assets",
+    "start-frontend": "http-server dist -o",
+    "watch": "tsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "typescript": "^5.2.2"
+  }
+}
