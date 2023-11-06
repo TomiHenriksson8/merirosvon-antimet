@@ -2,7 +2,7 @@
 
 The project's objective is to build a functional web-based platform with a restaurant theme.
 
-### Prerequisites
+## Prerequisites
 
 What things you need to install the software and how to install them.
 
@@ -13,38 +13,38 @@ What things you need to install the software and how to install them.
 
 The back-end currently handles API routing and serves static files. Database integration is planned but not yet implemented.
 
-### Installation
+## Installation
 
- # Clone Github repo
+### Clone Github repo
 git clone <repository-url>
 
-## Navigate to the back-end directory
+### Navigate to the back-end directory
 cd <repository-name>/back-end
 
-# Install dependencies
+### Install dependencies
 npm install
 
-# Start the development server
+### Start the development server
 npm run dev
 
 
-## Open a new terminal and navigate to the         front-end directory
+### Open a new terminal and navigate to the         front-end directory
 cd <repository-name>/front-end
 
-# Install dependencies
+### Install dependencies
 npm install
 
-# Build the project
+### Build the project
 npm run build
 
-# Start the application
+### Start the application
 npm start
 
 
-### Built With
+## Built With
 
 coming soon...
 
-### Version
+## Version
 
 Coming soon...
