@@ -110,6 +110,35 @@ header {
     transform: scaleX(-1);
 }
 
+.centered-grid {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* Adjust column size as needed */
+    gap: 20px;
+    /* Adjust gap between items as needed */
+    max-width: 800px;
+    /* Adjust maximum width of the grid as needed */
+    margin: 0 auto;
+    /* Center the grid along the x-axis */
+    padding: 20px;
+    /* Add padding for better appearance */
+}
+
+/* Example styling for items inside the grid */
+.centered-grid .grid-item {
+    background-color: rgba(0, 0, 0, 0.646);
+    padding: 20px;
+    margin-top: 200px;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    /* background-image: url(../images/kartta.png);
+    background-size: fill;
+    background-repeat: no-repeat; */
+}
+
+
 .tekstiboksi {
 
     text-align: center;
