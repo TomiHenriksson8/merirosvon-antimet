@@ -12,7 +12,6 @@ body {
     /* background-image: url(../images/lokki.gif); */
     background-size: cover;
     background-repeat: no-repeat;
-
 }
 
 header {
@@ -36,7 +35,7 @@ header {
     height: 100%;
     background: rgba(0, 0, 0, .1);
     backdrop-filter: blur(50px);
-    z-index:-1;
+    z-index: -1;
 }
 
 .header::after {
@@ -69,7 +68,7 @@ header {
     margin-left: 2.5rem;
 }
 
-.log-cart a  {
+.log-cart a {
     font-size: 1.15rem;
     color: #fff;
     text-decoration: none;
@@ -81,11 +80,13 @@ header {
     display: none;
 }
 
-#profile, #cart {
+#profile,
+#cart {
     display: none;
 }
 
-#profile-icon, #cart-icon {
+#profile-icon,
+#cart-icon {
     width: 30px;
 }
 
@@ -96,6 +97,16 @@ header {
     color: #fff;
     cursor: pointer;
     display: none;
+}
+
+#luurankomoikka {
+    position: right;
+    float: right;
+    padding: 5px;
+    width: 28%;
+    height: 50%;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
 /* BREAKPOINTS */
@@ -112,7 +123,8 @@ header {
         font-weight: 700;
     }
 
-    #profile, #cart {
+    #profile,
+    #cart {
         display: none;
     }
 }
@@ -124,12 +136,12 @@ header {
         text-decoration: none;
         font-weight: 700;
     }
-    
+
     .icons {
         display: inline-flex;
     }
 
-    .log-cart a  {
+    .log-cart a {
         font-size: 1.15rem;
         color: #fff;
         text-decoration: none;
@@ -138,16 +150,17 @@ header {
         display: none;
     }
 
-   
 
-    #profile, #cart {
+
+    #profile,
+    #cart {
         display: block;
     }
 
 
     #check:checked~.icons #menu-icon {
         display: none;
-    } 
+    }
 
     .icons #close-icon {
         display: none;
@@ -155,7 +168,7 @@ header {
 
     #check:checked~.icons #close-icon {
         display: block;
-    } 
+    }
 
     .navbar {
         position: absolute;
@@ -172,7 +185,7 @@ header {
 
     #check:checked~.navbar {
         height: 15rem;
-    } 
+    }
 
     .navbar a {
         display: block;
@@ -188,5 +201,5 @@ header {
         transform: translateY(0);
         opacity: 1;
         transition-delay: calc(.15s * var(--i));
-    } 
+    }
 }
