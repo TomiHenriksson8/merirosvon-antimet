@@ -8,6 +8,11 @@
 body {
     min-height: 100vh;
     background: #eed5b3;
+    background-image: url(../images/tausta.gif);
+    /* background-image: url(../images/lokki.gif); */
+    background-size: cover;
+    background-repeat: no-repeat;
+
 }
 
 header {
