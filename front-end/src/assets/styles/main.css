@@ -103,11 +103,28 @@ header {
     position: right;
     float: right;
     padding: 5px;
-    width: 28%;
+    margin-top: 35px;
+    width: 26%;
     height: 50%;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
+
+.tekstiboksi {
+
+    text-align: center;
+
+    margin: 200px auto;
+
+    padding: 100px;
+    background-image: url(../images/kartta.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+
+
+
+}
+
 
 /* BREAKPOINTS */
 
