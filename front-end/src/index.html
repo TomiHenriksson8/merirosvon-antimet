@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/user-dialog.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- <script src="scripts/design/scroll-parallax.js"></script> -->
+    <script src="scripts/design/carousel.js" defer></script>
+    <script  type="module" src="scripts/menu/menu.js"></script>
+    <script type="module" src="scripts/app.js"></script>
     <title>test navbarv1</title>
 </head>
 <body>
     <header class="header">
+        <a href="#"><img src="./assets/images/logo-white.png" alt=""></a>
         <a href="#" class="logo">Merirosvon Antimet</a>
         <input type="checkbox" id="check">
         <label for="check" class="icons">
@@ -26,13 +32,103 @@
             <a href="#"><img id="profile-icon" src="./assets/images/profile-pirate.png" alt=""></a>
             <a href="#"><img id="cart-icon" src="./assets/images/cart-pirate.png" alt=""></a>
         </div>
+        
     </header>
+    <div class="test">
+        <div class="container">
+            <figure class="slider">
+                <img src="./assets/images/slider1.png" alt="">
+                <img src="./assets/images/slider-img.png" alt="">
+                <img src="./assets/images/slider1.png" alt="">
+                <img src="./assets/images/slider-img.png" alt="">
+            </figure>
+        </div>
+        <img src="./assets/images/arrow-left.svg" alt="prev" id="prev">
+        <img src="./assets/images/arrow-right.svg" alt="next" id="next">
+    </div>
     <main>
-        <section class="hero-row-container">
-            <div>
-                <h1>difjsdkjfksdjf</h1>
+        
+        <section>
+            <div class="wave" id="p1" style="--i:1;"></div>
+            <div class="wave" id="p2" style="--i:2;"></div>
+            <div class="wave" id="p3" style="--i:4;"></div>
+            <div class="wave" id="p4" style="--i:5;"></div>
+            <div class="boat" id="p5" style="--i:3"></div>
+            <div class="boat" id="p6" style="--i:3"></div>
+        </section>
+        <div class="info">
+            <h2>Welcome to our restaurant</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime possimus enim earum minus, totam nemo iusto error qui! Blanditiis ullam rerum similique voluptate beatae est autem quibusdam delectus asperiores optio.
+            Qui nihil tenetur blanditiis saepe fugiat repudiandae, sequi officiis ratione ullam, voluptates commodi maiores? Enim reiciendis exercitationem delectus provident commodi at magnam, expedita fuga, dolorum aliquid dicta saepe necessitatibus doloremque!
+            Placeat, totam optio iusto aut accusantium odit voluptatum sed commodi nesciunt quis fugiat quidem adipisci sit soluta provident deleniti est nulla delectus illum pariatur assumenda eveniet? Id accusantium eaque consectetur?</p>
+        </div>
+        
+        <hr class="horizontal-line">
+        
+        <section class="menu" id="menu">
+            <div class="heading">
+                <span>Food menu</span>
+                <h2>Fresh taste and great price</h2>
+                <div class="menu-container">
+                    <!-- Menu Items -->
+                </div>
             </div>
+            
         </section>
     </main>
+    <footer>
+
+    </footer>
+    <dialog id="profileModal" style="display: none;">
+        <div class="profile-container">
+            <h1>Profile</h1>
+            
+            <div class="profile-top-sections">
+                <section id="login">
+                    <h2>Login</h2>
+                    
+                    <form id="login-form">
+                        <div class="form-control">
+                            <input id="username" type="text" name="username">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="form-control">
+                            <input id="password" type="password" name="password">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="form-control">
+                            <input type="submit" value="Login" class="button">
+                        </div>
+                        <a href="#" id="openSignUpModal">Don't have an account? Sign up</a>
+                    </form>
+                </section>
+                <section id="profile-form-section">
+                    <h2>Edit profile</h2>
+                    <form id="profile-form">
+                        <div class="form-control">
+                            <input id="profile-username" type="text" name="username">
+                            <label for="profile-username">Username</label>
+                        </div>
+                        <div class="form-control">
+                            <input id="profile-email" type="email" name="email">
+                            <label for="profile-email">Email</label>
+                        </div>
+                        <div class="form-control">
+                            <input type="submit" value="Update" class="button">
+                        </div>
+                    </form>
+                </section>
+            </div>
+            
+            <div class="profile-bottom-sections">
+                <section id="profile-info">
+                    <h2>Profile Details</h2>
+                    <p>Username: <span id="username-target"></span></p>
+                    <p>Email: <span id="email-target"></span></p>
+                </section>
+            </div>
+        </div>
+    </dialog>
+    
 </body>
 </html>
