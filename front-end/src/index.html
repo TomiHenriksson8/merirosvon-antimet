@@ -9,6 +9,7 @@
     <!-- <script src="scripts/design/scroll-parallax.js"></script> -->
     <script src="scripts/design/carousel.js" defer></script>
     <script  type="module" src="scripts/menu/menu.js"></script>
+    <script  type="module" src="scripts/user/user.js"></script>
     <script type="module" src="scripts/app.js"></script>
     <title>test navbarv1</title>
 </head>
@@ -25,8 +26,8 @@
             <a href="#" style="--i:0;">Etusivu</a>
             <a href="#" style="--i:1;">Menu</a>
             <a href="#" style="--i:2;">Yhteystiedot</a>
-            <a href="#" id="profile" style="--i:3;">Profile</a>
-            <a href="#" id="cart" style="--i:4;">Shopping Cart</a>
+            <a href="#" id="profile" style="--i:3;">Profiili</a>
+            <a href="#" id="cart" style="--i:4;">Ostoskori</a>
         </nav>
         <div class="log-cart">
             <a href="#"><img id="profile-icon" src="./assets/images/profile-pirate.png" alt=""></a>
@@ -118,8 +119,7 @@
                         </div>
                     </form>
                 </section>
-            </div>
-            
+            </div>        
             <div class="profile-bottom-sections">
                 <section id="profile-info">
                     <h2>Profile Details</h2>
@@ -129,6 +129,30 @@
             </div>
         </div>
     </dialog>
+    
+    <dialog id="signUpModal" class="dark-mode-target">
+        <div class="signup-container">
+            <h1>Sign Up</h1>
+            
+            <form id="signUp-form">
+                <div class="form-control">
+                    <input id="signUp-username" type="text" name="username" required>
+                    <label for="signUp-username">Username</label>
+                </div>
+                <div class="form-control">
+                    <input id="signUp-password" type="password" name="password" required>
+                    <label for="signUp-password">Password</label>
+                </div>
+                <div class="form-control">
+                    <input id="signUp-email" type="email" name="email" required>
+                    <label for="signUp-email">Email</label>
+                </div>
+                <div class="form-control">
+                    <input type="submit" value="Sign Up" class="button">
+                </div>
+            </form>
+        </div>
+      </dialog>
     
 </body>
 </html>

@@ -1,6 +1,5 @@
-/* Add this CSS to your new project */
-
-#profileModal {
+#profileModal,
+#signUpModal {
     width: 80%;
     max-width: 800px;
     margin: 0 auto;
@@ -10,50 +9,52 @@
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-  }
-  
-  #profileModal h1 {
+}
+
+#profileModal h1,
+#signUpModal h1 {
     font-size: 24px;
     color: black;
     margin-bottom: 20px;
     text-align: center;
-  }
-  
-  #profileModal h2 {
+}
+
+#profileModal h2,
+#signUpModal h2 {
     font-size: 20px;
     color: black;
     margin-top: 20px;
     margin-bottom: 15px;
     border-bottom: 1px solid #333;
     padding-bottom: 10px;
-  }
-  
-  #avatar-target {
+}
+
+#avatar-target {
     max-width: 80%;
     height: auto;
     border-radius: 50px;
-  }
-  
-  .form-control {
+}
+
+.form-control {
     margin-bottom: 20px;
-  }
-  
-  .form-control label {
+}
+
+.form-control label {
     display: block;
     margin-bottom: 5px;
     color: black;
     font-weight: bold;
-  }
-  
-  .form-control input {
+}
+
+.form-control input {
     width: calc(100% - 20px);
     padding: 10px;
     font-size: 16px;
     border: 1px solid #333;
     border-radius: 5px;
-  }
-  
-  .button {
+}
+
+.button {
     width: 100%;
     background-color: #007bff;
     color: #fff;
@@ -62,36 +63,39 @@
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .button:hover {
+}
+
+.button:hover {
     background-color: #0056b3;
-  }
-  
-  .button:active {
+}
+
+.button:active {
     background-color: #0056b3;
     box-shadow: 0 5px #003366;
     transform: translateY(4px);
-  }
-  
-  #profile-form .form-control label {
+}
+
+#profile-form .form-control label,
+#signUp-form .form-control label {
     color: black;
     font-weight: bold;
-  }
-  
-  #profile-form .form-control input {
+}
+
+#profile-form .form-control input,
+#signUp-form .form-control input {
     width: calc(100% - 20px);
     padding: 10px;
     font-size: 16px;
     border: 1px solid #333;
     border-radius: 5px;
-  }
-  
-  #profile-form .button {
+}
+
+#profile-form .button,
+#signUp-form .button {
     color: #fff;
-  }
-  
-  #profile-form .button:hover {
+}
+
+#profile-form .button:hover,
+#signUp-form .button:hover {
     background-color: #0056b3;
-  }
-  
+}

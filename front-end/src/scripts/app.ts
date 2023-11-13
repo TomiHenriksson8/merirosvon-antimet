@@ -1,17 +1,12 @@
+// login modal
+
 const profileModal = document.getElementById("profileModal") as HTMLDialogElement;
 const profileIconLink = document.getElementById("profile-icon") as HTMLAnchorElement;
 
 profileIconLink.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent the default action of the <a> tag
+    event.preventDefault(); 
     profileModal.showModal();
     profileModal.style.display = "flex";
-});
-
-profileModal.addEventListener("click", (event) => {
-    if (event.target === profileModal) {
-        profileModal.close();
-        profileModal.style.display = "none";
-    }
 });
 
 document.addEventListener("keydown", (event) => {
@@ -21,4 +16,21 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// sign up modal
+
+const signUpModal = document.getElementById("signUpModal") as HTMLDialogElement;
+
+document.getElementById("openSignUpModal")?.addEventListener("click", (e: Event) => {
+    e.preventDefault();
+    
+    if(profileModal && signUpModal) {
+        profileModal.close();
+        profileModal.style.display = "none";
+        signUpModal.showModal();
+    }
+});
+
+document.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Escape" && signUpModal.open) signUpModal.close();
+});
 
