@@ -100,9 +100,31 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
     const formData = getLoginFormData();
     try {
         const user = await fetchLoginUser(formData);
+
+        // Assuming the fetchLoginUser method returns the user data including email
+        const { username, email } = user;
+
         console.log("User logged in successfully!", user);
+        updateProfileInfo(username, email);
     } catch (error) {
         console.error("Error logging in:", error);
     }
 });
 
+
+// UPDATE THE PROFILE INFO IN THE DIALOG
+
+function updateProfileInfo(username: string, email: string) {
+    // Get the profile info elements
+    const usernameTarget = document.getElementById("username-target");
+    const emailTarget = document.getElementById("email-target");
+
+    // Update the profile info with the new data
+    if (usernameTarget) {
+        usernameTarget.textContent = username;
+    }
+
+    if (emailTarget) {
+        emailTarget.textContent = email;
+    }
+}
