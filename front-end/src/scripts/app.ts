@@ -34,3 +34,28 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape" && signUpModal.open) signUpModal.close();
 });
 
+// cart modal 
+
+const shoppingCarttModal = document.getElementById("shoppingCart") as HTMLDialogElement;
+const cartIcon = document.getElementById("cart-icon") as HTMLAnchorElement;
+const closeCart = document.querySelector(".close") as HTMLAnchorElement;
+
+cartIcon.addEventListener("click", (event) => {
+    event.preventDefault(); 
+    shoppingCarttModal.showModal();
+    shoppingCarttModal.style.display = "grid";
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && shoppingCarttModal.open) {
+    shoppingCarttModal.close();
+    shoppingCarttModal.style.display = "none";
+  }
+});
+
+closeCart.addEventListener("click", (event) => {
+    event.preventDefault();
+    shoppingCarttModal.close();
+    shoppingCarttModal.style.display = "none";
+});
+

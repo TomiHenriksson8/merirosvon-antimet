@@ -1,0 +1,70 @@
+#shoppingCart {
+    border: none;
+    width: 400px;
+    background: #353432;
+    color: #eee;
+    position: fixed;
+    top: 109px;
+    left: 78%;
+    display: grid;
+    grid-template-rows: 70px 1fr 70px;
+}
+
+.cart h3 {
+    padding: 20px;
+    margin: 0;
+    font-weight: 300;
+}
+
+.cart .btn {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.cart .btn button {
+    background-color: rgb(230, 150, 2);
+    border: none;
+    cursor: pointer;
+}
+
+.cart .btn .close {
+    background-color: #e0dfdf;
+}
+
+.cart .listCart  .item img {
+    width: 100%;
+}
+
+.cart .listCart .item {
+    display: grid;
+    grid-template-columns: 70px 130px 50px 1fr;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.listCart .quantity span {
+    display: inline-block;
+    width: 25px;
+    background-color: #e0dfdf;
+    color: #555;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.listCart .quantity span:nth-child(2) {
+    background-color: transparent;
+    color: #eee;
+} 
+
+.listCart .item:nth-child(even) {
+    background-color: #eee1;
+}
+
+.listCart {
+    overflow: auto;
+}
+
+.listCart::-webkit-scrollbar {
+    width: 5px;
+}

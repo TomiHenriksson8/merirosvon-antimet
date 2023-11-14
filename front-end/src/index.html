@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- STYLES -->
     <link rel="stylesheet" href="assets/styles/main.css">
     <link rel="stylesheet" href="assets/styles/user-dialog.css">
+    <link rel="stylesheet" href="assets/styles/shopping-cart.css">
+    <!-- ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- JS Files -->
     <!-- <script src="scripts/design/scroll-parallax.js"></script> -->
     <script src="scripts/design/carousel.js" defer></script>
     <script  type="module" src="scripts/menu/menu.js"></script>
     <script  type="module" src="scripts/user/user.js"></script>
+    <script type="module" src="scripts/cart/cart.js"></script>
     <script type="module" src="scripts/app.js"></script>
-    <title>test navbarv1</title>
+    <title>Merirosvon Antimet</title>
 </head>
 <body>
     <header class="header">
@@ -32,6 +37,7 @@
         <div class="log-cart">
             <a href="#"><img id="profile-icon" src="./assets/images/profile-pirate.png" alt=""></a>
             <a href="#"><img id="cart-icon" src="./assets/images/cart-pirate.png" alt=""></a>
+            <span>0</span>
         </div>
         
     </header>
@@ -118,7 +124,7 @@
                             <input type="submit" value="Update" class="button">
                         </div>
                     </form>
-                </section>
+                </section>                
             </div>        
             <div class="profile-bottom-sections">
                 <section id="profile-info">
@@ -130,7 +136,7 @@
         </div>
     </dialog>
     
-    <dialog id="signUpModal" class="dark-mode-target">
+    <dialog id="signUpModal">
         <div class="signup-container">
             <h1>Sign Up</h1>
             
@@ -153,6 +159,32 @@
             </form>
         </div>
       </dialog>
-    
+      <dialog id="shoppingCart"style="display: none;">
+        <div class="cart">
+            <h3>Shopping Cart</h3>
+            <div class="listCart">
+                <div class="item">
+                    <div class="image">
+                        <img src="./assets/images/logo-white.png" alt="placeholder">
+                    </div>
+                    <div class="name">
+                        NAME
+                    </div>
+                    <div class="totalPrice">
+                        200$
+                    </div>
+                    <div class="quantity">
+                        <span class="minus"><</span>
+                        <span>1</span>
+                        <span class="plus">></span>
+                    </div>
+                </div>
+            </div>
+            <div class="btn">
+                <button class="close">Close</button>
+                <button class="checkOut">Check Out</button>
+            </div>
+        </div>
+      </dialog>
 </body>
 </html>

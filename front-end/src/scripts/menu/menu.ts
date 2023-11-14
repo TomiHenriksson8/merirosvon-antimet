@@ -1,14 +1,14 @@
 import { MenuItem } from '../../interfaces/MenuItem';
-
+import { attachAddToCartListener } from '../cart/cart.js';
 
 const fetchAndDisplayMenu = async () => {
     try {
       // Fetch the menu items from the backend using the appropriate endpoint
       const response = await fetch('http://localhost:8000/api/menu'); // Adjust the URL accordingly
       const menuItems: MenuItem[] = await response.json(); // Specify the type for menuItems
-      console.log('test3')
       // Display the menu on the webpage
       renderMenu(menuItems);
+      attachAddToCartListener();
     } catch (error) {
       console.error('Error fetching menu:', error);
     }
@@ -18,7 +18,6 @@ const fetchAndDisplayMenu = async () => {
   const renderMenu = (menuItems: MenuItem[] | null) => {
     // Access the DOM elements where you want to display the menu
     const menuContainer = document.querySelector('.menu-container');
-    console.log('test1')
     // Check if menuContainer is not null
     if (menuContainer) {
       // Clear previous content
@@ -37,7 +36,6 @@ const fetchAndDisplayMenu = async () => {
     // Create and customize HTML elements to represent a menu item
     const menuItemElement = document.createElement('div');
     menuItemElement.classList.add('box');
-    console.log('test2')
     const boxImg = document.createElement('div');
     boxImg.classList.add('box-img');
     const img = document.createElement('img');
@@ -55,18 +53,21 @@ const fetchAndDisplayMenu = async () => {
     span.textContent = menuItem.price + '€';
   
     const i = document.createElement('i');
-    i.classList.add('bx', 'bx-cart-alt');
-  
+    i.classList.add('bx', 'bx-cart-alt', 'add-to-cart');
+    
+    menuItemElement.dataset.id = menuItem.id.toString();
+
     // Append elements to the menu item container
     menuItemElement.appendChild(boxImg);
     menuItemElement.appendChild(h2);
     menuItemElement.appendChild(h3);
     menuItemElement.appendChild(span);
     menuItemElement.appendChild(i);
-  
+    
     return menuItemElement;
   };
   
   // Call the fetchAndDisplayMenu function when the page loads
   window.addEventListener('load', fetchAndDisplayMenu);
-  
+
+  export {fetchAndDisplayMenu, renderMenu, createMenuItemElement}
