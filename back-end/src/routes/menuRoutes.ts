@@ -1,15 +1,15 @@
 // menuRoutes.ts
 import { Router } from 'express';
-import { addFoodItem, deleteFoodItem, getFoodItemById, getFoodItems, updateFoodItem } from '../controllers/menuController';
+import { getFoodItems, getFoodItemByIdHandler, addFoodItemHandler, updateFoodItemHandler, deleteFoodItemHandler } from '../controllers/menuController';
 /* import { authenticate, authorize } from '../middleware/authMiddleware'; */
 
 
 const menuRouter = Router();
 
 menuRouter.get('/',  getFoodItems);
-menuRouter.get('/:id', getFoodItemById)
-menuRouter.post('/add', /* authenticate, authorize(['admin']), */ addFoodItem);
-menuRouter.put('/:id/edit', /* authenticate, authorize(['admin']), */ updateFoodItem);
-menuRouter.delete('/:id/delete', /* authenticate, authorize(['admin']), */ deleteFoodItem);
+menuRouter.get('/:id', getFoodItemByIdHandler)
+menuRouter.post('/add', /* authenticate, authorize(['admin']), */ addFoodItemHandler);
+menuRouter.put('/:id/edit', /* authenticate, authorize(['admin']), */ updateFoodItemHandler);
+menuRouter.delete('/:id/delete', /* authenticate, authorize(['admin']), */ deleteFoodItemHandler);
 
 export default menuRouter;

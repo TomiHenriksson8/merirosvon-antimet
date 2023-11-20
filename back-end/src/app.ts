@@ -2,8 +2,12 @@ import express from 'express';
 import UserRouter from './routes/userRoutes';
 import menuRouter from './routes/menuRoutes';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 const app = express();
+dotenv.config();
+
+
 app.use(cors());
 app.use(express.json());
 

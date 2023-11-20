@@ -1,5 +1,5 @@
-CREATE DATABASE merirosvonantimet;
-USE merirosvonantimet;
+CREATE DATABASE merirosvonAntimet;
+USE merirosvonAntimet;
 
 
 -- Create Users table
@@ -7,7 +7,7 @@ CREATE TABLE Users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(40) NOT NULL,
     email VARCHAR(40) NOT NULL,
-    password VARCHAR(40) NOT NULL, -- should be hashed in production
+    password VARCHAR(255) NOT NULL, -- should be hashed in production
     role ENUM('user', 'staff', 'admin') NOT NULL
 );
 

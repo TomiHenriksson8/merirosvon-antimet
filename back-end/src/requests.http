@@ -7,9 +7,12 @@ POST {{host}}/api/users/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "newuser",
+    "id": 45,
+    "username": "logintestuser1",
     "password": "newpassword",
-    "email": "newuser@example.com"
+    "email": "newuser@example.com",
+    "role": "user"
+    
 }
 
 ### Login User
@@ -29,8 +32,19 @@ GET {{host}}/api/users HTTP/1.1
 GET {{host}}/api/users/1 HTTP/1.1
 
 ### delete User by ID
-DELETE {{host}}/api/users/3 HTTP/1.1
+DELETE {{host}}/api/users/14 HTTP/1.1
 
+### update User by ID
+PUT {{host}}/api/users/12 HTTP/1.1
+Content-Type: application/json
+    
+{
+    "id": 12,
+    "username": "newuser",
+    "password": "newpassword",
+    "email": "lol@gmail.com",
+    "role": "user"
+}
 
 ### MENU ENDPOINTS
 
