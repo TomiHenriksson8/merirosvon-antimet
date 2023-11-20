@@ -1,6 +1,7 @@
 import { LoginUser } from '../../interfaces/LoginUser';
 import { User } from '../../interfaces/User';
 
+// REGISTER USER
 
 const fetchGetExitingUsers = async () => {
     try {
@@ -13,25 +14,14 @@ const fetchGetExitingUsers = async () => {
         return existingUsers;
     } catch (error) {
         console.error("Error fetching existing users:", error);
-        // Handle the error appropriately
         throw error;
     }
 };
 
-
-// REGISTER A NEW USER
-
 const fetchPostNewUser = async (newUser: User) => {
-    const existingUsers = await fetchGetExitingUsers();
-    const newUserId = getLatestUserId(existingUsers) + 1;
-    newUser.id = newUserId;
-    newUser.role = 'user';
-    // Post the new user to the backend
     const response = await fetch('http://localhost:8000/api/users/register', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUser)
     });
     if (!response.ok) {
@@ -40,28 +30,16 @@ const fetchPostNewUser = async (newUser: User) => {
     return response.json();
 };
 
-const getLatestUserId = (existingUsers: User[]) => {
-    if (existingUsers.length === 0) {
-      return 0;
-    }
-    const latestUser = existingUsers.reduce((prevUser, currentUser) => {
-      return currentUser.id > prevUser.id ? currentUser : prevUser;
-    });
-    return latestUser.id;
-};
-
 function getSignUpFormData(): User {
     const usernameInput = document.getElementById("signUp-username") as HTMLInputElement;
     const passwordInput = document.getElementById("signUp-password") as HTMLInputElement;
     const emailInput = document.getElementById("signUp-email") as HTMLInputElement;
-    const formData: User = {
-        id: 0, // default value
+    return {
         username: usernameInput.value,
         password: passwordInput.value,
         email: emailInput.value,
         role: 'user',
     };
-    return formData;
 }
 
 document.getElementById("signUp-form")?.addEventListener("submit", async (event) => {
@@ -69,80 +47,164 @@ document.getElementById("signUp-form")?.addEventListener("submit", async (event)
     const formData = getSignUpFormData();
     try {
         await fetchPostNewUser(formData);
-        console.log("User registered successfully!"); 
+        console.log("User registered successfully!");
     } catch (error) {
-        console.error("Error registering user:", error); 
+        console.error("Error registering user:", error);
     }
 });
 
-// LOGIN A USER
+// LOGIN USER
 
 const fetchLoginUser = async (loginData: LoginUser) => {
     try {
         const response = await fetch('http://localhost:8000/api/users/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData),
         });
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message);
         }
-        const user = await response.json();
-        return user;
+        const responseData = await response.json();
+        console.log("Received user data:", responseData);
+        return responseData.user; // Extract the user from the response
     } catch (error) {
         console.error("Error during login:", error);
-        // Handle the error appropriately
         throw error;
     }
 };
 
+// Update UI with user data
 function getLoginFormData(): LoginUser {
     const usernameInput = document.getElementById("username") as HTMLInputElement;
     const passwordInput = document.getElementById("password") as HTMLInputElement;
-    const formData: LoginUser = {
+    return {
         username: usernameInput.value,
         password: passwordInput.value,
     };
-    return formData;
 }
 
 document.getElementById("login-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = getLoginFormData();
     try {
-        const existingUsers = await fetchGetExitingUsers();
         const user = await fetchLoginUser(formData);
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            updateProfileInfo(user.username, user.email);
 
-        // Assuming the fetchLoginUser method returns the user data including email
-        const { username, email } = user;
+            // Prefill the profile form with user data
+            prefillProfileForm();
 
-        console.log("User logged in successfully!", user);
-        updateProfileInfo(username, email);
+            console.log("User logged in successfully!", user);
+
+            // Optionally, hide login form and show logout button
+            document.getElementById('profile-form-section')!.style.display = 'block';
+            document.getElementById('login-header')!.style.display = 'none';
+            document.getElementById('login-form')!.style.display = 'none';
+            document.getElementById('logout-button')!.style.display = 'block';
+        }
     } catch (error) {
         console.error("Error logging in:", error);
     }
 });
 
+function prefillProfileForm() {
+    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (currentUser && currentUser.username && currentUser.email) {
+        const usernameInput = document.getElementById("profile-username") as HTMLInputElement;
+        const emailInput = document.getElementById("profile-email") as HTMLInputElement;
 
-// UPDATE THE PROFILE INFO IN THE DIALOG
-
-function updateProfileInfo(username: string, email: string) {
-    // Get the profile info elements
-    const usernameTarget = document.getElementById("username-target");
-    const emailTarget = document.getElementById("email-target");
-
-    // Update the profile info with the new data
-    if (usernameTarget) {
-        usernameTarget.textContent = username;
-    }
-
-    if (emailTarget) {
-        emailTarget.textContent = email;
+        if (usernameInput && emailInput) {
+            usernameInput.value = currentUser.username;
+            emailInput.value = currentUser.email;
+        }
     }
 }
 
-// EDIT THE PROFILE INFO
+function updateProfileInfo(username: string, email: string) {
+    const usernameTarget = document.getElementById("username-target");
+    const emailTarget = document.getElementById("email-target");
+    console.log("Updating profile info:", username, email);
+
+    if (usernameTarget) {
+        usernameTarget.textContent = username;
+    }
+    if (emailTarget) {
+        emailTarget.textContent = email;
+    }
+};
+
+document.getElementById('logout-button')?.addEventListener('click', () => {
+    localStorage.removeItem('user');
+    updateProfileInfo('', '');
+    console.log("User logged out successfully");
+
+    // Update UI
+    document.getElementById('profile-form-section')!.style.display = 'none';
+    document.getElementById('login-header')!.style.display = 'block';
+    document.getElementById('login-form')!.style.display = 'block';
+    document.getElementById('logout-button')!.style.display = 'none';
+});
+
+// EDIT USER
+const fetchUpdateUserProfile = async (userId: number, updatedData: { username?: string; email?: string, role: string }) => {
+    try {
+        console.log("Updating user profile:", userId, updatedData);
+        const response = await fetch(`http://localhost:8000/api/users/${userId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedData),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message);
+        }
+        const updatedUserResponse = await response.json();
+        if (updatedUserResponse && updatedUserResponse.user) {
+            return { ...updatedUserResponse.user, id: userId };
+        }
+        throw new Error('Invalid response from server');
+    } catch (error) {
+        console.error("Error updating user profile:", error);
+        throw error;
+    }
+};
+
+document.getElementById("profile-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const usernameInput = document.getElementById("profile-username") as HTMLInputElement;
+    const emailInput = document.getElementById("profile-email") as HTMLInputElement;
+
+    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!currentUser.id) {
+        console.error("No user logged in or user ID missing");
+        return;
+    }
+
+    const updatedData = {
+        id: currentUser.id,
+        username: usernameInput.value,
+        email: emailInput.value,
+        role: currentUser.role,
+        // Including the role, but still not including the password.
+        // If the backend requires the password, you need to handle it securely.
+    };
+
+    try {
+        const updatedUser = await fetchUpdateUserProfile(currentUser.id, updatedData);
+        localStorage.setItem('user', JSON.stringify({ ...currentUser, username: updatedUser.username, email: updatedUser.email }));
+        updateProfileInfo(updatedUser.username, updatedUser.email);
+        console.log("Profile updated successfully!", updatedUser);
+    } catch (error) {
+        console.error("Error updating profile:", error);
+    }
+});
+
+
+
+
+
 
