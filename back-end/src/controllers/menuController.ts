@@ -34,6 +34,7 @@ const addFoodItemHandler = async (req: Request, res: Response) => {
       res.status(201).json({ message: 'Food item added successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
+
     }
 };
   

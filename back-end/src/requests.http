@@ -80,3 +80,10 @@ Content-Type: application/json
 
 ### DELETE Menu by ID
 DELETE {{host}}/api/menu/7/delete HTTP/1.1
+
+
+### CART ENDPOINTS
+
+### GET Cart
+
+GET {{host}}/api/cart/1 HTTP/1.1

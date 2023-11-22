@@ -1,6 +1,7 @@
 import express from 'express';
 import UserRouter from './routes/userRoutes';
 import menuRouter from './routes/menuRoutes';
+import cartRouter from './routes/cartRoutes';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use('/api/users', UserRouter);
 app.use('/api/menu', menuRouter);
+app.use('/api/cart', cartRouter);
 
 const port = process.env.PORT || 8000;
 
