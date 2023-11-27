@@ -1,39 +1,59 @@
 import { MenuItem } from '../../interfaces/MenuItem';
-import { attachAddToCartListener } from '../cart/cart.js';
+import { attachAddToCartListener, attachShoppingCartListener } from '../cart/cart.js';
 
 const fetchAndDisplayMenu = async () => {
     try {
-      // Fetch the menu items from the backend using the appropriate endpoint
-      const response = await fetch('http://localhost:8000/api/menu'); // Adjust the URL accordingly
-      const menuItems: MenuItem[] = await response.json(); // Specify the type for menuItems
-      // Display the menu on the webpage
+      const response = await fetch('http://localhost:8000/api/menu');
+      const menuItems: MenuItem[] = await response.json(); 
       renderMenu(menuItems);
-      attachAddToCartListener();
+      attachShoppingCartListener();
     } catch (error) {
       console.error('Error fetching menu:', error);
     }
   };
   
-  // Function to render the menu on the webpage
-  const renderMenu = (menuItems: MenuItem[] | null) => {
-    // Access the DOM elements where you want to display the menu
-    const menuContainer = document.querySelector('.menu-container');
-    // Check if menuContainer is not null
-    if (menuContainer) {
-      // Clear previous content
-      menuContainer.innerHTML = '';
+document.querySelectorAll('.menu-filter-btn button').forEach((button) => {
+  button.addEventListener('click', async () => {
+    if (button.textContent) {
+      const buttonText = button.textContent.trim();
+
+    if (buttonText === "Kaikki") { 
+      fetchAndDisplayMenu();
+    } else {
+      try {
+        const response = await fetch(`http://localhost:8000/api/menu/category/${buttonText}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const menuItems: MenuItem[] = await response.json();
+        renderMenu(menuItems);
+      } catch (error) {
+        console.error('Error fetching menu by category:', error);
+      }
+    }
+    }
+    
+  });
+});
+
   
-      // Iterate over the menu items and create HTML elements to display them
+
+
+  const renderMenu = (menuItems: MenuItem[] | null) => {
+    const menuContainer = document.querySelector('.menu-container');
+    if (menuContainer) {
+      menuContainer.innerHTML = '';
       menuItems?.forEach((item) => {
         const menuItemElement = createMenuItemElement(item);
         menuContainer.appendChild(menuItemElement);
       });
+      attachAddToCartListener();
     }
   };
   
-  // Function to create an HTML element for a menu item
   const createMenuItemElement = (menuItem: MenuItem) => {
-    // Create and customize HTML elements to represent a menu item
     const menuItemElement = document.createElement('div');
     menuItemElement.classList.add('box');
     const boxImg = document.createElement('div');
@@ -57,7 +77,7 @@ const fetchAndDisplayMenu = async () => {
     
     menuItemElement.dataset.id = menuItem.id.toString();
 
-    // Append elements to the menu item container
+    
     menuItemElement.appendChild(boxImg);
     menuItemElement.appendChild(h2);
     menuItemElement.appendChild(h3);
@@ -67,7 +87,6 @@ const fetchAndDisplayMenu = async () => {
     return menuItemElement;
   };
   
-  // Call the fetchAndDisplayMenu function when the page loads
   window.addEventListener('load', fetchAndDisplayMenu);
 
   export {fetchAndDisplayMenu, renderMenu, createMenuItemElement}

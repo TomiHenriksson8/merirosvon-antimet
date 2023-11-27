@@ -1,3 +1,4 @@
+
 // login modal
 
 const profileModal = document.getElementById("profileModal") as HTMLDialogElement;
@@ -52,10 +53,3 @@ document.addEventListener("keydown", (event) => {
     shoppingCarttModal.style.display = "none";
   }
 });
-
-closeCart.addEventListener("click", (event) => {
-    event.preventDefault();
-    shoppingCarttModal.close();
-    shoppingCarttModal.style.display = "none";
-});
-

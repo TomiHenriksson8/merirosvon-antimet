@@ -1,4 +1,3 @@
-// src/utils/hashPassword.ts
 
 import bcrypt from 'bcrypt';
 
