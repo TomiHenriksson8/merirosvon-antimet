@@ -76,17 +76,14 @@ const updateUser = async (user: User): Promise<User> => {
           sql += 'email = ?, ';
           params.push(user.email);
       }
-      // Check if password is provided and is a string
       if (typeof user.password === 'string') {
           sql += 'password = ?, ';
-          params.push(user.password); // Ensure password is hashed
+          params.push(user.password);
       }
       if (typeof user.role === 'string') {
           sql += 'role = ?, ';
           params.push(user.role);
       }
-
-      // Ensure id is provided and is a number
       if (typeof user.id === 'number') {
           sql = sql.slice(0, -2) + ' WHERE id = ?';
           params.push(user.id);
@@ -94,13 +91,11 @@ const updateUser = async (user: User): Promise<User> => {
           throw new Error("User ID is missing or invalid");
       }
 
-      // Execute the query
       await promisePool.query(sql, params);
 
-      // Return updated user data excluding password
       return { id: user.id, username: user.username, email: user.email, role: user.role };
   } catch (error) {
-      throw error; // Better error handling can be added here
+      throw error; 
   }
 };
 

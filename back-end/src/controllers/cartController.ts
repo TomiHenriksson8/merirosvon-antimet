@@ -12,10 +12,16 @@ const getCart = async (req: Request, res: Response) => {
     }
 };
 
-const addToCart = async (req: Request, res: Response) => {
+const addToCart = async (req: Request, res: Response): Promise<void> => {
     try {
         const { userId, foodItemId, quantity } = req.body;
-        const updatedCart = await addItemToCart(userId, foodItemId, quantity);
+        
+        // Call function to add the item to the cart
+        await addItemToCart(userId, foodItemId, quantity);
+
+        // Call function to get the updated cart
+        const updatedCart = await getCartByUserId(userId);
+
         res.json(updatedCart);
     } catch (error) {
         const e = error as Error;
@@ -23,11 +29,12 @@ const addToCart = async (req: Request, res: Response) => {
     }
 };
 
+
 const removeFromCart = async (req: Request, res: Response) => {
     try {
-        const { cartId, foodItemId } = req.body;
-        await removeItemFromCart(cartId, foodItemId);
-        res.status(204).send(); // No content to send back
+        const { userId, foodItemId } = req.params;
+        await removeItemFromCart(parseInt(userId), parseInt(foodItemId));
+        res.status(200).json({ message: "Item removed successfully" });
     } catch (error) {
         const e = error as Error;
         res.status(500).send(e.message);

@@ -7,4 +7,8 @@ interface MenuItem {
     imageUrl: string
 }
 
-export {MenuItem}
+interface CartItem extends MenuItem {
+    quantity: number;
+  }
+
+export { MenuItem, CartItem }

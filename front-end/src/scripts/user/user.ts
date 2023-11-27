@@ -1,5 +1,33 @@
 import { LoginUser } from '../../interfaces/LoginUser';
 import { User } from '../../interfaces/User';
+import { getCurrentUser } from '../../utils/utils.js'; 
+
+// Function to check for a logged-in user and update UI
+function checkLoggedInUser() {
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+        updateProfileInfo(currentUser.username, currentUser.email);
+        prefillProfileForm();
+        document.getElementById('profile-form-section')!.style.display = 'block';
+        document.getElementById('login-header')!.style.display = 'none';
+        document.getElementById('login-form')!.style.display = 'none';
+        document.getElementById('logout-button')!.style.display = 'block';
+    } else {
+        document.getElementById('profile-form-section')!.style.display = 'none';
+        document.getElementById('login-header')!.style.display = 'block';
+        document.getElementById('login-form')!.style.display = 'block';
+        document.getElementById('logout-button')!.style.display = 'none';
+    }
+}
+
+
+window.addEventListener('load', checkLoggedInUser);
+
+document.getElementById("profile-icon")?.addEventListener("click", () => {
+    checkLoggedInUser();
+    
+});
+
 
 // REGISTER USER
 
@@ -68,7 +96,7 @@ const fetchLoginUser = async (loginData: LoginUser) => {
         }
         const responseData = await response.json();
         console.log("Received user data:", responseData);
-        return responseData.user; // Extract the user from the response
+        return responseData.user; 
     } catch (error) {
         console.error("Error during login:", error);
         throw error;
@@ -94,12 +122,9 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
             localStorage.setItem('user', JSON.stringify(user));
             updateProfileInfo(user.username, user.email);
 
-            // Prefill the profile form with user data
             prefillProfileForm();
 
             console.log("User logged in successfully!", user);
-
-            // Optionally, hide login form and show logout button
             document.getElementById('profile-form-section')!.style.display = 'block';
             document.getElementById('login-header')!.style.display = 'none';
             document.getElementById('login-form')!.style.display = 'none';
@@ -189,8 +214,6 @@ document.getElementById("profile-form")?.addEventListener("submit", async (event
         username: usernameInput.value,
         email: emailInput.value,
         role: currentUser.role,
-        // Including the role, but still not including the password.
-        // If the backend requires the password, you need to handle it securely.
     };
 
     try {

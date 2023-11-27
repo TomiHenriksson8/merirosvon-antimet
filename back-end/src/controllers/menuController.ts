@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { FoodItem } from '../models/FoodItem';
 import { menu } from '../test-data/menu';
-import { addNewFoodItem, deleteFoodItemById, fetchAllFoodItems, fetchFoodItemById, updateExistingFoodItem } from '../data/menuData';
+import { addNewFoodItem, deleteFoodItemById, fetchAllFoodItems, fetchFoodItemById, fetchFoodItemsByCategory, updateExistingFoodItem } from '../data/menuData';
 
 const getFoodItems = async (req: Request, res: Response) => {
     try {
-      const foodItems = await fetchAllFoodItems();  // Assuming this function exists and fetches all food items from the database
+      const foodItems = await fetchAllFoodItems();
       res.status(200).json(foodItems);
     } catch (error) {
       console.error('Error fetching food items:', error);
@@ -27,6 +27,23 @@ const getFoodItemByIdHandler = async (req: Request, res: Response) => {
       res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+const getFoodItemsByCategoryHandler = async (req: Request, res: Response) => {
+  try {
+    const category = req.params.category;
+    const foodItems = await fetchFoodItemsByCategory(category);
+
+    if (foodItems.length > 0) {
+      res.status(200).json(foodItems);
+    } else {
+      res.status(404).json({ message: 'No food items found for this category' });
+    }
+  } catch (error) {
+    console.error('Error fetching food items by category:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 const addFoodItemHandler = async (req: Request, res: Response) => {
     try {
@@ -61,4 +78,4 @@ const deleteFoodItemHandler = async (req: Request, res: Response) => {
 };
   
 
-export { getFoodItems, getFoodItemByIdHandler, addFoodItemHandler, updateFoodItemHandler, deleteFoodItemHandler};
+export { getFoodItems, getFoodItemByIdHandler, addFoodItemHandler, getFoodItemsByCategoryHandler, updateFoodItemHandler, deleteFoodItemHandler};

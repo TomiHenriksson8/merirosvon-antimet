@@ -7,9 +7,9 @@ const fetchAllFoodItems = async (): Promise<RowDataPacket[]> => {
     try {
       const sql = 'SELECT * FROM FoodItem';
       const [rows] = await promisePool.query<RowDataPacket[]>(sql);
-      return rows as RowDataPacket[]; // Explicitly casting it to RowDataPacket[]
+      return rows as RowDataPacket[];
     } catch (error) {
-      throw error; // Add better error handling as needed
+      throw error;
     }
   };
 
@@ -22,6 +22,18 @@ const fetchFoodItemById = async (id: number): Promise<RowDataPacket[]> => {
     throw error;
   }
 };
+
+const fetchFoodItemsByCategory = async (category: string): Promise<RowDataPacket[]> => {
+  try {
+    const sql = 'SELECT * FROM FoodItem WHERE category = ?';
+    const [rows] = await promisePool.query<RowDataPacket[]>(sql, [category]);
+    return rows as RowDataPacket[];
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 const addNewFoodItem = async (foodItem: any): Promise<void> => {
     try {
@@ -53,6 +65,6 @@ const deleteFoodItemById = async (id: number): Promise<void> => {
   };
   
 
-export { fetchAllFoodItems, fetchFoodItemById, addNewFoodItem, updateExistingFoodItem, deleteFoodItemById};
+export { fetchAllFoodItems, fetchFoodItemById, fetchFoodItemsByCategory, addNewFoodItem, updateExistingFoodItem, deleteFoodItemById};
   
   

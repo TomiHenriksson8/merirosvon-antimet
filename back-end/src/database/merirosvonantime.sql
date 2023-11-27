@@ -67,8 +67,8 @@ INSERT INTO Users (username, email, password, role) VALUES
 
 -- Insert test food items
 INSERT INTO FoodItem (name, description, price, category, imageUrl) VALUES 
-('Margherita Pizza', 'Classic Margherita with mozzarella cheese and basil.', 9.99, 'Pizza', 'images/margherita.jpg'),
-('Veggie Burger', 'A healthy veggie burger loaded with fresh vegetables.', 7.99, 'Burger', 'images/veggieburger.jpg'),
+('Margherita Pizza', 'Classic Margherita with mozzarella cheese and basil.', 9.99, 'Pizza', './assets/images/menu-placeholder.png'),
+('Veggie Burger', 'A healthy veggie burger loaded with fresh vegetables.', 7.99, 'Burger', './assets/images/menu-placeholder.png'),
 ('Caesar Salad', 'Fresh romaine lettuce with Caesar dressing.', 5.99, 'Salad', 'images/caesarsalad.jpg');
 
 -- Insert a test cart item for user 1

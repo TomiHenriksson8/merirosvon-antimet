@@ -6,7 +6,7 @@ const cartRouter = Router();
 
 cartRouter.get('/:userId', getCart);
 cartRouter.post('/add', addToCart);
-cartRouter.delete('/remove', removeFromCart);
+cartRouter.delete('/remove/:userId/:foodItemId', removeFromCart);
 
 
 export default cartRouter;
