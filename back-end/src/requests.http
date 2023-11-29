@@ -91,6 +91,14 @@ DELETE {{host}}/api/menu/7/delete HTTP/1.1
 
 GET {{host}}/api/cart/4 HTTP/1.1
 
+### GET Cart by User ID
+
+GET {{host}}/api/cart/4 HTTP/1.1
+
+### GET Cart Total by User ID
+
+GET {{host}}/api/cart/total/4 HTTP/1.1
+
 ### POST Cart
 
 POST {{host}}/api/cart/add HTTP/1.1

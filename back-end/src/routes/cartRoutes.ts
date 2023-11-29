@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { getCart, addToCart, removeFromCart } from '../controllers/cartController';
+import { getCart, getCartTotalAmount, addToCart, removeFromCart } from '../controllers/cartController';
 /* import { authenticate, authorize } from '../middleware/authMiddleware'; */
 
 const cartRouter = Router();
 
 cartRouter.get('/:userId', getCart);
+cartRouter.get('/total/:userId', getCartTotalAmount);
 cartRouter.post('/add', addToCart);
 cartRouter.delete('/remove/:userId/:foodItemId', removeFromCart);
 
