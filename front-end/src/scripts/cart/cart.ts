@@ -53,6 +53,7 @@ const addToCart = async (
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    // in here
     console.log("Item added to cart successfully.");
   } catch (error) {
     console.error("Error adding item to cart:", error);
@@ -75,6 +76,34 @@ const fetchCartItems = async (): Promise<CartItem[]> => {
 
   const cartItems: CartItem[] = await response.json();
   return cartItems;
+};
+
+const updateCartTotalInUI = async () => {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !currentUser.id) {
+    console.error("User is not logged in.");
+    return;
+  }
+  const total = await fetchCartTotal(currentUser.id);
+  const cartTotalElement = document.getElementById('cart-total');
+  if (cartTotalElement) {
+    cartTotalElement.textContent = `$${total.toFixed(2)}`;
+  }
+};
+
+
+const fetchCartTotal = async (userId: number): Promise<number> => {
+  try {
+    const response = await fetch(`http://localhost:8000/api/cart/total/${userId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return parseFloat(data.total);
+  } catch (error) {
+    console.error('Error fetching cart total:', error);
+    return 0; // Return 0 or handle error appropriately
+  }
 };
 
 const renderCartItems = (cartItems: CartItem[]): void => {
@@ -140,6 +169,7 @@ const deleteCartItem = async (itemId: string): Promise<void> => {
 
     console.log(`Item ${itemId} deleted successfully from the cart.`);
     const updatedCartItems = await fetchCartItems();
+    await updateCartTotalInUI();
     renderCartItems(updatedCartItems);
   } catch (error) {
     console.error("Error deleting item from cart:", error);
@@ -162,6 +192,7 @@ const attachShoppingCartListener = () => {
       try {
         const cartItems = await fetchCartItems();
         renderCartItems(cartItems);
+        await updateCartTotalInUI();
         shoppingCartDialog.showModal();
       } catch (error) {
         console.error("Error fetching or rendering cart items:", error);

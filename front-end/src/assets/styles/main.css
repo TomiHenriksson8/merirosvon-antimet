@@ -52,12 +52,21 @@ header {
     left: 100%;
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container a {
+    margin-right: 10px;
+} 
+
 .logo {
     font-size: 2rem;
     color: #fff;
     text-decoration: none;
     font-weight: 700;
-    margin-left: -300px;
+    
 }
 
 a img {
@@ -71,6 +80,10 @@ a img {
     text-decoration: none;
     font-weight: 500;
     margin-left: 2.5rem;
+}
+
+.navbar a:hover {
+    color: orange ;
 }
 
 .log-cart a  {
@@ -450,11 +463,10 @@ footer {
 
 @media (max-width: 768px) {
     .logo {
-        font-size: 1.5rem;
-        color: #fff;
-        text-decoration: none;
-        font-weight: 700;
+        display: none;
     }
+
+
     
     .icons {
         display: inline-flex;
