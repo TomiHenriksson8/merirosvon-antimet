@@ -54,6 +54,21 @@ const fetchUserById = async (id: number): Promise<User | null> => {
   }
 };
 
+const fetchLatestUserId = async (): Promise<number | null> => {
+  try {
+    const [rows] = await promisePool.query<RowDataPacket[]>('SELECT id FROM Users ORDER BY id DESC LIMIT 1');
+    console.log(rows); // Log to see the structure of returned data
+    if (rows.length > 0 && 'id' in rows[0]) {
+      return rows[0].id as number;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching the latest user ID:', error);
+    throw error;
+  }
+};
+
 const deleteUser = async (id: number): Promise<void> => {
   try {
     const sql = 'DELETE FROM Users WHERE id = ?';
@@ -102,4 +117,4 @@ const updateUser = async (user: User): Promise<User> => {
 
 
 
-export { fetchAllUsers, createUser, fetchUserByUsername, fetchUserById, deleteUser, updateUser };
+export { fetchAllUsers, createUser, fetchUserByUsername, fetchUserById, fetchLatestUserId, deleteUser, updateUser };

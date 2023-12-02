@@ -3,7 +3,7 @@ import { User } from "../models/User";
 import { users } from "../test-data/user";
 import exp from "constants";
 import { hashPassword } from "../utils/hashPassword";
-import { createUser, deleteUser, fetchAllUsers, fetchUserById, fetchUserByUsername, updateUser } from "../data/userData";
+import { createUser, deleteUser, fetchAllUsers, fetchUserById, fetchLatestUserId, fetchUserByUsername, updateUser } from "../data/userData";
 import { createSecureServer } from "http2";
 import bcrypt from 'bcrypt';
 
@@ -83,6 +83,20 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
+const getLatestUserId = async (req: Request, res: Response) => {
+  try {
+    const latestUserId = await fetchLatestUserId();
+    if (latestUserId !== null) {
+      res.status(200).json({ latestUserId });
+    } else {
+      res.status(404).json({ message: 'No users found' });
+    }
+  } catch (error) {
+    console.error('Error fetching the latest user ID:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 const handleDeleteUserRequest = async (req: Request, res: Response) => {
   try {
     const userId = parseInt(req.params.id, 10);
@@ -115,6 +129,7 @@ export {
   loginUser,
   getUsers,
   getUserById,
+  getLatestUserId,
   handleDeleteUserRequest,
   handleUpdateUserRequest,
 };
