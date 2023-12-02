@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- STYLES -->
     <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/admin-staff-panel.css">
     <link rel="stylesheet" href="assets/styles/user-dialog.css">
     <link rel="stylesheet" href="assets/styles/shopping-cart.css">
     <!-- ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- JS Files -->
     <!-- <script src="scripts/design/scroll-parallax.js"></script> -->
-    <script src="scripts/design/carousel.js" defer></script>
+    
     <script  type="module" src="scripts/menu/menu.js"></script>
     <script  type="module" src="scripts/user/user.js"></script>
     <script type="module" src="scripts/user/admin.js"></script>
-    <script type="module" src="scripts/cart/cart.js"></script>
+    
     <script type="module" src="utils/utils.js"></script>
-    <script type="module" src="scripts/app.js"></script>
+    
     <title>Merirosvon Antimet</title>
 </head>
 <body id="home">
@@ -33,50 +34,38 @@
             <i class='bx bx-x' id="close-icon"></i>
         </label>
         <nav class="navbar">
-            <a href="#home" style="--i:0;">Etusivu</a>
-            <a href="#menu" style="--i:1;">Menu</a>
-            <a href="#" style="--i:2;">Yhteystiedot</a>
             <a href="#" id="profile" style="--i:3;">Profiili</a>
             <a href="#" id="cart" style="--i:4;">Ostoskori</a>
         </nav>
         <div class="log-cart">
-            <div id="panelAdminAndStaff"></div>
-            <a href="#"><img id="profile-icon" src="./assets/images/profile-pirate.png" alt=""></a>
-            <a href="#"><img id="cart-icon" src="./assets/images/cart-pirate.png" alt=""></a>
+            <div id="panelAdminAndStaff">
+                <button id="exit-panel">Exit Panel and log out</button>
+            </div>
+            
         </div> 
     </header>
-    <section class="container">
-        <div class="slider-wrapper">
-            <div class="slider">
-                <img id="slide-1" src="./assets/images/slider1.png" alt="3D rendering of an imaginary orange planet in space" />
-                <img id="slide-2" src="./assets/images/slider-img.png" />
-                <img id="slide-3" src="./assets/images/slider-img.png" />
-            </div>
-            <div class="slider-nav">
-                <a href="#slide-1"></a>
-                <a href="#slide-2"></a>
-                <a href="#slide-3"></a>
-            </div>
-        </div>
-    </section>
     <main>
-        
-        <section>
-            <div class="boat-wave"></div>
+        <section class="panelInfo">
+            <span>Info</span>
+            <div class="boxes">
+                <div class="dashboard-box" id="users-box">
+                    <p>Users: <span id="users-count">2</span></p>
+                </div>
+                <div class="dashboard-box" id="orders-box">
+                    <p>Orders: <span id="orders-count">99</span></p>
+                </div>
+                <div class="dashboard-box" id="another-box">
+                    <p>Other Data: <span id="other-data">44</span></p>  <!-- MODIFY LATER TO DISPLAY SOMETHING -->
+                </div>
+                <!-- total user, total orders, something else fun... -->
+            </div>
         </section>
-        <div class="info">
-            <h2>Welcome to our restaurant</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime possimus enim earum minus, totam nemo iusto error qui! Blanditiis ullam rerum similique voluptate beatae est autem quibusdam delectus asperiores optio.
-            Qui nihil tenetur blanditiis saepe fugiat repudiandae, sequi officiis ratione ullam, voluptates commodi maiores? Enim reiciendis exercitationem delectus provident commodi at magnam, expedita fuga, dolorum aliquid dicta saepe necessitatibus doloremque!
-            Placeat, totam optio iusto aut accusantium odit voluptatum sed commodi nesciunt quis fugiat quidem adipisci sit soluta provident deleniti est nulla delectus illum pariatur assumenda eveniet? Id accusantium eaque consectetur?</p>
+        <div id="orders-table-container">
+            <!-- ORDERS TABLE -->
         </div>
-        
-        <hr class="horizontal-line">
-        
         <section class="menu" id="menu">
             <div class="heading">
-                <span>Food menu</span>
-                <h2>Fresh taste and great price</h2>
+                <span>Food Categories</span>
                 <div class="menu-filter-btn">
                     <button><span></span>Kaikki<span></span></button>
                     <button><span></span>Pizza<span></span></button>
@@ -84,6 +73,23 @@
                     <button><span></span>Salad<span></span></button>
                     <!-- Lisää Lisää myöhemmin  -->
                     <button><span></span>Juomat<span></span></button>
+                </div>
+                <span>Food Items</span>
+                <!-- add option to add food items to database and delete from the ui  ( ADMIN ROLE ONLY ) -->
+                <div class="addFoodItems">
+                    <form id="add-food-item-form">
+                        <input type="text" id="name" placeholder="Food Item Name">
+                        <input type="text" id="description" placeholder="Description">
+                    
+                        <!-- Number input for price -->
+                        <input type="number" id="price" placeholder="Price" step="0.01" min="0">
+                    
+                        <!-- Dropdown for category selection -->
+                        <input type="text" id="category" placeholder="Category">
+                    
+                        <input type="text" id="imageUrl" placeholder="Path to food item image">
+                        <button type="submit">Add To Menu</button>
+                    </form>
                 </div>
                 <div class="menu-container">
                     <!-- Menu Items -->
@@ -93,7 +99,6 @@
         </section>
     </main>
     <footer>
-
     </footer>
     <dialog id="profileModal" style="display: none;">
         <div class="profile-container">

@@ -1,0 +1,93 @@
+main {
+    text-align: center;
+}
+
+.panelInfo span {
+    font-size: 1.5rem; /* use made  css  variable later */;
+}
+
+.boxes {
+    display: flex; 
+    gap: 20px; 
+    padding: 20px;
+    justify-content: center;
+}
+
+dashboard-box {
+    flex-grow: 1; 
+}
+
+#users-box {
+    background-color: #4caf50;
+    padding: 30px 50px;
+    border: 1px solid #252525;
+    border-radius: 10px;
+    color: #fff; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#orders-box {
+    background-color: #2196f3;
+    padding: 30px 50px;
+    border: 1px solid #252525;
+    border-radius: 10px;
+    color: #fff; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+}
+
+#another-box {
+    background-color: #f44336;
+    padding: 30px 50px;
+    border: 1px solid #252525;
+    border-radius: 10px;
+    color: #fff; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+#orders-table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; 
+}
+
+
+#orders-table-container table {
+    border-collapse: collapse; 
+    width: 80%; 
+    max-width: 1000px; 
+}
+
+
+#orders-table-container th,
+#orders-table-container td {
+    border: 1px solid black; 
+    padding: 8px;
+    text-align: left; 
+}
+
+
+#orders-table-container th {
+    background-color: #f2f2f2; 
+    font-weight: bold; 
+}
+
+
+#orders-table-container tr:nth-child(even) {
+    background-color: #f9f9f9; 
+}
+
+
+span {
+    color: orange;
+    font-weight: 600;
+}
+
+/* BREAKPOINTS */
+
+@media screen and (max-width: 768px) {
+    .panelInfo {
+        flex-direction: column;
+    }
+}

@@ -1,4 +1,4 @@
-
+import { getCurrentUser } from '../utils/utils.js';
 // login modal
 
 const profileModal = document.getElementById("profileModal") as HTMLDialogElement;
@@ -53,3 +53,40 @@ document.addEventListener("keydown", (event) => {
     shoppingCarttModal.style.display = "none";
   }
 });
+
+// check role and generate role-specific UI for index.html
+
+
+const generateRoleSpecificUI = (): void => {
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+        console.log("No user logged in.");
+        return;
+    }
+
+    const container = document.getElementById('panelAdminAndStaff');
+    if (!container) {
+        console.error('Container for role-specific UI not found');
+        return;
+    }
+
+    if (currentUser.role === 'admin') {
+        const adminPanelButton = createPanelButton('Admin Panel', 'adminAndStaffPanel.html');
+        container.appendChild(adminPanelButton);
+    } else if (currentUser.role === 'staff') {
+        const staffPanelButton = createPanelButton('Staff Panel', 'adminAndStaffPanel.html');
+        container.appendChild(staffPanelButton);
+    } 
+};
+
+const createPanelButton = (buttonText: string, pageUrl: string): HTMLButtonElement => {
+    const button = document.createElement('button');
+    button.textContent = buttonText;
+    button.addEventListener('click', () => {
+        window.location.href = pageUrl;
+    });
+    return button;
+};
+
+
+generateRoleSpecificUI();
