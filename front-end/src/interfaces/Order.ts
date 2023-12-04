@@ -1,13 +1,21 @@
-interface Order {
+interface DetailedOrder {
     orderId: number;
     userId: number;
     totalPrice: string;
-    orderDate: string; // Adjust the type if you are using a Date object
+    orderDate: string;
     orderStatus: string;
+    foodItemId: number;
+    foodItemName: string;
+    foodItemPrice: number;
+    quantity: number;
 }
 
 interface OrdersResponse {
-    orders: Order[];
+    orders: DetailedOrder[];
 }
 
-export { Order, OrdersResponse };
+interface GroupedOrders {
+    [orderId: number]: DetailedOrder[];
+}
+
+export { DetailedOrder, OrdersResponse, GroupedOrders };

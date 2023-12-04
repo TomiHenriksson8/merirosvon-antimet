@@ -1,6 +1,7 @@
 import { LoginUser } from '../../interfaces/LoginUser';
 import { User } from '../../interfaces/User';
 import { getCurrentUser } from '../../utils/utils.js'; 
+import { generateRoleSpecificUI } from '../app.js';
 
 // Function to check for a logged-in user and update UI
 function checkLoggedInUser() {
@@ -129,6 +130,8 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
             document.getElementById('login-header')!.style.display = 'none';
             document.getElementById('login-form')!.style.display = 'none';
             document.getElementById('logout-button')!.style.display = 'block';
+        
+            generateRoleSpecificUI();
         }
     } catch (error) {
         console.error("Error logging in:", error);

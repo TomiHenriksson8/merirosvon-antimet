@@ -1,5 +1,6 @@
 import { getCurrentUser } from '../../utils/utils.js';
-import { Order, OrdersResponse } from '../../interfaces/Order.js';
+import { DetailedOrder, OrdersResponse, GroupedOrders } from '../../interfaces/Order.js';
+import { User } from '../../interfaces/User.js';
 
 const redirectToAppropriatePage = () => {
     const currentUser = getCurrentUser();
@@ -79,40 +80,74 @@ const getOrders = async (): Promise<OrdersResponse> => {
         return responseData;
     } catch (error) {
         console.error('Error:', error);
-        throw error; // Rethrowing the error for the caller to handle
+        throw error;
     }
 };
 
 const displayOrders = async () => {
     try {
         const ordersData = await getOrders();
-        if (!ordersData.orders || ordersData.orders.length === 0) {
+        if (!ordersData || ordersData.orders.length === 0) {
             console.error('Failed to retrieve orders data');
             return;
         }
-        const tableContainer = document.getElementById('orders-table-container');
+
+        const tableContainer = document.getElementById('orders-table-container') as HTMLDivElement;
         if (!tableContainer) {
             console.error('Table container not found');
             return;
         }
 
         const table = document.createElement('table');
-        // Add table headers
         const headerRow = table.insertRow();
-        ['Order ID', 'User ID', 'Total Price', 'Order Date', 'Order Status'].forEach(text => {
+        ['Order ID', 'User Info', 'Total Price', 'Order Date', 'Order Status', 'Item Details'].forEach(text => {
             const cell = headerRow.insertCell();
             cell.textContent = text;
         });
 
-        // Add table rows for each order
-        ordersData.orders.forEach(order => {
+        // Group orders by orderId
+        const orderGroups: GroupedOrders = ordersData.orders.reduce((acc: GroupedOrders, order: DetailedOrder) => {
+            acc[order.orderId] = acc[order.orderId] || [];
+            acc[order.orderId].push(order);
+            return acc;
+        }, {});
+
+        Object.entries(orderGroups).forEach(([orderId, orders]) => {
             const row = table.insertRow();
-            row.insertCell().textContent = order.orderId.toString();
-            row.insertCell().textContent = order.userId.toString();
-            row.insertCell().textContent = order.totalPrice;
-            row.insertCell().textContent = order.orderDate;
-            row.insertCell().textContent = order.orderStatus;
+            row.insertCell().textContent = orderId;
+
+            const userInfoLink = document.createElement('a');
+            userInfoLink.href = '#';
+            userInfoLink.textContent = `User ${orders[0].userId}`;
+            userInfoLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            displayUserInfo(orders[0].userId);
+            });
+            const userInfoCell = row.insertCell();
+        userInfoCell.appendChild(userInfoLink);
+
+        row.insertCell().textContent = orders[0].totalPrice.toString();
+        row.insertCell().textContent = orders[0].orderDate;
+
+        const statusDropdown = document.createElement('select');
+        ['completed', 'pending', 'cancelled'].forEach(status => {
+            const option = document.createElement('option');
+            option.value = status;
+            option.textContent = status;
+            option.selected = orders[0].orderStatus === status;
+            statusDropdown.appendChild(option);
         });
+        statusDropdown.addEventListener('change', (event: Event) => {
+            const target = event.target as HTMLSelectElement;
+            updateOrderStatus(parseInt(orderId), target.value);
+        });
+        const statusCell = row.insertCell();
+        statusCell.appendChild(statusDropdown);
+
+        // Concatenate item details
+        const itemDetails = orders.map((item: DetailedOrder) => `${item.foodItemName} (x${item.quantity}) - ${item.foodItemPrice} each`).join(', ');
+        row.insertCell().textContent = itemDetails;
+});
 
         tableContainer.appendChild(table);
     } catch (error) {
@@ -121,6 +156,63 @@ const displayOrders = async () => {
 };
 
 displayOrders();
+
+
+
+
+
+async function updateOrderStatus(orderId: number, newStatus: string) {
+    console.log(`Update status for order ${orderId} to ${newStatus}`);
+
+    // The URL for the backend endpoint
+    const url = `http://localhost:8000/api/order/status/${orderId}`; // Replace with your actual backend URL
+
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ newStatus: newStatus })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log('Update successful:', responseData);
+    } catch (error) {
+        console.error('Error updating order status:', error);
+    }
+}
+
+/// show user info based on user id on table
+
+const fetchUserInfoById = async (userId: number): Promise<User | null> => {
+    try {
+        const response = await fetch(`http://localhost:8000/api/users/${userId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const userInfo: User = await response.json();
+        return userInfo;
+    } catch (error) {
+        console.error("Error fetching user info:", error);
+        return null;
+    }
+};
+
+const displayUserInfo = async (userId: number) => {
+    const userInfo = await fetchUserInfoById(userId);
+    if (userInfo) {
+        // Display user information in your preferred way
+        // For example, you might use a modal or an alert for simplicity
+        alert(`Name: ${userInfo.username}\nEmail: ${userInfo.email}`);
+    }
+};
+
+
 
 // ADD FOOD ITEM
 
@@ -164,3 +256,5 @@ const form = document.getElementById('add-food-item-form');
 if (form) {
     form.addEventListener('submit', handleFoodItemSubmission);
 }
+
+
