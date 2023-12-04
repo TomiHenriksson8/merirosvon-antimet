@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { fetchAllOrders, fetchLatestOrderId } from "../data/orderData";
+import { fetchAllOrders, fetchLatestOrderId, updateOrderStatus, createOrderFromCart } from "../data/orderData";
 
 const getLatestOrderId = async (req: Request, res: Response) => {
     try {
@@ -29,6 +29,38 @@ const getAllOrders = async (req: Request, res: Response) => {
     }
 };
 
+const changeOrderStatusController = async (req: Request, res: Response) => {
+    const { orderid } = req.params;
+    const { newStatus } = req.body;
+    try {
+        const numericOrderId = parseInt(orderid, 10);
+        if (isNaN(numericOrderId)) {
+            return res.status(400).json({ message: "Invalid order ID provided." });
+        }
+        const affectedRows = await updateOrderStatus(numericOrderId, newStatus);
+        if (affectedRows === 0) {
+            return res.status(404).json({ message: "Order not found or no changes made." });
+        }
+        res.json({ message: `Order status updated successfully for order ID ${numericOrderId}.` });
+    } catch (error) {
+        console.error('Error in changeOrderStatusController:', error);
+        res.status(500).json({ message: "Internal server error when updating order status." });
+    }
+};
 
+const createOrderController = async (req: Request, res: Response) => {
+    const userId = req.body.userId; // Assuming userId is sent in the request body
 
-export { getLatestOrderId, getAllOrders };
+    try {
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
+        const orderId = await createOrderFromCart(userId);
+        res.status(200).json({ message: 'Order created successfully', orderId: orderId });
+    } catch (error) {
+        console.error('Error in createOrderController:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export { getLatestOrderId, getAllOrders, changeOrderStatusController, createOrderController };
