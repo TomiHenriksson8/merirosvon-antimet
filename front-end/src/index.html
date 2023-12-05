@@ -89,8 +89,21 @@
                     <!-- Menu Items -->
                 </div>
             </div>
-            
         </section>
+        <hr class="horizontal-line2">
+        <div class="about-us">
+            <div class="about-us-content">
+                <div class="map-container" id="mapid">
+                    <!-- Leaflet map will be injected here -->
+                </div>
+                <div class="restaurant-info">
+                    <h2>About Our Restaurant</h2>
+                    <p>Here you can add text about your restaurant's history, mission, and values.</p>
+                    <p>Don't forget to include practical information like opening hours and contact details.</p>
+                    <!-- Add more content about your restaurant here -->
+                </div>
+            </div>
+        </div>
     </main>
     <footer>
 
@@ -186,6 +199,22 @@
             </div>
         </div>
     </dialog>
+    <div class="popup-overlay popup-ok-container">
+        <div class="popup-ok">
+            <img src="./assets/images/popupok.png" alt="Order Success">
+            <h3>Order Placed Successfully!</h3>
+            <p>Thank you for your order! We are currently processing it and will send you a confirmation email shortly. You can view your order details and status in your account.</p>
+            <button class="close-popup" type="button">Continue</button>
+        </div>
+    </div>
+    <div class="popup-overlay popup-fail-container">
+        <div class="popup-fail">
+            <img src="./assets/images/popupfail.png" alt="Order Failure">
+            <h3>Something Went Wrong</h3>
+            <p>We're sorry, but there was a problem processing your order. Please check your information and try again. If the problem persists, please contact our support team.</p>
+            <button class="close-popup" type="button">Try Again</button>
+        </div>
+    </div>
     
 </body>
 

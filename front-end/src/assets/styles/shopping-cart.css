@@ -1,4 +1,5 @@
-dialog {
+#shoppingCart {
+    position: fixed;
     border: none;
     border-radius: 8px;
 }
@@ -13,9 +14,6 @@ dialog {
     margin-bottom: 20px;
 }
 
-.cart-items {
-    /* Styles for the cart items list */
-}
 
 .cart-summary {
     margin-top: 20px;
@@ -43,4 +41,98 @@ dialog {
 .checkout {
     background: #4CAF50;
     color: white;
+}
+
+/*  POPUPS */
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+
+
+
+.popup-ok {
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    border: 2px solid #4CAF50;
+    position: relative;
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    z-index: 1100;
+
+    transform: scale(0.1);
+    transition: transform 0.4s;
+}
+
+.popup-fail {
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    border: 2px solid #3b1212;
+    position: relative;
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    z-index: 1100;
+
+    transform: scale(0.1);
+    transition: transform 0.4s;
+}
+
+.popup-ok img,
+.popup-fail img {
+    width: 300px;
+    margin-top: -150px;
+    
+}
+
+.popup-fail img {
+    width: 350px;
+    margin-top: -175px;
+}
+
+.popup-ok h3,
+.popup-fail h3 {
+    font-size: 38px;
+    font-weight: 500;
+    margin: -30px 0 25px;
+}
+
+.popup-ok button {
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px 0;
+    background: #6fd649;
+    color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.popup-fail button {
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px 0;
+    background: #3b1212;
+    color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }

@@ -3,6 +3,7 @@
 import { MenuItem } from "../../interfaces/MenuItem";
 import { CartItem } from "../../interfaces/MenuItem";
 import { getCurrentUser } from "../../utils/utils.js";
+import { popUpOk, popUpFail, closePopup } from "../order/order.js";
 
 const attachAddToCartListener = () => {
   console.log("Attaching add to cart listeners");
@@ -209,5 +210,37 @@ const attachShoppingCartListener = () => {
     );
   }
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  const orderButton = document.querySelector('.checkout');
+  orderButton?.addEventListener('click', async () => {
+    const user = getCurrentUser();
+
+    if (user) {
+      try {
+        const response = await fetch('http://localhost:8000/api/order/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: user.id
+          })
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        popUpOk();
+        
+      } catch (error) {
+        console.error('Error creating order:', error);
+        popUpFail();
+        
+      }
+    }
+  });
+});
+
+
 
 export { attachAddToCartListener, attachShoppingCartListener };
