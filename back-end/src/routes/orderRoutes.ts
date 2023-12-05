@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
   getAllOrders,
-  getLatestOrderId,
+  getOrderCount,
   changeOrderStatusController,
-  createOrderController,
+  createOrderController
 } from "../controllers/orderController";
 
 const orderRouter = Router();
 
-orderRouter.get("/latest/id", getLatestOrderId);
+orderRouter.get("/latest/id", getOrderCount);
 orderRouter.get("/all", getAllOrders);
 orderRouter.put("/status/:orderid", changeOrderStatusController);
 orderRouter.post("/create", createOrderController);

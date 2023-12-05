@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { fetchAllOrders, fetchLatestOrderId, updateOrderStatus, createOrderFromCart } from "../data/orderData";
+import { fetchAllOrders, fetchOrderCount, updateOrderStatus, createOrderFromCart, fetchOrderById } from "../data/orderData";
+import { listCartItems } from "../data/cartData";
 
-const getLatestOrderId = async (req: Request, res: Response) => {
+const getOrderCount = async (req: Request, res: Response) => {
     try {
-        const latestOrderId = await fetchLatestOrderId();
+        const latestOrderId = await fetchOrderCount();
         if (latestOrderId !== null) {
             res.status(200).json({ latestOrderId: latestOrderId });
         } else {
@@ -55,6 +56,10 @@ const createOrderController = async (req: Request, res: Response) => {
         if (!userId) {
             return res.status(400).json({ message: 'User ID is required' });
         }
+        const cartItems = await listCartItems(userId);
+        if (cartItems.length === 0) {
+            return res.status(400).json({ message: 'Cannot create an order with an empty cart.' });
+        }
         const orderId = await createOrderFromCart(userId);
         res.status(200).json({ message: 'Order created successfully', orderId: orderId });
     } catch (error) {
@@ -63,4 +68,4 @@ const createOrderController = async (req: Request, res: Response) => {
     }
 };
 
-export { getLatestOrderId, getAllOrders, changeOrderStatusController, createOrderController };
+export { getOrderCount, getAllOrders, changeOrderStatusController, createOrderController };

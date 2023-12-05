@@ -8,7 +8,7 @@ Content-Type: application/json
 
 {
     "id": 6,
-    "username": "logintestNEWORDER",
+    "username": "logintestPOPUP",
     "password": "newpassword",
     "email": "newuser@example.com",
     "role": "user"

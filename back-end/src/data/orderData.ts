@@ -32,20 +32,49 @@ const fetchAllOrders = async (): Promise<any> => {
     }
 };
 
-const fetchLatestOrderId = async (): Promise<number | null> => {
+const fetchOrderById = async (orderId: number): Promise<any> => {  // REMOVE IF NOT USED LATER
     try {
-        const sql = 'SELECT orderId FROM `Order` ORDER BY orderId DESC LIMIT 1';
-        const [rows] = await promisePool.query<RowDataPacket[]>(sql);
+        const sql = `
+            SELECT 
+                o.orderId, 
+                o.userId, 
+                o.totalPrice, 
+                o.orderDate, 
+                o.orderStatus, 
+                od.foodItemId, 
+                f.name AS foodItemName, 
+                f.price AS foodItemPrice, 
+                od.quantity 
+            FROM \`Order\` o
+            JOIN OrderDetails od ON o.orderId = od.orderId
+            JOIN FoodItem f ON od.foodItemId = f.id
+            WHERE o.orderId = ?;
+        `;
+        const [rows] = await promisePool.query<RowDataPacket[]>(sql, [orderId]);
         if (rows.length > 0) {
-            return rows[0].orderId;
+            return rows;
         } else {
             return null;
         }
     } catch (error) {
-        console.error('Error fetching the latest order ID:', error);
+        console.error(`Error fetching order with ID ${orderId}:`, error);
+        throw error;
+    }
+}; 
+
+
+
+const fetchOrderCount = async (): Promise<number> => {
+    try {
+        const sql = 'SELECT COUNT(*) AS orderCount FROM `Order`';
+        const [rows] = await promisePool.query<RowDataPacket[]>(sql);
+        return rows[0].orderCount;
+    } catch (error) {
+        console.error('Error fetching order count:', error);
         throw error;
     }
 };
+
 
 const updateOrderStatus = async (orderId: number, newStatus: string): Promise<number> => {
     try {
@@ -108,4 +137,4 @@ const createOrderFromCart = async (userId: number) => {
     }
 };
 
-export { fetchLatestOrderId, fetchAllOrders, updateOrderStatus, createOrderFromCart };
+export { fetchOrderCount, fetchAllOrders, fetchOrderById, updateOrderStatus, createOrderFromCart };
