@@ -32,7 +32,7 @@ const fetchAllOrders = async (): Promise<any> => {
     }
 };
 
-const fetchOrderById = async (orderId: number): Promise<any> => {  // REMOVE IF NOT USED LATER
+const fetchOrdersByUserId = async (userId: number): Promise<any> => {  
     try {
         const sql = `
             SELECT 
@@ -48,19 +48,20 @@ const fetchOrderById = async (orderId: number): Promise<any> => {  // REMOVE IF 
             FROM \`Order\` o
             JOIN OrderDetails od ON o.orderId = od.orderId
             JOIN FoodItem f ON od.foodItemId = f.id
-            WHERE o.orderId = ?;
+            WHERE o.userId = ?;
         `;
-        const [rows] = await promisePool.query<RowDataPacket[]>(sql, [orderId]);
+        const [rows] = await promisePool.query<RowDataPacket[]>(sql, [userId]);
         if (rows.length > 0) {
             return rows;
         } else {
             return null;
         }
     } catch (error) {
-        console.error(`Error fetching order with ID ${orderId}:`, error);
+        console.error(`Error fetching orders for user with ID ${userId}:`, error);
         throw error;
     }
-}; 
+};
+
 
 
 
@@ -137,4 +138,4 @@ const createOrderFromCart = async (userId: number) => {
     }
 };
 
-export { fetchOrderCount, fetchAllOrders, fetchOrderById, updateOrderStatus, createOrderFromCart };
+export { fetchOrderCount, fetchAllOrders, fetchOrdersByUserId, updateOrderStatus, createOrderFromCart };

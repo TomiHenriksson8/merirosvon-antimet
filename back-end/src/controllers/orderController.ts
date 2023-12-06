@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { fetchAllOrders, fetchOrderCount, updateOrderStatus, createOrderFromCart, fetchOrderById } from "../data/orderData";
+import { fetchAllOrders, fetchOrderCount, updateOrderStatus, createOrderFromCart, fetchOrdersByUserId,  } from "../data/orderData";
 import { listCartItems } from "../data/cartData";
 
 const getOrderCount = async (req: Request, res: Response) => {
@@ -29,6 +29,26 @@ const getAllOrders = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+const getOrderById = async (req: Request, res: Response) => {
+    const { orderid } = req.params;
+    try {
+        const numericOrderId = parseInt(orderid, 10);
+        if (isNaN(numericOrderId)) {
+            return res.status(400).json({ message: "Invalid order ID provided." });
+        }
+        const order = await fetchOrdersByUserId(numericOrderId);
+        if (order !== null) {
+            res.status(200).json({ order: order });
+        } else {
+            res.status(404).json({ message: 'Order not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching order by ID:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 
 const changeOrderStatusController = async (req: Request, res: Response) => {
     const { orderid } = req.params;
@@ -68,4 +88,4 @@ const createOrderController = async (req: Request, res: Response) => {
     }
 };
 
-export { getOrderCount, getAllOrders, changeOrderStatusController, createOrderController };
+export { getOrderCount, getAllOrders, getOrderById, changeOrderStatusController, createOrderController };
