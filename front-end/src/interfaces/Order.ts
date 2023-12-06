@@ -6,7 +6,7 @@ interface DetailedOrder {
     orderStatus: string;
     foodItemId: number;
     foodItemName: string;
-    foodItemPrice: number;
+    foodItemPrice: string;
     quantity: number;
 }
 

@@ -1,5 +1,24 @@
 import { getCurrentUser } from '../utils/utils.js';
+import { renderOrderHistory } from './order/order.js';
 // login modal
+
+const profileLink = document.getElementById('profileLink') as HTMLElement;
+const orderHistoryLink = document.getElementById('orderHistoryLink') as HTMLElement;
+
+const orderHistoryContainer = document.querySelector('.order-history-container') as HTMLElement;
+const profileContainer = document.querySelector('.profile-container') as HTMLElement;
+
+orderHistoryLink.addEventListener('click', () => {
+    renderOrderHistory();
+    orderHistoryContainer.style.display = "block";
+    profileContainer.style.display = "none";
+});
+
+profileLink.addEventListener('click', () => {
+    orderHistoryContainer.style.display = "none"; 
+    profileContainer.style.display = "block";
+});
+
 
 const profileModal = document.getElementById("profileModal") as HTMLDialogElement;
 const profileIconLink = document.getElementById("profile-icon") as HTMLAnchorElement;
@@ -27,12 +46,16 @@ document.getElementById("openSignUpModal")?.addEventListener("click", (e: Event)
     if(profileModal && signUpModal) {
         profileModal.close();
         profileModal.style.display = "none";
+        signUpModal.style.display = "flex";
         signUpModal.showModal();
     }
 });
 
 document.addEventListener("keydown", (e: KeyboardEvent) => {
-    if (e.key === "Escape" && signUpModal.open) signUpModal.close();
+    if (e.key === "Escape" && signUpModal.open) {
+        signUpModal.close();
+        signUpModal.style.display = "none";
+    }
 });
 
 // cart modal 

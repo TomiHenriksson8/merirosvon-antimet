@@ -1,6 +1,8 @@
 * {
     margin: 0;
     padding: 0;
+    list-style: none;
+	text-decoration: none;
     box-sizing: border-box;
 }
 
@@ -205,6 +207,7 @@ main {
     width: 100%;
     margin-top: 18.7rem;
     background: #fff;
+    padding-bottom: 50px;
 }
 
 .boat-wave {
@@ -275,7 +278,7 @@ main {
 }
 
 .about-us {
-    height: 400px;
+    background: rgb(15, 56, 151);
 }
 
 .menu {
@@ -436,9 +439,98 @@ button:has(:last-child:active)::before {
     text-decoration: none;
 }
 
+.about-us-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.map-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.restaurant-info {
+    padding-left: 70px;
+    width: 45%;
+}
+
+#map {
+    height: 400px;
+    width: 150px;
+    margin-right: 30px;
+    margin-left: 100px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    padding: 0;
+}
+
+
 footer {
-    height: 200px;
     background: #07285a;
+    color: #fff;
+}
+
+footer h4 {
+    margin: 0.5rem;
+}
+
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.footer-info,
+.footer-links,
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 1rem;
+}
+
+
+footer img {
+    width: 70px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.footer-social {
+    margin-top: 1rem;
+}
+
+.footer-links ul {
+    list-style: none;
+    margin-top: 0.5rem;
+}
+
+.footer-links ul li {
+    margin-top: 10px;
+}
+
+.footer-links ul li a {
+    text-decoration: none;
+    color: inherit;
+    
+}
+   
+
+
+.footer-social a{
+    color: inherit;
+    font-size: 1.6rem;
+    margin-bottom: .5rem;
+    margin-top: 0.5rem;
+    
+    
+
 }
 
 /* BREAKPOINTS */
@@ -550,5 +642,14 @@ footer {
         transform: translateY(0);
         opacity: 1;
         transition-delay: calc(.15s * var(--i));
+    }
+    
+    .about-us-content {
+        flex-direction: column;
+    }
+
+    .map-container,
+    .restaurant-info {
+        width: 100%;
     } 
 }

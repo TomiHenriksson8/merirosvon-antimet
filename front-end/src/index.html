@@ -8,13 +8,16 @@
     <link rel="stylesheet" href="assets/styles/main.css">
     <link rel="stylesheet" href="assets/styles/user-dialog.css">
     <link rel="stylesheet" href="assets/styles/shopping-cart.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <!-- ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- JS Files -->
     <!-- <script src="scripts/design/scroll-parallax.js"></script> -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="scripts/design/carousel.js" defer></script>
-    <script  type="module" src="scripts/menu/menu.js"></script>
-    <script  type="module" src="scripts/user/user.js"></script>
+    <script type="module" src="scripts/design/map.js"></script>
+    <script type="module" src="scripts/menu/menu.js"></script>
+    <script type="module" src="scripts/user/user.js"></script>
     <script type="module" src="scripts/user/admin.js"></script>
     <script type="module" src="scripts/cart/cart.js"></script>
     <script type="module" src="utils/utils.js"></script>
@@ -35,7 +38,7 @@
         <nav class="navbar">
             <a href="#home" style="--i:0;">Etusivu</a>
             <a href="#menu" style="--i:1;">Menu</a>
-            <a href="#" style="--i:2;">Yhteystiedot</a>
+            <a href="#info" style="--i:2;">Tietoa Meistä</a>
             <a href="#" id="profile" style="--i:3;">Profiili</a>
             <a href="#" id="cart" style="--i:4;">Ostoskori</a>
         </nav>
@@ -91,24 +94,54 @@
             </div>
         </section>
         <hr class="horizontal-line2">
-        <div class="about-us">
+        <div class="about-us" id="info">
             <div class="about-us-content">
-                <div class="map-container" id="mapid">
+                <div class="map-container" id="map">
                     <!-- Leaflet map will be injected here -->
                 </div>
                 <div class="restaurant-info">
                     <h2>About Our Restaurant</h2>
-                    <p>Here you can add text about your restaurant's history, mission, and values.</p>
-                    <p>Don't forget to include practical information like opening hours and contact details.</p>
+                    <p>kfoddddfdsfksdlfksdlfksdlfksdlö</p>
+                    <p>dskflsdökflsödkfsdlfksdlfksdlff</p>
                     <!-- Add more content about your restaurant here -->
                 </div>
             </div>
         </div>
     </main>
     <footer>
-
+        <div class="footer-content">
+            <div class="footer-info">
+                <img src="./assets/images/logo-white.png" alt="">
+                <p>basic info about restaurant .dlfksdklfksdlfksdlfklsdf</p>
+            </div>
+            <div class="footer-links">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#home">Etusivu</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#info">Tietoa meistä</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href=""><i class='bx bxl-twitter'></i></a>
+                <a href=""><i class='bx bxl-instagram-alt' ></i></a>
+                <a href=""><i class='bx bxl-youtube' ></i></a>
+            </div>
+        </div>
     </footer>
     <dialog id="profileModal" style="display: none;">
+        <div class="side-bar">
+            <ul>
+                <li id="profileLink"><i class='bx bx-user'>Profile</i></li>
+                <li id="orderHistoryLink"><i class='bx bx-book'>Order History</i></li>
+            
+            </ul>
+        </div>
+        <div class="order-history-container" style="display: none;">
+            <h2>Order History</h2>
+            <!-- GENERATE ORDER HISTORY -->
+        </div>
         <div class="profile-container">
             <h1>Profile</h1>
             
@@ -160,7 +193,6 @@
             </div>
         </div>
     </dialog>
-    
     <dialog id="signUpModal">
         <div class="signup-container">
             <h1>Sign Up</h1>
