@@ -28,6 +28,10 @@ body {
     background: linear-gradient(to bottom, #8dd4f6, #0a4055);
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 header {
     position: fixed;
     top: -5px;
@@ -309,6 +313,7 @@ main {
 }
 
 .heading {
+    position: relative;
     text-align: center;
 }
 

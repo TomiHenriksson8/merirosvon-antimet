@@ -26,6 +26,8 @@ const popUpOk = () => {
     const popupOverlay = document.querySelector('.popup-ok-container') as HTMLElement;
     if (popupOverlay && cartDialog) {
         cartDialog.close();
+        cartDialog.style.display = 'none';
+        document.body.classList.remove('no-scroll');
         popupOverlay.style.display = 'flex';
         const popupOk = document.querySelector('.popup-ok') as HTMLElement;
         popupOk.style.transform = 'scale(1)';
@@ -38,6 +40,8 @@ const popUpFail = () => {
     const cartDialog = document.getElementById('shoppingCart') as HTMLDialogElement;
     if (popupOverlay && cartDialog) {
         cartDialog.close();
+        cartDialog.style.display = 'none';
+        document.body.classList.remove('no-scroll');
         popupOverlay.style.display = 'flex';
         const popupFail = document.querySelector('.popup-fail') as HTMLElement;
         popupFail.style.transform = 'scale(1)';

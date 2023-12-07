@@ -123,10 +123,22 @@ const renderCartItems = (cartItems: CartItem[]): void => {
               <div class="item-details">
                   <h4>${item.name}</h4>
                   <p>${item.description}</p>
-                  <p>Quantity: ${item.quantity}</p>
+                  <p>
+                    <!-- Minus Button -->
+                    <button class="quantity-btn" id="minus-q" aria-label="Decrease quantity">
+                      <i class='bx bxs-minus-circle'></i>
+                    </button>
+                    
+                    ${item.quantity}
+                    
+                    <!-- Plus Button -->
+                    <button class="quantity-btn" id="plus-q" aria-label="Increase quantity">
+                      <i class='bx bxs-plus-circle'></i>
+                    </button>
+                  </p>
                   <p>Price: $${item.price}</p>
               </div>
-              <button class="delete-cart-item" data-id="${item.id}">Delete</button>
+              <button class="delete-cart-item" data-id="${item.id}"><span>X</span></button>
           </div>
       `;
     cartContainer.innerHTML += cartItemHtml;
@@ -202,6 +214,7 @@ const attachShoppingCartListener = () => {
 
     closeCartButton.addEventListener("click", () => {
       shoppingCartDialog.close();
+      document.body.classList.remove('no-scroll');
       shoppingCartDialog.style.display = "none";
     });
   } else {

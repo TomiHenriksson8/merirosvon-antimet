@@ -26,12 +26,14 @@ const profileIconLink = document.getElementById("profile-icon") as HTMLAnchorEle
 profileIconLink.addEventListener("click", (event) => {
     event.preventDefault(); 
     profileModal.showModal();
+    document.body.classList.add('no-scroll');
     profileModal.style.display = "flex";
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && profileModal.open) {
     profileModal.close();
+    document.body.classList.remove('no-scroll');
     profileModal.style.display = "none";
   }
 });
@@ -67,12 +69,14 @@ const closeCart = document.querySelector(".close") as HTMLAnchorElement;
 cartIcon.addEventListener("click", (event) => {
     event.preventDefault(); 
     shoppingCarttModal.showModal();
+    document.body.classList.add('no-scroll');
     shoppingCarttModal.style.display = "grid";
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && shoppingCarttModal.open) {
     shoppingCarttModal.close();
+    document.body.classList.remove('no-scroll');
     shoppingCarttModal.style.display = "none";
   }
 });
