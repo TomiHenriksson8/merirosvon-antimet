@@ -88,6 +88,7 @@ const generateRoleSpecificUI = (): void => {
     }
 
     const container = document.getElementById('panelAdminAndStaff') as HTMLDivElement;
+    console.log(container);
     if (!container) {
         console.error('Container for role-specific UI not found');
         return;

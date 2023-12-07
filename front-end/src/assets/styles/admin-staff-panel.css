@@ -2,6 +2,10 @@ main {
     text-align: center;
 }
 
+.menu {
+    background-color: inherit;
+}
+
 .panelInfo span {
     font-size: 1.5rem; /* use made  css  variable later */;
 }
