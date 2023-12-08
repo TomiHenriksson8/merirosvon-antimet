@@ -300,6 +300,7 @@ main {
 
 .about-us {
     background: linear-gradient(to bottom, #0a779b, #105e7c);
+    width: 100%;
 }
 
 .menu {
@@ -675,5 +676,6 @@ footer img {
     .map-container,
     .restaurant-info {
         width: 100%;
+        border: 2px solid black;
     }
 }

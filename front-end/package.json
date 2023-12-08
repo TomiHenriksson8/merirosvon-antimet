@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "http-server dist -o",
-    "build": "tsc -p . && copy src\\index.html dist\\index.html && copy src\\adminAndStaffPanel.html dist\\adminAndStaffPanel.html && xcopy /E /I src\\assets dist\\assets",
+    "build": "tsc -p . && cp src/index.html dist/index.html && cp src/adminAndStaffPanel.html dist/adminAndStaffPanel.html && cp -r src/assets dist/assets",
     "start-frontend": "http-server dist -o",
     "watch": "tsc -w"
   },
