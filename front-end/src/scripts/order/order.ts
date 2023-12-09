@@ -12,42 +12,48 @@ const attachCloseButtonListeners = () => {
     const closeButtons = document.querySelectorAll('.close-popup');
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
-            if (button.closest('.popup-ok-container')) {
-                closePopup('popup-ok-container');
-            } else if (button.closest('.popup-fail-container')) {
-                closePopup('popup-fail-container');
+            const popupOverlay = button.closest('.popup-overlay') as HTMLElement;
+            if (popupOverlay) {
+                popupOverlay.style.display = 'none';
+                document.body.classList.remove('no-scroll');
             }
         });
     });
 };
 
-const popUpOk = () => {
-    const cartDialog = document.getElementById('shoppingCart') as HTMLDialogElement;
-    const popupOverlay = document.querySelector('.popup-ok-container') as HTMLElement;
-    if (popupOverlay && cartDialog) {
-        cartDialog.close();
-        cartDialog.style.display = 'none';
-        document.body.classList.remove('no-scroll');
+
+const showPopup = (popupContainerClass: string, title: string, message: string, imageSrc: string) => {
+    // Close any open dialogs
+    const dialogsToClose = ['profileModal', 'signUpModal', 'shoppingCart'];
+    dialogsToClose.forEach(dialogId => {
+        const dialogElement = document.getElementById(dialogId) as HTMLDialogElement | null;
+        if (dialogElement) {
+            dialogElement.close();
+            dialogElement.style.display = 'none';
+        }
+    });
+
+    // Show the popup
+    const popupOverlay = document.querySelector(`.${popupContainerClass}`) as HTMLElement | null;
+    if (popupOverlay) {
+        const popupTitle = popupOverlay.querySelector('h3') as HTMLElement | null;
+        const popupMessage = popupOverlay.querySelector('p') as HTMLElement | null;
+        const popupImage = popupOverlay.querySelector('img') as HTMLImageElement | null;
+
+        if (popupTitle && popupMessage && popupImage) {
+            popupTitle.textContent = title;
+            popupMessage.textContent = message;
+            popupImage.src = imageSrc;
+        }
+
+        document.body.classList.add('no-scroll');
         popupOverlay.style.display = 'flex';
-        const popupOk = document.querySelector('.popup-ok') as HTMLElement;
-        popupOk.style.transform = 'scale(1)';
         attachCloseButtonListeners();
     }
 };
 
-const popUpFail = () => {
-    const popupOverlay = document.querySelector('.popup-fail-container') as HTMLElement;
-    const cartDialog = document.getElementById('shoppingCart') as HTMLDialogElement;
-    if (popupOverlay && cartDialog) {
-        cartDialog.close();
-        cartDialog.style.display = 'none';
-        document.body.classList.remove('no-scroll');
-        popupOverlay.style.display = 'flex';
-        const popupFail = document.querySelector('.popup-fail') as HTMLElement;
-        popupFail.style.transform = 'scale(1)';
-        attachCloseButtonListeners();
-    }
-};
+
+
 
 const getOrderForOHistory = async () => {
     const user = await getCurrentUser();
@@ -114,4 +120,4 @@ const groupOrders = (order: DetailedOrder[]): GroupedOrders => {
 
 
 
-export { popUpOk, popUpFail, closePopup, renderOrderHistory, getOrderForOHistory };
+export { showPopup, closePopup, renderOrderHistory, getOrderForOHistory };

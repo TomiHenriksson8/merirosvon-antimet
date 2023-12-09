@@ -215,8 +215,24 @@
                 </div>
             </form>
         </div>
-      </dialog>
-      <dialog id="shoppingCart">
+    </dialog>
+    <div class="popup-overlay popup-lr-ok-container">
+        <div class="popup-ok">
+            <img src="#" alt="Success">
+            <h3 id="popup-ok-title"></h3>
+            <p id="popup-ok-message"></p>
+            <button class="close-popup" type="button">Continue</button>
+        </div>
+    </div>
+    <div class="popup-overlay popup-fail-lr-container">
+        <div class="popup-fail">
+            <img src="#" alt="Failure">
+            <h3 id="popup-fail-title"></h3>
+            <p id="popup-fail-message"></p>
+            <button class="close-popup" type="button">Try Again</button>
+        </div>
+    </div>    
+    <dialog id="shoppingCart">
         <div class="cart">
             <h3>Your Cart</h3>
             <div class="cart-items">
@@ -231,23 +247,22 @@
             </div>
         </div>
     </dialog>
-    <div class="popup-overlay popup-ok-container">
+    <div class="popup-overlay popup-ok-o-container">
         <div class="popup-ok">
             <img src="./assets/images/popupok.png" alt="Order Success">
-            <h3>Order Placed Successfully!</h3>
-            <p>Thank you for your order! We are currently processing it and will send you a confirmation email shortly. You can view your order details and status in your account.</p>
+            <h3></h3>
+            <p></p>
             <button class="close-popup" type="button">Continue</button>
         </div>
     </div>
-    <div class="popup-overlay popup-fail-container">
+    <div class="popup-overlay popup-fail-o-container">
         <div class="popup-fail">
-            <img src="./assets/images/popupfail.png" alt="Order Failure">
-            <h3>Something Went Wrong</h3>
-            <p>We're sorry, but there was a problem processing your order. Please check your information and try again. If the problem persists, please contact our support team.</p>
+            <img src="#" alt="Order Failure">
+            <h3></h3>
+            <p></p>
             <button class="close-popup" type="button">Try Again</button>
         </div>
     </div>
-    
 </body>
 
 </html>

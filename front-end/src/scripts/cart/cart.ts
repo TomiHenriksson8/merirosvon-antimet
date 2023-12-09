@@ -3,7 +3,7 @@
 import { MenuItem } from "../../interfaces/MenuItem";
 import { CartItem } from "../../interfaces/MenuItem";
 import { getCurrentUser } from "../../utils/utils.js";
-import { popUpOk, popUpFail, closePopup } from "../order/order.js";
+import { closePopup, showPopup } from "../order/order.js";
 
 const attachAddToCartListener = () => {
   console.log("Attaching add to cart listeners");
@@ -27,37 +27,114 @@ const attachAddToCartListener = () => {
   });
 };
 
-const addToCart = async (
-  foodItemId: number,
-  quantity: number
-): Promise<void> => {
+const addToCart = async (foodItemId: number, quantity: number): Promise<void> => {
   const currentUser = getCurrentUser();
   if (!currentUser || !currentUser.id) {
     throw new Error("User is not logged in or user ID is not available.");
   }
   try {
-    const response = await fetch("http://localhost:8000/api/cart/add", {
-      method: "POST",
+    const currentCartItems = await fetchCartItems();
+    const existingItem = currentCartItems.find(item => item.id === foodItemId);
+    if (existingItem) {
+      const updatedQuantity = existingItem.quantity + quantity;
+      await updateCartItemQuantity(foodItemId, updatedQuantity);
+    } else {
+      const response = await fetch("http://localhost:8000/api/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: currentUser.id,
+          foodItemId: foodItemId,
+          quantity: quantity,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    }
+    const updatedCartItems = await fetchCartItems();
+    renderCartItems(updatedCartItems);
+    updateCartTotalInUI();
+
+  } catch (error) {
+    console.error("Error processing cart item:", error);
+  }
+};
+
+
+const addOrUpdateCartItemQuantity = async (foodItemId: number, quantity: number): Promise<void> => {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !currentUser.id ) {
+    throw new Error('User is not logged in or user ID is not available.')
+  }
+  try {
+    const currentCartItem = await fetchCartItems();
+    const findExitingItem = currentCartItem.find(item => item.id === foodItemId);
+
+    if (findExitingItem) {
+      const newQuantity = findExitingItem.quantity + quantity;
+      await updateCartItemQuantity(foodItemId, newQuantity); 
+      const updatedCartItems = await fetchCartItems();
+      renderCartItems(updatedCartItems);
+      updateCartTotalInUI();   
+    } else {
+      await addToCart(foodItemId, quantity);
+    }
+  } catch (error) {
+    console.error('Error processing cart item:', error);
+  }
+};
+
+const decreaseOrRemoveCartItem = async (foodItemId: number, quantity: number): Promise<void> => {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !currentUser.id) {
+    throw new Error('User is not logged in or user ID is not available');
+  }
+  try {
+    const currentCartItem = await fetchCartItems();
+    const findExitingItem = currentCartItem.find(item => item.id === foodItemId);
+    if (findExitingItem) {
+      const newQuantity = findExitingItem.quantity - quantity;
+      if (newQuantity < 1) {
+        await deleteCartItem(foodItemId.toString());
+      } else {
+        await updateCartItemQuantity(foodItemId, newQuantity);
+      }
+      const updatedCartItems = await fetchCartItems();
+      renderCartItems(updatedCartItems);
+      updateCartTotalInUI();
+    } else {
+      console.error('Item not found in cart:', foodItemId);
+    }
+  } catch (error) {
+    console.error('Error processing cart item:', error);
+  }
+};
+
+
+const updateCartItemQuantity = async (foodItemId: number, newQuantity: number): Promise<void> => {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !currentUser.id) {
+    throw new Error('User is not logged in or user ID is not available.');
+    return;
+  }
+  try {
+    const response = await fetch('http://localhost:8000/api/cart/update', {
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
-        // authentication tokens if necessary
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         userId: currentUser.id,
         foodItemId: foodItemId,
-        quantity: quantity,
-      }),
-    });
-    console.log(
-      `Sent data for user ${currentUser.id}, food item ${foodItemId}, quantity ${quantity}`
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    // in here
-    console.log("Item added to cart successfully.");
+        newQuantity: newQuantity 
+      })
+    })
+
   } catch (error) {
-    console.error("Error adding item to cart:", error);
+    console.error('Error', error)
   }
 };
 
@@ -118,34 +195,69 @@ const renderCartItems = (cartItems: CartItem[]): void => {
 
   cartItems.forEach((item) => {
     const cartItemHtml = `
-          <div class="cart-item" data-id="${item.id}">
-              <img src="${item.imageUrl}" alt="${item.name}">
-              <div class="item-details">
-                  <h4>${item.name}</h4>
-                  <p>${item.description}</p>
-                  <p>
-                    <!-- Minus Button -->
-                    <button class="quantity-btn" id="minus-q" aria-label="Decrease quantity">
-                      <i class='bx bxs-minus-circle'></i>
-                    </button>
-                    
-                    ${item.quantity}
-                    
-                    <!-- Plus Button -->
-                    <button class="quantity-btn" id="plus-q" aria-label="Increase quantity">
-                      <i class='bx bxs-plus-circle'></i>
-                    </button>
-                  </p>
-                  <p>Price: $${item.price}</p>
-              </div>
-              <button class="delete-cart-item" data-id="${item.id}"><span>X</span></button>
-          </div>
-      `;
+      <div class="cart-item" data-id="${item.id}">
+        <img src="${item.imageUrl}" alt="${item.name}">
+        <div class="item-details">
+          <h4>${item.name}</h4>
+          <p>${item.description}</p>
+          <p>
+            <button class="quantity-btn minus-btn" data-id="${item.id}" aria-label="Decrease quantity">
+              <i class='bx bxs-minus-circle'></i>
+            </button>
+            ${item.quantity}
+            <button class="quantity-btn plus-btn" data-id="${item.id}" aria-label="Increase quantity">
+              <i class='bx bxs-plus-circle'></i>
+            </button>
+          </p>
+          <p>Price: $${item.price}</p>
+        </div>
+        <button class="delete-cart-item" data-id="${item.id}"><span>X</span></button>
+      </div>
+    `;
     cartContainer.innerHTML += cartItemHtml;
   });
 
+  attachQuantityEventListeners();
   attachDeleteEventListeners();
 };
+
+const attachQuantityEventListeners = () => {
+  const minusButtons = document.querySelectorAll('.minus-btn'); 
+  const plusButtons = document.querySelectorAll('.plus-btn');
+
+  minusButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const foodItemIds = button.getAttribute('data-id');
+      if (foodItemIds) {
+        const foodItemId = parseInt(foodItemIds, 10);
+        if (!isNaN(foodItemId)) {
+          decreaseOrRemoveCartItem(foodItemId, 1);
+        } else {
+          console.error('Invalid foodItemId:', foodItemIds);
+        }
+      } else {
+        console.error('Could not get data-id attribute from the button');
+      }
+    });
+  });
+
+  plusButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const foodItemIds = button.getAttribute('data-id');
+      if (foodItemIds) {
+        const foodItemId = parseInt(foodItemIds, 10);
+        if (!isNaN(foodItemId)) {
+          addOrUpdateCartItemQuantity(foodItemId, 1);
+        } else {
+          console.error('Invalid foodItemId:', foodItemIds);
+        }
+      } else {
+        console.error('Could not get data-id attribute from the button');
+      }
+    });
+  });
+};
+
 
 const attachDeleteEventListeners = () => {
   const deleteButtons = document.querySelectorAll(".delete-cart-item");
@@ -243,11 +355,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        popUpOk();
+        showPopup('popup-ok-o-container', 'Order Placed Successfully!', 'Thank you for your order! We are currently processing it and will send you a confirmation email shortly. You can view your order details and status in your account.', './assets/images/popupok.png')
         
       } catch (error) {
         console.error('Error creating order:', error);
-        popUpFail();
+        showPopup('popup-fail-o-container', 'Something Went Wrong', "We''re sorry, but there was a problem processing your order. Please check your information and try again. If the problem persists, please contact our support team.", './assets/images/popupfail.png');
         
       }
     }

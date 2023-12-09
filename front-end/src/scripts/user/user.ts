@@ -2,6 +2,7 @@ import { LoginUser } from '../../interfaces/LoginUser';
 import { User } from '../../interfaces/User';
 import { getCurrentUser } from '../../utils/utils.js'; 
 import { generateRoleSpecificUI } from '../app.js';
+import { showPopup } from '../order/order.js';
 
 // Function to check for a logged-in user and update UI
 function checkLoggedInUser() {
@@ -77,10 +78,13 @@ document.getElementById("signUp-form")?.addEventListener("submit", async (event)
     try {
         await fetchPostNewUser(formData);
         console.log("User registered successfully!");
+        showPopup('popup-lr-ok-container', 'Registration Successful', 'Your account has been successfully created!', './assets/images/success.png');
     } catch (error) {
         console.error("Error registering user:", error);
+        showPopup('popup-fail-lr-container', 'Registration Failed', 'Unable to create an account. Please try again later.', './assets/images/failure.png');
     }
 });
+
 
 // LOGIN USER
 
@@ -126,6 +130,9 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
             prefillProfileForm();
 
             console.log("User logged in successfully!", user);
+            showPopup('popup-lr-ok-container', 'Login Successful', 'You have successfully logged in. Welcome back!', './assets/images/success.png');
+
+
             document.getElementById('profile-form-section')!.style.display = 'block';
             document.getElementById('login-header')!.style.display = 'none';
             document.getElementById('login-form')!.style.display = 'none';
@@ -135,6 +142,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
         }
     } catch (error) {
         console.error("Error logging in:", error);
+        showPopup('popup-fail-lr-container', 'Login Failed', 'Your login attempt was unsuccessful. Please check your credentials and try again.', './assets/images/failure.png');
     }
 });
 

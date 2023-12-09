@@ -63,7 +63,7 @@ header {
     left: -100%;
     width: 100%;
     height: 95%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     transition: .8s;
 }
 
@@ -225,7 +225,6 @@ a img {
 
 
 main {
-
     width: 100%;
     margin-top: 18.7rem;
     background: #fff;
@@ -237,7 +236,7 @@ main {
     position: absolute;
     width: 100%;
     height: 1000px;
-    top: -337px;
+    top: -338px;
     background-image: url(../images/waveboat3.png);
     animation: animate 4s ease-in-out infinite;
     background-color: transparent;
@@ -304,6 +303,7 @@ main {
 
 .about-us {
     background: linear-gradient(to bottom, #0a779b, #105e7c);
+    width: 100%;
 }
 
 .menu {
@@ -327,8 +327,13 @@ main {
 }
 
 .menu-filter-btn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
     margin-top: 25px;
     margin-bottom: 15px;
+
 }
 
 button {
@@ -569,7 +574,7 @@ footer img {
         position: absolute;
         width: 100%;
         height: 550px;
-        top: 120px;
+        top: 175px;
 
 
     }
@@ -593,10 +598,16 @@ footer img {
         display: none;
     }
 
-
+    .info {
+        margin-top: -200px;
+    }
 
     .boat-wave {
         display: none;
+    }
+
+    .menu-filter-btn {
+        flex: 0 1 auto;
     }
 }
 
@@ -673,6 +684,43 @@ footer img {
         transition-delay: calc(.15s * var(--i));
     }
 
+    main {
+        padding-top: .5rem;
+    }
+
+    .container {
+        padding: .5rem;
+    }
+    
+    .info {
+        display: none;
+    }
+
+    .horizontal-line {
+        width: 100%;
+        height: 50px;
+        border: 0 none;
+        background: url(../images/rope-lineb.png);
+        background-size: 101% 50px;
+        margin-top: -285px;
+        position: relative;
+        z-index: 1001;
+    }
+    
+    .horizontal-line2 {
+        width: 100%;
+        height: 50px;
+        border: 0 none;
+        background: url(../images/rope-lineb.png);
+        background-size: 101% 50px;
+        position: relative;
+        z-index: 1001;
+    }
+    
+    .menu {
+        padding: 3rem;
+    }
+
     .about-us-content {
         flex-direction: column;
     }
@@ -680,5 +728,22 @@ footer img {
     .map-container,
     .restaurant-info {
         width: 100%;
+        border: 2px solid black;
+    }
+
+    .footer-info p {
+        font-size: 12px;
+    }
+
+    .footer-links ul li {
+        margin-top: 7px;
+    }
+    .footer-links ul li a {
+        font-size: 12px;
+    }
+
+    .footer-social a {
+        font-size: 1.2rem;
+        margin-bottom: 0;
     }
 }
