@@ -2,6 +2,13 @@ import { Request, Response } from "express";
 import { fetchAllOrders, fetchOrderCount, updateOrderStatus, createOrderFromCart, fetchOrdersByUserId,  } from "../data/orderData";
 import { listCartItems } from "../data/cartData";
 
+/**
+ * @api {get} /order/count Get the latest order ID
+ * @apiName  GetOrderCount
+ * @apiGroup Order
+ * @apiSuccess {Number} latestOrderId Latest order ID
+ * @apiError ( 500 ) InternalServerError There was an issue getting the latest order ID
+ */
 const getOrderCount = async (req: Request, res: Response) => {
     try {
         const latestOrderId = await fetchOrderCount();
@@ -16,6 +23,13 @@ const getOrderCount = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {get} /order/all Get all orders
+ * @apiName  GetAllOrders
+ * @apiGroup Order
+ * @apiSuccess {Object[]} orders Orders
+ * @apiError ( 500 ) InternalServerError There was an issue getting the orders
+ */
 const getAllOrders = async (req: Request, res: Response) => {
     try {
         const orders = await fetchAllOrders();
@@ -30,6 +44,14 @@ const getAllOrders = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {get} /order/:orderid Get order by ID
+ * @apiName  GetOrderById
+ * @apiGroup Order
+ * @apiParam {Number} orderid Order ID
+ * @apiSuccess {Object} order Order
+ * @apiError ( 500 ) InternalServerError There was an issue getting the order
+ */
 const getOrderById = async (req: Request, res: Response) => {
     const { orderid } = req.params;
     try {
@@ -49,7 +71,15 @@ const getOrderById = async (req: Request, res: Response) => {
     }
 };
 
-
+/**
+ * @api {put} /order/:orderid Change order status
+ * @apiName  ChangeOrderStatus
+ * @apiGroup Order
+ * @apiParam {Number} orderid Order ID
+ * @apiParam {String} newStatus New order status
+ * @apiSuccess {String} message Order status updated successfully
+ * @apiError ( 500 ) InternalServerError There was an issue updating the order status
+ */
 const changeOrderStatusController = async (req: Request, res: Response) => {
     const { orderid } = req.params;
     const { newStatus } = req.body;
@@ -69,9 +99,17 @@ const changeOrderStatusController = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {post} /order Create new order
+ * @apiName  CreateOrder
+ * @apiGroup Order
+ * @apiParam {Number} userId User ID
+ * @apiSuccess {String} message Order created successfully
+ * @apiSuccess {Number} orderId Order ID
+ * @apiError ( 500 ) InternalServerError There was an issue creating the order
+ */
 const createOrderController = async (req: Request, res: Response) => {
-    const userId = req.body.userId; // Assuming userId is sent in the request body
-
+    const userId = req.body.userId;
     try {
         if (!userId) {
             return res.status(400).json({ message: 'User ID is required' });

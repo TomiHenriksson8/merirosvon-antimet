@@ -1,19 +1,23 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
-import { users } from "../test-data/user";
-import exp from "constants";
 import { hashPassword } from "../utils/hashPassword";
 import { createUser, deleteUser, fetchAllUsers, fetchUserById, fetchLatestUserId, fetchUserByUsername, updateUser } from "../data/userData";
-import { createSecureServer } from "http2";
+import { createSecureServer } from "http2"; // ?? check this
 import bcrypt from 'bcrypt';
 
-
+/**
+ * @api {get} /users Get all users
+ * @apiName  GetUsers
+ * @apiGroup User
+ * @apiSuccess {Object[]} users Users
+ * @apiError ( 500 ) InternalServerError There was an issue getting the users
+ */
 const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await fetchAllUsers();
     res.status(200).json(users);
   } catch (error) {
-    // If there's an error, send a 500 Internal Server Error response
+    
     res
       .status(500)
       .json({
@@ -22,6 +26,16 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @api {post} /users/register Register new user
+ * @apiName  RegisterUser
+ * @apiGroup User
+ * @apiParam {String} username Username
+ * @apiParam {String} email Email
+ * @apiParam {String} password Password
+ * @apiSuccess {Object} user User
+ * @apiError ( 500 ) InternalServerError There was an issue registering the user
+ */
 const registerUser = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
@@ -40,6 +54,15 @@ const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @api {post} /users/login Login user
+ * @apiName  LoginUser
+ * @apiGroup User
+ * @apiParam {String} username Username
+ * @apiParam {String} password Password
+ * @apiSuccess {Object} user User
+ * @apiError ( 500 ) InternalServerError There was an issue logging in the user
+ */
 const loginUser = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
@@ -61,7 +84,15 @@ const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-
+/**
+ * @api {get} /users/:id Get user by ID
+ * @apiName  GetUserById
+ * @apiGroup User
+ * @apiParam {Number} id User ID
+ * @apiSuccess {Object} user User
+ * @apiError ( 404 ) NotFound User not found
+ * @apiError ( 500 ) InternalServerError There was an issue getting the user
+ */
 const getUserById = async (req: Request, res: Response) => {
   try {
     const userId = parseInt(req.params.id, 10);
@@ -83,6 +114,14 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @api {get} /users/latest Get latest user ID
+ * @apiName  GetLatestUserId
+ * @apiGroup User
+ * @apiSuccess {Number} latestUserId Latest user ID
+ * @apiError ( 500 ) InternalServerError There was an issue getting the latest user ID
+ * @apiError ( 404 ) NotFound No users found
+ */
 const getLatestUserId = async (req: Request, res: Response) => {
   try {
     const latestUserId = await fetchLatestUserId();
@@ -97,6 +136,15 @@ const getLatestUserId = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @api {delete} /users/:id Delete user by ID
+ * @apiName  DeleteUserById
+ * @apiGroup User
+ * @apiParam {Number} id User ID
+ * @apiSuccess {String} message User successfully deleted
+ * @apiError ( 500 ) InternalServerError There was an issue deleting the user
+ * @apiError ( 400 ) BadRequest Invalid user ID
+ */
 const handleDeleteUserRequest = async (req: Request, res: Response) => {
   try {
     const userId = parseInt(req.params.id, 10);
@@ -113,6 +161,18 @@ const handleDeleteUserRequest = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @api {put} /users/:id Update user by ID
+ * @apiName  UpdateUserById
+ * @apiGroup User
+ * @apiParam {Number} id User ID
+ * @apiParam {String} username Username
+ * @apiParam {String} email Email
+ * @apiParam {String} role Role
+ * @apiSuccess {String} message User successfully updated
+ * @apiError ( 500 ) InternalServerError There was an issue updating the user
+ * @apiError ( 400 ) BadRequest Invalid user ID
+ */
 const handleUpdateUserRequest = async (req: Request, res: Response) => {
   try {
     const userData: User = req.body;

@@ -1,6 +1,15 @@
 import { Request, Response } from 'express';
 import  { getCartByUserId, addItemToCart, removeItemFromCart, clearCart, updateCartItemQuantity, getCartTotal, listCartItems, checkoutCart } from '../data/cartData';
 
+
+/**
+ * @api {get} /cart/:userId Get cart by user id
+ * @apiName  GetCartByUserId
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiSuccess {Object[]} cart Cart items
+ * @apiError ( 500 ) InternalServerError There was an issue getting the cart
+ */
 const getCart = async (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.userId);
@@ -12,6 +21,16 @@ const getCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {post} /cart/add Add item to cart
+ * @apiName  AddItemToCart
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiParam {Number} foodItemId Food item id
+ * @apiParam {Number} quantity Quantity of the food item
+ * @apiSuccess {Object[]} cart Updated cart
+ * @apiError ( 500 ) InternalServerError There was an issue adding the item to the cart
+ */
 const addToCart = async (req: Request, res: Response): Promise<void> => {
     try {
         const { userId, foodItemId, quantity } = req.body;
@@ -29,7 +48,15 @@ const addToCart = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-
+/**
+ * @api {delete} /cart/remove/:userId/:foodItemId Remove item from cart
+ * @apiName  RemoveItemFromCart
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiParam {Number} foodItemId Food item id
+ * @apiSuccess {String} message Item removed successfully
+ * @apiError ( 500 ) InternalServerError There was an issue removing the item from the cart
+ */
 const removeFromCart = async (req: Request, res: Response) => {
     try {
         const { userId, foodItemId } = req.params;
@@ -41,6 +68,14 @@ const removeFromCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {delete} /cart/clear/:userId Clear user cart
+ * @apiName  ClearUserCart
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiSuccess {String} message Cart cleared successfully
+ * @apiError ( 500 ) InternalServerError There was an issue clearing the cart
+ */
 const clearUserCart = async (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.userId);
@@ -51,6 +86,16 @@ const clearUserCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {patch} /cart/update Update item quantity in cart
+ * @apiName  UpdateItemQuantityInCart
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiParam {Number} foodItemId Food item id
+ * @apiParam {Number} newQuantity New quantity of the food item
+ * @apiSuccess {String} message Cart item quantity updated successfully
+ * @apiError ( 500 ) InternalServerError There was an issue updating the cart item quantity
+ */
 const updateItemQuantityInCart = async (req: Request, res: Response) => {
     try {
         const { userId, foodItemId, newQuantity } = req.body;
@@ -61,6 +106,14 @@ const updateItemQuantityInCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {get} /cart/total/:userId Get cart total amount
+ * @apiName  GetCartTotalAmount
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiSuccess {Number} total Total amount of the cart
+ * @apiError ( 500 ) InternalServerError There was an issue getting the cart total
+ */
 const getCartTotalAmount = async (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.userId);
@@ -71,6 +124,14 @@ const getCartTotalAmount = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {get} /cart/items/:userId Get cart items
+ * @apiName  ListItemsInCart
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiSuccess {Object[]} items Items in the cart
+ * @apiError ( 500 ) InternalServerError There was an issue getting the cart items
+ */
 const listItemsInCart = async (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.userId);
@@ -81,6 +142,14 @@ const listItemsInCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @api {post} /cart/checkout/:userId Checkout user cart
+ * @apiName  CheckoutUserCart
+ * @apiGroup Cart
+ * @apiParam {Number} userId User id
+ * @apiSuccess {String} message Checkout successful
+ * @apiError ( 500 ) InternalServerError There was an issue checking out the cart
+ */
 const checkoutUserCart = async (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.userId);
