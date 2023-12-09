@@ -92,7 +92,7 @@ DELETE {{host}}/api/menu/7/delete HTTP/1.1
 
 ### GET Cart
 
-GET {{host}}/api/cart/4 HTTP/1.1
+GET {{host}}/api/cart/7 HTTP/1.1
 
 ### GET Cart by User ID
 
@@ -101,6 +101,17 @@ GET {{host}}/api/cart/7 HTTP/1.1
 ### GET Cart Total by User ID
 
 GET {{host}}/api/cart/total/4 HTTP/1.1
+
+### update the quantity
+
+PATCH {{host}}/api/cart/update HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId" : 7,
+    "foodItemId": 1,
+    "newQuantity": 2 
+}
 
 ### POST Cart
 

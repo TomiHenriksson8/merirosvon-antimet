@@ -53,8 +53,8 @@ const clearUserCart = async (req: Request, res: Response) => {
 
 const updateItemQuantityInCart = async (req: Request, res: Response) => {
     try {
-        const { cartId, foodItemId, newQuantity } = req.body;
-        await updateCartItemQuantity(cartId, foodItemId, newQuantity);
+        const { userId, foodItemId, newQuantity } = req.body;
+        await updateCartItemQuantity(userId, foodItemId, newQuantity);
         res.status(200).json({ message: 'Cart item quantity updated successfully' });
     } catch (error) {
         res.status(500).send('Internal server error');
