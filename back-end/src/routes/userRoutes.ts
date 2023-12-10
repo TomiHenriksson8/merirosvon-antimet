@@ -5,12 +5,13 @@ import { loginUser, registerUser, getUsers, getUserById, handleDeleteUserRequest
 
 const router = Router();
 
-router.get('/', /*authenticate, authorize(['admin']),*/ getUsers);
+router.get('/', authenticate, authorize(['admin']), getUsers);
 router.post('/register', registerUser );
 router.post('/login', loginUser);
-router.get('/:id', /*authenticate, authorize(['admin']),*/ getUserById);
-router.get('/latest/id', /*authenticate, authorize(['admin']),*/ getLatestUserId);
-router.delete('/:id',/*authenticate, authorize(['admin']),*/  handleDeleteUserRequest);
-router.put('/:id', /*authenticate, authorize(['admin']),*/ handleUpdateUserRequest);
+router.get('/:id', authenticate, authorize(['admin']), getUserById);
+router.get('/latest/id', authenticate, authorize(['admin']), getLatestUserId);
+router.delete('/:id', authenticate, authorize(['admin']), handleDeleteUserRequest);
+router.put('/:id', authenticate, handleUpdateUserRequest);
+
 
 export default router;

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { FoodItem } from '../models/FoodItem';
-import { menu } from '../test-data/menu';
 import { addNewFoodItem, deleteFoodItemById, fetchAllFoodItems, fetchFoodItemById, fetchFoodItemsByCategory, updateExistingFoodItem } from '../data/menuData';
 
 /**
  * @api {get} /menu Get all food items
  * @apiName  GetFoodItems
  * @apiGroup Menu
+ * @apiPermission open to all
  * @apiSuccess {Object[]} foodItems Food items
  * @apiError ( 500 ) InternalServerError There was an issue getting the food items
  */
@@ -24,6 +24,7 @@ const getFoodItems = async (req: Request, res: Response) => {
  * @api {get} /menu/:id Get food item by id
  * @apiName  GetFoodItemById
  * @apiGroup Menu
+ * @apiPermission open to all
  * @apiParam {Number} id Food item id
  * @apiSuccess {Object} foodItem Food item
  * @apiError ( 404 ) NotFound Food item not found
@@ -46,6 +47,7 @@ const getFoodItemByIdHandler = async (req: Request, res: Response) => {
  * @api {get} /menu/category/:category Get food items by category
  * @apiName  GetFoodItemsByCategory
  * @apiGroup Menu
+ * @apiPermission open to all
  * @apiParam {String} category Food item category
  * @apiSuccess {Object[]} foodItems Food items
  * @apiError ( 404 ) NotFound No food items found for this category
@@ -69,6 +71,7 @@ const getFoodItemsByCategoryHandler = async (req: Request, res: Response) => {
  * @api {post} /menu Add new food item
  * @apiName  AddFoodItem
  * @apiGroup Menu
+ * @apiPermission admin
  * @apiParam {String} name Food item name
  * @apiParam {String} description Food item description
  * @apiParam {String} category Food item category
@@ -88,6 +91,7 @@ const addFoodItemHandler = async (req: Request, res: Response) => {
  * @api {put} /menu/:id Update existing food item
  * @apiName  UpdateFoodItem
  * @apiGroup Menu
+ * @apiPermission admin
  * @apiParam {Number} id Food item id
  * @apiParam {String} name Food item name
  * @apiParam {String} description Food item description
@@ -111,6 +115,7 @@ const updateFoodItemHandler = async (req: Request, res: Response) => {
  * @api {delete} /menu/:id Delete food item
  * @apiName  DeleteFoodItem
  * @apiGroup Menu
+ * @apiPermission admin
  * @apiParam {Number} id Food item id
  * @apiSuccess {String} message Food item deleted successfully
  * @apiError ( 500 ) InternalServerError There was an issue deleting the food item

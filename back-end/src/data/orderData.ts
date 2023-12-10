@@ -2,7 +2,11 @@ import { promisePool } from "../database/database";
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
 
 
-
+/**
+ * Retrieves all orders
+ * @returns {Promise<any>} A promise that resolves to all orders
+ * @throws {Error} An error that contains the error code and message
+ */
 const fetchAllOrders = async (): Promise<any> => {
     try {
         const sql = `
@@ -32,6 +36,12 @@ const fetchAllOrders = async (): Promise<any> => {
     }
 };
 
+/**
+ * Retrieves orders by user id
+ * @param {number} userId - The user id
+ * @returns {Promise<any>} A promise that resolves to the orders
+ * @throws {Error} An error that contains the error code and message
+ */
 const fetchOrdersByUserId = async (userId: number): Promise<any> => {  
     try {
         const sql = `
@@ -62,9 +72,11 @@ const fetchOrdersByUserId = async (userId: number): Promise<any> => {
     }
 };
 
-
-
-
+/**
+ * Retrieves the number of orders
+ * @returns {Promise<number>} A promise that resolves to the number of orders
+ * @throws {Error} An error that contains the error code and message
+*/ 
 const fetchOrderCount = async (): Promise<number> => {
     try {
         const sql = 'SELECT COUNT(*) AS orderCount FROM `Order`';
@@ -76,7 +88,13 @@ const fetchOrderCount = async (): Promise<number> => {
     }
 };
 
-
+/**
+ * Updates the status of an order
+ * @param {number} orderId - The order id
+ * @param {string} newStatus - The new order status
+ * @returns {Promise<number>} A promise that resolves to the number of affected rows
+ * @throws {Error} An error that contains the error code and message
+ */
 const updateOrderStatus = async (orderId: number, newStatus: string): Promise<number> => {
     try {
         const validStatuses = ['pending', 'completed', 'cancelled'];
@@ -96,6 +114,12 @@ const updateOrderStatus = async (orderId: number, newStatus: string): Promise<nu
     }
 };
 
+/**
+ * Creates an order from the user's cart
+ * @param {number} userId - The user id
+ * @returns {Promise<void>} A promise that resolves when the order has been created
+ * @throws {Error} An error that contains the error code and message
+ */
 const createOrderFromCart = async (userId: number) => {
     try {
         // Retrieve cart items along with their foodItemId
@@ -106,10 +130,8 @@ const createOrderFromCart = async (userId: number) => {
              WHERE Cart.userId = ?`, 
             [userId]
         );
-
         // Calculate the total price of the order
         const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
         // Insert the new order into the Order table
         const [orderResult] = await promisePool.query<ResultSetHeader>(
             `INSERT INTO \`Order\` (userId, totalPrice, orderDate, orderStatus) 
@@ -117,7 +139,6 @@ const createOrderFromCart = async (userId: number) => {
             [userId, totalPrice]
         );
         const orderId = orderResult.insertId;
-
         // Insert each cart item into the OrderDetails table
         for (const item of cartItems) {
             await promisePool.query(
@@ -126,7 +147,6 @@ const createOrderFromCart = async (userId: number) => {
                 [orderId, item.foodItemId, item.quantity]
             );
         }
-
         // Clear the user's cart
         await promisePool.query(
             `DELETE FROM Cart WHERE userId = ?`, 
@@ -138,4 +158,11 @@ const createOrderFromCart = async (userId: number) => {
     }
 };
 
-export { fetchOrderCount, fetchAllOrders, fetchOrdersByUserId, updateOrderStatus, createOrderFromCart };
+
+export {
+    fetchOrderCount,
+    fetchAllOrders,
+    fetchOrdersByUserId,
+    updateOrderStatus,
+    createOrderFromCart
+};

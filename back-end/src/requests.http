@@ -33,7 +33,7 @@ GET {{host}}/api/users/4 HTTP/1.1
 
 ### GET the latest user id
 GET {{host}}/api/users/latest/id HTTP/1.1
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMjIwMDgzNiwiZXhwIjoxNzAyMjA0NDM2fQ.p9vnanQF0GlgagXjqO-JdEXhDqAG5fxu3ARDNVbdBs8
 ### delete User by ID
 DELETE {{host}}/api/users/1 HTTP/1.1
 

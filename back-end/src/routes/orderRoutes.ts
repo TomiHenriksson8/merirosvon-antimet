@@ -6,13 +6,15 @@ import {
   changeOrderStatusController,
   createOrderController
 } from "../controllers/orderController";
+import { authenticate, authorize } from '../middleware/authMiddleware';
+
 
 const orderRouter = Router();
 
-orderRouter.get("/latest/id", getOrderCount);
-orderRouter.get("/all", getAllOrders);
-orderRouter.put("/status/:orderid", changeOrderStatusController);
+orderRouter.get("/latest/id", authenticate, authorize(['admin', 'staff']), getOrderCount);
+orderRouter.get("/all", authenticate, authorize(['admin', 'staff']), getAllOrders);
+orderRouter.put("/status/:orderid", authenticate, authorize(['admin', 'staff']), changeOrderStatusController);
 orderRouter.post("/create", createOrderController);
-orderRouter.get("/:orderid", getOrderById);
+orderRouter.get("/:orderid", authenticate, getOrderById);
 
 export default orderRouter;

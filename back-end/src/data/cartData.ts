@@ -1,6 +1,11 @@
 import { promisePool } from "../database/database";
 import { RowDataPacket } from "mysql2";
 
+/**
+ * Rerieves the cart items for a user
+ * @param {number} userId - The user ID 
+ * @returns {Promise<any>} A promise that resolves to the cart of the specified user. 
+ */
 const getCartByUserId = async (userId: number): Promise<any> => {
   const [rows] = await promisePool.query(
     `
@@ -14,6 +19,13 @@ const getCartByUserId = async (userId: number): Promise<any> => {
   return rows;
 };
 
+/**
+ * Adds an item to the cart
+ * @param {number} userId - The user ID
+ * @param {number} foodItemId - The food item ID
+ * @param {number} quantity - The quantity of the food item
+ * @returns {Promise<void>} A promise that resolves when the item has been added to the cart
+ */
 const addItemToCart = async (
     userId: number,
     foodItemId: number,
@@ -28,7 +40,12 @@ const addItemToCart = async (
     );
   };
   
-  
+  /**
+   * removes an item from the cart
+   * @param {number} userId 
+   * @param {number} foodItemId
+   * @returns {Promise<void>} A promise that resolves when the item has been removed from the cart   
+   */
   const removeItemFromCart = async (userId: number, foodItemId: number): Promise<void> => {
     await promisePool.query(`
         DELETE FROM Cart 
@@ -36,6 +53,11 @@ const addItemToCart = async (
     `, [userId, foodItemId]);
 };
 
+/**
+ * Clears the cart for a user
+ * @param {number} userId
+ * @returns {Promise<void>} A promise that resolves when the cart has been cleared
+ */
 const clearCart = async (userId: number): Promise<void> => {
   await promisePool.query(
     `
@@ -46,6 +68,13 @@ const clearCart = async (userId: number): Promise<void> => {
   );
 };
 
+/**
+ * Updates the quantity of an item in the cart
+ * @param {number} userId
+ * @param {number} foodItemId
+ * @param {number} newQuantity
+ * @returns {Promise<void>} A promise that resolves when the item quantity has been updated
+ */
 const updateCartItemQuantity = async (
   userId: number,
   foodItemId: number,
@@ -61,6 +90,11 @@ const updateCartItemQuantity = async (
   );
 };
 
+/**
+ * Gets the total price of the cart
+ * @param {number} userId
+ * @returns {Promise<number>} A promise that resolves to the total price of the cart
+ */
 const getCartTotal = async (userId: number): Promise<number> => {
   const [rows] = await promisePool.query<RowDataPacket[]>(
     `
@@ -79,6 +113,11 @@ const getCartTotal = async (userId: number): Promise<number> => {
   }
 };
 
+/**
+ * Lists the items in the cart
+ * @param {number} userId
+ * @returns {Promise<any[]>} A promise that resolves to the items in the cart
+ */
 const listCartItems = async (userId: number): Promise<any[]> => {
   const [rows] = await promisePool.query(
     `
@@ -92,9 +131,6 @@ const listCartItems = async (userId: number): Promise<any[]> => {
   return rows as RowDataPacket[];
 };
 
-const checkoutCart = async (userId: number) => {
-  // TODO: Implement this function
-};
 
 export {
   getCartByUserId,
@@ -103,6 +139,5 @@ export {
   clearCart,
   updateCartItemQuantity,
   getCartTotal,
-  listCartItems,
-  checkoutCart,
+  listCartItems
 };

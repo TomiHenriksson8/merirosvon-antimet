@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 interface User {
   id?: number;
   username?: string;
@@ -6,4 +8,10 @@ interface User {
   role?: "user" | "staff" | "admin";
 }
 
-export { User };
+interface CustomRequest extends Request {
+  user?: { 
+      id: number;
+      role: string;
+  };
+}
+  export { User, CustomRequest };

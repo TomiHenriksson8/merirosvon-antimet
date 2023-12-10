@@ -4,11 +4,13 @@ import { hashPassword } from "../utils/hashPassword";
 import { createUser, deleteUser, fetchAllUsers, fetchUserById, fetchLatestUserId, fetchUserByUsername, updateUser } from "../data/userData";
 import { createSecureServer } from "http2"; // ?? check this
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 /**
  * @api {get} /users Get all users
  * @apiName  GetUsers
  * @apiGroup User
+ * @apiPermission admin
  * @apiSuccess {Object[]} users Users
  * @apiError ( 500 ) InternalServerError There was an issue getting the users
  */
@@ -30,6 +32,7 @@ const getUsers = async (req: Request, res: Response) => {
  * @api {post} /users/register Register new user
  * @apiName  RegisterUser
  * @apiGroup User
+ * @apiPermission open to all
  * @apiParam {String} username Username
  * @apiParam {String} email Email
  * @apiParam {String} password Password
@@ -58,6 +61,7 @@ const registerUser = async (req: Request, res: Response) => {
  * @api {post} /users/login Login user
  * @apiName  LoginUser
  * @apiGroup User
+ * @apiPermission open to all
  * @apiParam {String} username Username
  * @apiParam {String} password Password
  * @apiSuccess {Object} user User
@@ -70,12 +74,21 @@ const loginUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
-    if (typeof user.password === 'string') {
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (!passwordMatch) {
-        return res.status(401).json({ message: "Invalid username or password" });
-      }
-      res.status(200).json({ message: 'Login successful', user: { ...user, password: undefined } }); // Hide password
+    
+    if (typeof user.password === 'string' && await bcrypt.compare(password, user.password)) {
+      const jwtSecret = process.env.JWT_SECRET;
+      if (!jwtSecret) {
+        throw new Error('JWT_SECRET is not defined in the environment variables');
+      }         
+
+      const token = jwt.sign(
+        { userId: user.id, role: user.role },
+        jwtSecret,  // Use the validated JWT_SECRET
+        { expiresIn: '8h' }  // Token expires in 1 hour
+      );
+
+      // Send the token in the response
+      res.status(200).json({ message: 'Login successful', token, user: { ...user, password: undefined } }); 
     } else {
       return res.status(401).json({ message: "Invalid username or password" });
     }
@@ -84,10 +97,12 @@ const loginUser = async (req: Request, res: Response) => {
   }
 };
 
+
 /**
  * @api {get} /users/:id Get user by ID
  * @apiName  GetUserById
  * @apiGroup User
+ * @apiPermission admin
  * @apiParam {Number} id User ID
  * @apiSuccess {Object} user User
  * @apiError ( 404 ) NotFound User not found
@@ -118,6 +133,7 @@ const getUserById = async (req: Request, res: Response) => {
  * @api {get} /users/latest Get latest user ID
  * @apiName  GetLatestUserId
  * @apiGroup User
+ * @apiPermission admin
  * @apiSuccess {Number} latestUserId Latest user ID
  * @apiError ( 500 ) InternalServerError There was an issue getting the latest user ID
  * @apiError ( 404 ) NotFound No users found
@@ -140,6 +156,7 @@ const getLatestUserId = async (req: Request, res: Response) => {
  * @api {delete} /users/:id Delete user by ID
  * @apiName  DeleteUserById
  * @apiGroup User
+ * @apiPermission admin
  * @apiParam {Number} id User ID
  * @apiSuccess {String} message User successfully deleted
  * @apiError ( 500 ) InternalServerError There was an issue deleting the user
@@ -165,6 +182,7 @@ const handleDeleteUserRequest = async (req: Request, res: Response) => {
  * @api {put} /users/:id Update user by ID
  * @apiName  UpdateUserById
  * @apiGroup User
+ * @apiPermission authenticated
  * @apiParam {Number} id User ID
  * @apiParam {String} username Username
  * @apiParam {String} email Email
@@ -175,6 +193,11 @@ const handleDeleteUserRequest = async (req: Request, res: Response) => {
  */
 const handleUpdateUserRequest = async (req: Request, res: Response) => {
   try {
+    const userIdFromParam = parseInt(req.params.id);
+    const userIdFromToken = (req as any).user.userId;
+    if (userIdFromToken !== userIdFromParam && (req as any).user.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
     const userData: User = req.body;
     const updatedUser = await updateUser(userData);
     res.status(200).json({ message: 'User successfully updated', user: updatedUser });

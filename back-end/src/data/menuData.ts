@@ -1,8 +1,13 @@
-import { FoodItem } from "../models/FoodItem";
+
 import { promisePool } from "../database/database";
 import { RowDataPacket } from 'mysql2';
 
 
+/**
+ * Retrieves all food items
+ * @returns {Promise<RowDataPacket[]>} A promise that resolves to all food items
+ * @throws {Error} An error that contains the error code and message
+ */
 const fetchAllFoodItems = async (): Promise<RowDataPacket[]> => {
     try {
       const sql = 'SELECT * FROM FoodItem';
@@ -13,6 +18,12 @@ const fetchAllFoodItems = async (): Promise<RowDataPacket[]> => {
     }
   };
 
+/**
+ * Retrieves a food item by id
+ * @param {number} id - The food item id
+ * @returns {Promise<RowDataPacket[]>} A promise that resolves to the food item
+ * @throws {Error} An error that contains the error code and message
+ */
 const fetchFoodItemById = async (id: number): Promise<RowDataPacket[]> => {
   try {
     const sql = 'SELECT * FROM FoodItem WHERE id = ?';
@@ -23,6 +34,12 @@ const fetchFoodItemById = async (id: number): Promise<RowDataPacket[]> => {
   }
 };
 
+/**
+ * Retrieves food items by category
+ * @param {string} category - The food item category
+ * @returns {Promise<RowDataPacket[]>} A promise that resolves to the food items
+ * @throws {Error} An error that contains the error code and message
+ */
 const fetchFoodItemsByCategory = async (category: string): Promise<RowDataPacket[]> => {
   try {
     const sql = 'SELECT * FROM FoodItem WHERE category = ?';
@@ -33,8 +50,12 @@ const fetchFoodItemsByCategory = async (category: string): Promise<RowDataPacket
   }
 };
 
-
-
+/**
+ * Adds a new food item
+ * @param {any} foodItem - The food item to add
+ * @returns {Promise<void>} A promise that resolves when the food item has been added
+ * @throws {Error} An error that contains the error code and message
+ */
 const addNewFoodItem = async (foodItem: any): Promise<void> => {
     try {
       const { name, description, price, category, imageUrl } = foodItem;
@@ -44,7 +65,14 @@ const addNewFoodItem = async (foodItem: any): Promise<void> => {
       throw error;
     }
 };
-  
+
+/**
+ * Updates an existing food item
+ * @param {number} id - The food item id
+ * @param {any} foodItem - The food item to update
+ * @returns {Promise<void>} A promise that resolves when the food item has been updated
+ * @throws {Error} An error that contains the error code and message
+ */
 const updateExistingFoodItem = async (id: number, foodItem: any): Promise<void> => {
     try {
       const { name, description, price, category, imageUrl } = foodItem;
@@ -55,6 +83,12 @@ const updateExistingFoodItem = async (id: number, foodItem: any): Promise<void> 
     }
 };
 
+/**
+ * Deletes a food item by id
+ * @param {number} id - The food item id
+ * @returns {Promise<void>} A promise that resolves when the food item has been deleted
+ * @throws {Error} An error that contains the error code and message
+ */
 const deleteFoodItemById = async (id: number): Promise<void> => {
     try {
       const sql = 'DELETE FROM FoodItem WHERE id = ?';
@@ -65,6 +99,13 @@ const deleteFoodItemById = async (id: number): Promise<void> => {
   };
   
 
-export { fetchAllFoodItems, fetchFoodItemById, fetchFoodItemsByCategory, addNewFoodItem, updateExistingFoodItem, deleteFoodItemById};
+export { 
+  fetchAllFoodItems,
+  fetchFoodItemById,
+  fetchFoodItemsByCategory,
+  addNewFoodItem,
+  updateExistingFoodItem,
+  deleteFoodItemById
+};
   
   
