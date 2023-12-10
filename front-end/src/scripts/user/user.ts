@@ -1,10 +1,13 @@
+
 import { LoginUser } from '../../interfaces/LoginUser';
 import { User } from '../../interfaces/User';
 import { getCurrentUser } from '../../utils/utils.js'; 
 import { generateRoleSpecificUI } from '../app.js';
 import { showPopup } from '../order/order.js';
 
-// Function to check for a logged-in user and update UI
+/**
+ * Checks if a user is logged in and updates the UI accordingly.
+ */
 function checkLoggedInUser() {
     const currentUser = getCurrentUser();
     if (currentUser) {
@@ -21,33 +24,17 @@ function checkLoggedInUser() {
         document.getElementById('logout-button')!.style.display = 'none';
     }
 }
-
-
 window.addEventListener('load', checkLoggedInUser);
-
 document.getElementById("profile-icon")?.addEventListener("click", () => {
     checkLoggedInUser();
     
 });
 
-
-// REGISTER USER
-
-const fetchGetExitingUsers = async () => {
-    try {
-        const response = await fetch('http://localhost:8000/api/users');
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
-        }
-        const existingUsers = await response.json();
-        console.log(existingUsers);
-        return existingUsers;
-    } catch (error) {
-        console.error("Error fetching existing users:", error);
-        throw error;
-    }
-};
-
+/**
+ * Registers a new user.
+ * @param {User} newUser - The new user to register.
+ * @returns {Promise<User>} A promise that resolves to the registered user.
+ */
 const fetchPostNewUser = async (newUser: User) => {
     const response = await fetch('http://localhost:8000/api/users/register', {
         method: 'POST',
@@ -60,6 +47,10 @@ const fetchPostNewUser = async (newUser: User) => {
     return response.json();
 };
 
+/**
+ * Retrieves sign-up form data and constructs a User object.
+ * @returns {User} The constructed User object.
+ */
 function getSignUpFormData(): User {
     const usernameInput = document.getElementById("signUp-username") as HTMLInputElement;
     const passwordInput = document.getElementById("signUp-password") as HTMLInputElement;
@@ -85,9 +76,11 @@ document.getElementById("signUp-form")?.addEventListener("submit", async (event)
     }
 });
 
-
-// LOGIN USER
-
+/**
+ * Logs in a user.
+ * @param {LoginUser} loginData - The login credentials.
+ * @returns {Promise<User>} A promise that resolves to the logged-in user.
+ */
 const fetchLoginUser = async (loginData: LoginUser) => {
     try {
         const response = await fetch('http://localhost:8000/api/users/login', {
@@ -95,21 +88,25 @@ const fetchLoginUser = async (loginData: LoginUser) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData),
         });
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message);
-        }
         const responseData = await response.json();
-        console.log("Received user data:", responseData);
-        return responseData.user; 
+        if (response.ok) {
+            localStorage.setItem('user', JSON.stringify(responseData.user));
+            localStorage.setItem('token', responseData.token); 
+            return responseData.user;
+        } else {
+            alert(responseData.message || 'Login failed. Please try again.');
+        }
     } catch (error) {
         console.error("Error during login:", error);
-        throw error;
+        alert('An error occurred during login. Please try again.');
     }
 };
 
-// Update UI with user data
-function getLoginFormData(): LoginUser {
+/**
+ * Retrieves login form data and constructs a LoginUser object.
+ * @returns {LoginUser} The constructed LoginUser object.
+ */
+const getLoginFormData = (): LoginUser =>  {
     const usernameInput = document.getElementById("username") as HTMLInputElement;
     const passwordInput = document.getElementById("password") as HTMLInputElement;
     return {
@@ -117,7 +114,6 @@ function getLoginFormData(): LoginUser {
         password: passwordInput.value,
     };
 }
-
 document.getElementById("login-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = getLoginFormData();
@@ -126,18 +122,13 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
             updateProfileInfo(user.username, user.email);
-
             prefillProfileForm();
-
             console.log("User logged in successfully!", user);
             showPopup('popup-lr-ok-container', 'Login Successful', 'You have successfully logged in. Welcome back!', './assets/images/success.png');
-
-
             document.getElementById('profile-form-section')!.style.display = 'block';
             document.getElementById('login-header')!.style.display = 'none';
             document.getElementById('login-form')!.style.display = 'none';
             document.getElementById('logout-button')!.style.display = 'block';
-        
             generateRoleSpecificUI();
         }
     } catch (error) {
@@ -146,12 +137,14 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
     }
 });
 
-function prefillProfileForm() {
+/**
+ * Prefills the profile form with the current user's information.
+ */
+const prefillProfileForm = () => {
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (currentUser && currentUser.username && currentUser.email) {
         const usernameInput = document.getElementById("profile-username") as HTMLInputElement;
         const emailInput = document.getElementById("profile-email") as HTMLInputElement;
-
         if (usernameInput && emailInput) {
             usernameInput.value = currentUser.username;
             emailInput.value = currentUser.email;
@@ -159,11 +152,15 @@ function prefillProfileForm() {
     }
 }
 
-function updateProfileInfo(username: string, email: string) {
+/**
+ * Updates the profile information displayed on the UI.
+ * @param {string} username - The user's username.
+ * @param {string} email - The user's email.
+ */
+const updateProfileInfo = (username: string, email: string) => {
     const usernameTarget = document.getElementById("username-target");
     const emailTarget = document.getElementById("email-target");
     console.log("Updating profile info:", username, email);
-
     if (usernameTarget) {
         usernameTarget.textContent = username;
     }
@@ -174,23 +171,31 @@ function updateProfileInfo(username: string, email: string) {
 
 document.getElementById('logout-button')?.addEventListener('click', () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     updateProfileInfo('', '');
     console.log("User logged out successfully");
-
-    // Update UI
     document.getElementById('profile-form-section')!.style.display = 'none';
     document.getElementById('login-header')!.style.display = 'block';
     document.getElementById('login-form')!.style.display = 'block';
     document.getElementById('logout-button')!.style.display = 'none';
 });
 
-// EDIT USER
+/**
+ * Updates a user's profile.
+ * @param {number} userId - The ID of the user.
+ * @param {{ username?: string; email?: string, role: string }} updatedData - The updated user data.
+ * @returns {Promise<User>} A promise that resolves to the updated user.
+ */
 const fetchUpdateUserProfile = async (userId: number, updatedData: { username?: string; email?: string, role: string }) => {
+    const token = localStorage.getItem('token');
     try {
         console.log("Updating user profile:", userId, updatedData);
         const response = await fetch(`http://localhost:8000/api/users/${userId}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(updatedData),
         });
         if (!response.ok) {
@@ -208,6 +213,10 @@ const fetchUpdateUserProfile = async (userId: number, updatedData: { username?: 
     }
 };
 
+/**
+ * Submits the updated user profile.
+ * @param {Event} event - The submit event.
+ */
 document.getElementById("profile-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -219,14 +228,12 @@ document.getElementById("profile-form")?.addEventListener("submit", async (event
         console.error("No user logged in or user ID missing");
         return;
     }
-
     const updatedData = {
         id: currentUser.id,
         username: usernameInput.value,
         email: emailInput.value,
         role: currentUser.role,
     };
-
     try {
         const updatedUser = await fetchUpdateUserProfile(currentUser.id, updatedData);
         localStorage.setItem('user', JSON.stringify({ ...currentUser, username: updatedUser.username, email: updatedUser.email }));

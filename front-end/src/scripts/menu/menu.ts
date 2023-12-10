@@ -1,6 +1,10 @@
 import { MenuItem } from '../../interfaces/MenuItem';
 import { attachAddToCartListener, attachShoppingCartListener } from '../cart/cart.js';
 
+
+/**
+ * Fetches menu items from the server and displays them on the UI.
+ */
 const fetchAndDisplayMenu = async () => {
     try {
         const response = await fetch('http://localhost:8000/api/menu');
@@ -12,6 +16,10 @@ const fetchAndDisplayMenu = async () => {
     }
 };
 
+/**  
+* Renders the menu items in the UI.
+* @param {MenuItem[] | null} menuItems - Array of menu items to be displayed.
+*/
 const renderMenu = (menuItems: MenuItem[] | null) => {
     const menuContainer = document.querySelector('.menu-container');
     if (menuContainer) {
@@ -24,6 +32,11 @@ const renderMenu = (menuItems: MenuItem[] | null) => {
     }
 };
 
+/**
+ * Creates a menu item element.
+ * @param {MenuItem} menuItem - The menu item data.
+ * @returns {HTMLElement} The created menu item element.
+ */
 const createMenuItemElement = (menuItem: MenuItem) => {
     const menuItemElement = document.createElement('div');
     menuItemElement.classList.add('box');
@@ -33,32 +46,28 @@ const createMenuItemElement = (menuItem: MenuItem) => {
     img.src = menuItem.imageUrl || './assets/images/menu-placeholder.png';
     img.alt = '';
     boxImg.appendChild(img);
-
     const h2 = document.createElement('h2');
     h2.textContent = menuItem.name;
-
     const h3 = document.createElement('h3');
     h3.textContent = menuItem.description;
-
     const span = document.createElement('span');
     span.textContent = menuItem.price + '€';
-
     const i = document.createElement('i');
     i.classList.add('bx', 'bx-cart-alt', 'add-to-cart');
-
     menuItemElement.dataset.id = menuItem.id.toString();
-
     menuItemElement.appendChild(boxImg);
     menuItemElement.appendChild(h2);
     menuItemElement.appendChild(h3);
     menuItemElement.appendChild(span);
     menuItemElement.appendChild(i);
-
     return menuItemElement;
 };
 
 // Event delegation for category buttons
 const menuFilterContainer = document.querySelector('.menu-filter-btn') as HTMLElement;
+/**
+ * Event handler for menu category filter buttons.
+ */
 menuFilterContainer.addEventListener('click', async (event) => {
     const target = event.target as HTMLElement;
     if (target.tagName === 'BUTTON') {
@@ -83,6 +92,8 @@ menuFilterContainer.addEventListener('click', async (event) => {
     }
 });
 
+// Load the menu items when the window loads
 window.addEventListener('load', fetchAndDisplayMenu);
+
 
 export { fetchAndDisplayMenu, renderMenu, createMenuItemElement };

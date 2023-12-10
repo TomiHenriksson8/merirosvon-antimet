@@ -1,7 +1,11 @@
 import { getCurrentUser } from '../utils/utils.js';
 import { renderOrderHistory } from './order/order.js';
-// login modal
 
+/**
+ * Handles functionality related to the profile and order history links in the UI.
+ */
+
+// login modal
 const profileLink = document.getElementById('profileLink') as HTMLElement;
 const orderHistoryLink = document.getElementById('orderHistoryLink') as HTMLElement;
 
@@ -19,7 +23,9 @@ profileLink.addEventListener('click', () => {
     profileContainer.style.display = "block";
 });
 
-
+/**
+ * Manages the display and interaction with the profile modal.
+ */
 const profileModal = document.getElementById("profileModal") as HTMLDialogElement;
 const profileIconLink = document.getElementById("profile-icon") as HTMLAnchorElement;
 
@@ -38,8 +44,9 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// sign up modal
-
+/**
+ * Manages the display and interaction with the sign-up modal.
+ */
 const signUpModal = document.getElementById("signUpModal") as HTMLDialogElement;
 
 document.getElementById("openSignUpModal")?.addEventListener("click", (e: Event) => {
@@ -60,8 +67,10 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
     }
 });
 
-// cart modal 
 
+/**
+ * Manages the display and interaction with the shopping cart modal.
+ */
 const shoppingCarttModal = document.getElementById("shoppingCart") as HTMLDialogElement;
 const cartIcon = document.getElementById("cart-icon") as HTMLAnchorElement;
 const closeCart = document.querySelector(".close") as HTMLAnchorElement;
@@ -81,9 +90,11 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// check role and generate role-specific UI for index.html
 
 
+/**
+ * Generates a role-specific user interface based on the current user's role.
+ */
 const generateRoleSpecificUI = (): void => {
     const currentUser = getCurrentUser();
     if (!currentUser) {
@@ -107,6 +118,12 @@ const generateRoleSpecificUI = (): void => {
     }
 };
 
+/**
+ * Creates a button for navigating to different panels based on user roles.
+ * @param {string} buttonText - Text to display on the button.
+ * @param {string} pageUrl - URL to navigate to when the button is clicked.
+ * @returns {HTMLButtonElement} The created button element.
+ */
 const createPanelButton = (buttonText: string, pageUrl: string): HTMLButtonElement => {
     const button = document.createElement('button');
     button.textContent = buttonText;

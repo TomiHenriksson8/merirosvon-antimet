@@ -1,16 +1,22 @@
+/**
+ * Script for handling image slider navigation.
+ */
+
+// Element selectors for navigation buttons and slider.
 const prev = document.getElementById('prev') as HTMLElement | null;
 const next = document.getElementById('next') as HTMLElement | null;
 const slider = document.querySelector('.slider') as HTMLElement | null;
 const imgs = document.querySelectorAll('.slider img');
 
-// Checking if the first image is present and is an HTMLElement to access clientWidth
+// Calculate the width of a single image, assuming all images have the same width.
 let width = imgs.length > 0 && imgs[0] instanceof HTMLElement ? imgs[0].clientWidth : 0;
-
 console.log(width);
 
+/**
+ * Event listener for the 'next' button to slide to the next image.
+ */
 next?.addEventListener('click', () => {
     let index = 0;
-
     if (slider && imgs.length > 0) {
         index++;
         slider.style.transform = `translate(${-index * (width + 10)}px)`;
@@ -23,14 +29,14 @@ next?.addEventListener('click', () => {
     }
 });
 
+/**
+ * Event listener for the 'prev' button to slide to the previous image.
+ */
 prev?.addEventListener('click', () => {
     let index = 0;
-
     if (slider && imgs.length > 0) {
         index--;
-
         slider.style.transform = `translate(${-index * (width + 10)}px)`;
-
         if (index === 0) {
             prev?.classList.add('disable');
         } else {

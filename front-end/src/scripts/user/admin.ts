@@ -2,6 +2,9 @@ import { getCurrentUser } from '../../utils/utils.js';
 import { DetailedOrder, OrdersResponse, GroupedOrders } from '../../interfaces/Order.js';
 import { User } from '../../interfaces/User.js';
 
+/**
+ * Redirects to the appropriate page based on the user's role.
+ */
 const redirectToAppropriatePage = () => {
     const currentUser = getCurrentUser();
     const currentPath = window.location.pathname;
@@ -21,15 +24,29 @@ redirectToAppropriatePage();
 
 document.getElementById('exit-panel')?.addEventListener('click', () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     console.log("Panel exited successfully");
     redirectToAppropriatePage();
 });
 
-// Box with amount of users
+/**
+ * Displays the total number of users.
+ */
 const showAmountOfUsers = async () => {
     const url = 'http://localhost:8000/api/users/latest/id';
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -46,11 +63,20 @@ const showAmountOfUsers = async () => {
 
 showAmountOfUsers();
 
-// Box with amount of orders
+/**
+ * Displays the total number of orders.
+ */
 const showAmountOfOrders = async () => {
     const url = 'http://localhost:8000/api/order/latest/id';
+    const token = localStorage.getItem('token');
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -69,10 +95,21 @@ showAmountOfOrders();
 
 // ORDER LIST
 
+/**
+ * Fetches all orders.
+ * @returns {Promise<OrdersResponse>} A promise that resolves to the orders response.
+ */
 const getOrders = async (): Promise<OrdersResponse> => {
     const url = 'http://localhost:8000/api/order/all';
+    const token = localStorage.getItem('token');
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -84,6 +121,9 @@ const getOrders = async (): Promise<OrdersResponse> => {
     }
 };
 
+/**
+ * Displays orders in a table format.
+ */
 const displayOrders = async () => {
     try {
         const ordersData = await getOrders();
@@ -143,12 +183,10 @@ const displayOrders = async () => {
         });
         const statusCell = row.insertCell();
         statusCell.appendChild(statusDropdown);
-
         // Concatenate item details
         const itemDetails = orders.map((item: DetailedOrder) => `${item.foodItemName} (x${item.quantity}) - ${item.foodItemPrice} each`).join(', ');
         row.insertCell().textContent = itemDetails;
 });
-
         tableContainer.appendChild(table);
     } catch (error) {
         console.error('Error displaying orders:', error);
@@ -157,29 +195,27 @@ const displayOrders = async () => {
 
 displayOrders();
 
-
-
-
-
+/**
+ * Updates the status of an order.
+ * @param {number} orderId - The ID of the order to update.
+ * @param {string} newStatus - The new status of the order.
+ */
 async function updateOrderStatus(orderId: number, newStatus: string) {
     console.log(`Update status for order ${orderId} to ${newStatus}`);
-
-    // The URL for the backend endpoint
-    const url = `http://localhost:8000/api/order/status/${orderId}`; // Replace with your actual backend URL
-
+    const url = `http://localhost:8000/api/order/status/${orderId}`;
+    const token = localStorage.getItem('token');
     try {
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ newStatus: newStatus })
+            body: JSON.stringify({ newStatus })
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         const responseData = await response.json();
         console.log('Update successful:', responseData);
     } catch (error) {
@@ -187,11 +223,19 @@ async function updateOrderStatus(orderId: number, newStatus: string) {
     }
 }
 
-/// show user info based on user id on table
-
+/**
+ * Fetches user information by user ID.
+ * @param {number} userId - The ID of the user.
+ * @returns {Promise<User | null>} A promise that resolves to the user information.
+ */
 const fetchUserInfoById = async (userId: number): Promise<User | null> => {
+    const token = localStorage.getItem('token'); 
     try {
-        const response = await fetch(`http://localhost:8000/api/users/${userId}`);
+        const response = await fetch(`http://localhost:8000/api/users/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -203,6 +247,10 @@ const fetchUserInfoById = async (userId: number): Promise<User | null> => {
     }
 };
 
+/**
+ * Displays information for a specific user.
+ * @param {number} userId - The ID of the user to display information for.
+ */
 const displayUserInfo = async (userId: number) => {
     const userInfo = await fetchUserInfoById(userId);
     if (userInfo) {
@@ -212,10 +260,11 @@ const displayUserInfo = async (userId: number) => {
     }
 };
 
-
-
 // ADD FOOD ITEM
-
+/**
+ * Handles the submission of a new food item.
+ * @param {Event} event - The event object.
+ */
 const handleFoodItemSubmission = async(event: Event) => {
     event.preventDefault();
     const foodIname = (document.getElementById('name') as HTMLInputElement).value;
@@ -226,8 +275,17 @@ const handleFoodItemSubmission = async(event: Event) => {
     await addFoodItemToBackend(foodIname, foodIdecription, foodIprice, foodIcategory, foodIimage);
 }
 
+/**
+ * Adds a new food item to the backend.
+ * @param {string} name - The name of the food item.
+ * @param {string} description - The description of the food item.
+ * @param {string} price - The price of the food item.
+ * @param {string} category - The category of the food item.
+ * @param {string} imageUrl - The image URL of the food item.
+ */
 async function addFoodItemToBackend(name: string, description: string, price: string, category: string, imageUrl: string) {
     const url = 'http://localhost:8000/api/menu/add';
+    const token = localStorage.getItem('token');
     const data = {
         name: name,
         description: description,
@@ -240,6 +298,7 @@ async function addFoodItemToBackend(name: string, description: string, price: st
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(data)
         });
