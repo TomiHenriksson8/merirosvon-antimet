@@ -69,10 +69,10 @@ document.getElementById("signUp-form")?.addEventListener("submit", async (event)
     try {
         await fetchPostNewUser(formData);
         console.log("User registered successfully!");
-        showPopup('popup-lr-ok-container', 'Registration Successful', 'Your account has been successfully created!', './assets/images/success.png');
+        showPopup('popup-lr-ok-container', 'Rekisteröityminen onnistui', 'Tilisi on luotu onnistuneesti!', './assets/images/success.png');
     } catch (error) {
         console.error("Error registering user:", error);
-        showPopup('popup-fail-lr-container', 'Registration Failed', 'Unable to create an account. Please try again later.', './assets/images/failure.png');
+        showPopup('popup-fail-lr-container', 'Rekisteröityminen epäonnistui', 'Tilin luominen ei onnistunut. Yritä uudelleen myöhemmin.', './assets/images/failure.png');
     }
 });
 
@@ -124,7 +124,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
             updateProfileInfo(user.username, user.email);
             prefillProfileForm();
             console.log("User logged in successfully!", user);
-            showPopup('popup-lr-ok-container', 'Login Successful', 'You have successfully logged in. Welcome back!', './assets/images/success.png');
+            showPopup('popup-lr-ok-container', 'Kirjautuminen Onnistui', 'Olet kirjautunut sisään onnistuneesti. Tervetuloa takaisin!', './assets/images/success.png');
             document.getElementById('profile-form-section')!.style.display = 'block';
             document.getElementById('login-header')!.style.display = 'none';
             document.getElementById('login-form')!.style.display = 'none';
@@ -133,7 +133,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
         }
     } catch (error) {
         console.error("Error logging in:", error);
-        showPopup('popup-fail-lr-container', 'Login Failed', 'Your login attempt was unsuccessful. Please check your credentials and try again.', './assets/images/failure.png');
+        showPopup('popup-fail-lr-container', 'Kirjautuminen Epäonnistui', 'Kirjautumisyrityksesi epäonnistui. Tarkista tunnistetietosi ja yritä uudelleen.', './assets/images/failure.png');
     }
 });
 

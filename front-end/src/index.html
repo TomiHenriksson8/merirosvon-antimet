@@ -68,7 +68,7 @@
             <div class="boat-wave"></div>
         </section>
         <div class="info">
-            <h2>Welcome to our restaurant</h2>
+            <h2>Tervetuloa meidän Ravintolaan</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime possimus enim earum minus, totam nemo iusto error qui! Blanditiis ullam rerum similique voluptate beatae est autem quibusdam delectus asperiores optio.
             Qui nihil tenetur blanditiis saepe fugiat repudiandae, sequi officiis ratione ullam, voluptates commodi maiores? Enim reiciendis exercitationem delectus provident commodi at magnam, expedita fuga, dolorum aliquid dicta saepe necessitatibus doloremque!
             Placeat, totam optio iusto aut accusantium odit voluptatum sed commodi nesciunt quis fugiat quidem adipisci sit soluta provident deleniti est nulla delectus illum pariatur assumenda eveniet? Id accusantium eaque consectetur?</p>
@@ -79,12 +79,12 @@
         <section class="menu" id="menu">
             <div class="heading">
                 <span>Food menu</span>
-                <h2>Fresh taste and great price</h2>
+                <h2>Tuoretta ruokaa edulliseen hintaan</h2>
                 <div class="menu-filter-btn">
                     <button><span></span>Kaikki<span></span></button>
-                    <button><span></span>Pizza<span></span></button>
-                    <button><span></span>Burger<span></span></button>
-                    <button><span></span>Salad<span></span></button>
+                    <button><span></span>Pizzat<span></span></button>
+                    <button><span></span>Burgerit<span></span></button>
+                    <button><span></span>Salaatit<span></span></button>
                     <!-- Lisää Lisää myöhemmin  -->
                     <button><span></span>Juomat<span></span></button>
                 </div>
@@ -115,7 +115,7 @@
                 <p>basic info about restaurant .dlfksdklfksdlfksdlfklsdf</p>
             </div>
             <div class="footer-links">
-                <h4>Links</h4>
+                <h4>Linkit</h4>
                 <ul>
                     <li><a href="#home">Etusivu</a></li>
                     <li><a href="#menu">Menu</a></li>
@@ -123,7 +123,7 @@
                 </ul>
             </div>
             <div class="footer-social">
-                <h4>Follow Us</h4>
+                <h4>Seuraa Meitä</h4>
                 <a href=""><i class='bx bxl-twitter'></i></a>
                 <a href=""><i class='bx bxl-instagram-alt' ></i></a>
                 <a href=""><i class='bx bxl-youtube' ></i></a>
@@ -133,47 +133,47 @@
     <dialog id="profileModal" style="display: none;">
         <div class="side-bar">
             <ul>
-                <li id="profileLink"><i class='bx bx-user'>Profile</i></li>
-                <li id="orderHistoryLink"><i class='bx bx-book'>Order History</i></li>
+                <li id="profileLink"><i class='bx bx-user'>Profiili</i></li>
+                <li id="orderHistoryLink"><i class='bx bx-book'>Tilaus Historia</i></li>
             
             </ul>
         </div>
         <div class="order-history-container" style="display: none;">
-            <h2>Order History</h2>
+            <h2>Tilaus Historia</h2>
             <!-- GENERATE ORDER HISTORY -->
         </div>
         <div class="profile-container">
-            <h1>Profile</h1>
+            <h1>Profiili</h1>
             
             <div class="profile-top-sections">
                 <section id="login">
-                    <h2 id="login-header">Login</h2>
+                    <h2 id="login-header">Kirjaudu Sisään</h2>
                     
                     <form id="login-form">
                         <div class="form-control">
                             <input id="username" type="text" name="username">
-                            <label for="username">Username</label>
+                            <label for="username">Käyttäjänimi</label>
                         </div>
                         <div class="form-control">
                             <input id="password" type="password" name="password">
-                            <label for="password">Password</label>
+                            <label for="password">Salasana</label>
                         </div>
                         <div class="form-control">
                             <input type="submit" value="Login" class="button">
                         </div>
-                        <a href="#" id="openSignUpModal">Don't have an account? Sign up</a>
+                        <a href="#" id="openSignUpModal">Eikö sinulla ole tiliä? Rekisteröidy</a>
                     </form>
                 </section>
                 <section id="profile-form-section" style="display: none">
-                    <h2>Edit profile</h2>
+                    <h2>Muokkaa Profiilia</h2>
                     <form id="profile-form">
                         <div class="form-control">
                             <input id="profile-username" type="text" name="username">
-                            <label for="profile-username">Username</label>
+                            <label for="profile-username">Käyttäjänimi</label>
                         </div>
                         <div class="form-control">
                             <input id="profile-email" type="email" name="email">
-                            <label for="profile-email">Email</label>
+                            <label for="profile-email">Sähköposti</label>
                         </div>
                         <div class="form-control">
                             <input type="submit" value="Update" class="button">
@@ -183,32 +183,32 @@
             </div>        
             <div class="profile-bottom-sections">
                 <section id="profile-info">
-                    <h2>Profile Details</h2>
+                    <h2>Profiilin Tiedot</h2>
                     <div>
-                        <p>Username: <span id="username-target"></span></p>
-                        <p>Email: <span id="email-target"></span></p>
+                        <p>Käyttäjänimi: <span id="username-target"></span></p>
+                        <p>Sähköposti: <span id="email-target"></span></p>
                     </div>
-                    <button id="logout-button" style="display: none;">Logout</button>
+                    <button id="logout-button" style="display: none;">Kirjaudu Ulos</button>
                 </section>
             </div>
         </div>
     </dialog>
     <dialog id="signUpModal">
         <div class="signup-container">
-            <h1>Sign Up</h1>
+            <h1>Rekisteröidy</h1>
             
             <form id="signUp-form">
                 <div class="form-control">
                     <input id="signUp-username" type="text" name="username" required>
-                    <label for="signUp-username">Username</label>
+                    <label for="signUp-username">Käyttäjänimi</label>
                 </div>
                 <div class="form-control">
                     <input id="signUp-password" type="password" name="password" required>
-                    <label for="signUp-password">Password</label>
+                    <label for="signUp-password">Salasana</label>
                 </div>
                 <div class="form-control">
                     <input id="signUp-email" type="email" name="email" required>
-                    <label for="signUp-email">Email</label>
+                    <label for="signUp-email">Sähköposti</label>
                 </div>
                 <div class="form-control">
                     <input type="submit" value="Sign Up" class="button">
@@ -221,7 +221,7 @@
             <img src="#" alt="Success">
             <h3 id="popup-ok-title"></h3>
             <p id="popup-ok-message"></p>
-            <button class="close-popup" type="button">Continue</button>
+            <button class="close-popup" type="button">Jatka</button>
         </div>
     </div>
     <div class="popup-overlay popup-fail-lr-container">
@@ -229,21 +229,21 @@
             <img src="#" alt="Failure">
             <h3 id="popup-fail-title"></h3>
             <p id="popup-fail-message"></p>
-            <button class="close-popup" type="button">Try Again</button>
+            <button class="close-popup" type="button">Yritä Uudelleen</button>
         </div>
     </div>    
     <dialog id="shoppingCart">
         <div class="cart">
-            <h3>Your Cart</h3>
+            <h3>Ostoskori</h3>
             <div class="cart-items">
                 <!-- Cart items will be dynamically inserted here -->
             </div>
             <div class="cart-summary">
-                <p>Total: <span id="cart-total">$0.00</span></p>
+                <p>Total: <span id="cart-total">0.00€</span></p>
             </div>
             <div class="cart-actions">
-                <button class="button close-cart">Close</button>
-                <button class="button checkout">Checkout</button>
+                <button class="button close-cart">Sulje</button>
+                <button class="button checkout">Tilaa</button>
             </div>
         </div>
     </dialog>
@@ -252,7 +252,7 @@
             <img src="./assets/images/popupok.png" alt="Order Success">
             <h3></h3>
             <p></p>
-            <button class="close-popup" type="button">Continue</button>
+            <button class="close-popup" type="button">Jatka</button>
         </div>
     </div>
     <div class="popup-overlay popup-fail-o-container">
@@ -260,7 +260,7 @@
             <img src="#" alt="Order Failure">
             <h3></h3>
             <p></p>
-            <button class="close-popup" type="button">Try Again</button>
+            <button class="close-popup" type="button">Yritä Uudelleen</button>
         </div>
     </div>
 </body>

@@ -37,6 +37,7 @@ const attachAddToCartListener = () => {
 const addToCart = async (foodItemId: number, quantity: number): Promise<void> => {
   const currentUser = getCurrentUser();
   if (!currentUser || !currentUser.id) {
+    showPopup('popup-fail-o-container', 'Toimintoa ei voi suorittaa', "Anteeksi, mutta pyyntöäsi ei voitu käsitellä. Varmista, että olet kirjautunut sisään. Jos ongelma jatkuu, ota yhteyttä tukitiimiimme saadaksesi apua.", './assets/images/cart-add-error.png');
     throw new Error("User is not logged in or user ID is not available.");
   }
   const token = localStorage.getItem('token');

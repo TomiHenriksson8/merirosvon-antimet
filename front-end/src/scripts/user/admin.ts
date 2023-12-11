@@ -93,6 +93,33 @@ const showAmountOfOrders = async () => {
 
 showAmountOfOrders();
 
+const showAmountOfFoodItems = async () => {
+    const url = 'http://localhost:8000/api/menu/count';
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const responseData = await response.json();
+        const FoodItemsCount = responseData.itemCount;
+        const amountOfFoodItemsElement = document.getElementById('food-items-box');
+        if (amountOfFoodItemsElement) {
+            amountOfFoodItemsElement.innerHTML = `Food Items Count: ${FoodItemsCount}`;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+showAmountOfFoodItems();
+
 // ORDER LIST
 
 /**
@@ -316,4 +343,36 @@ if (form) {
     form.addEventListener('submit', handleFoodItemSubmission);
 }
 
+/**
+ * Deletes a food item.
+ * @param {number} foodItemId - The ID of the food item to delete.
+ * @returns {Promise<void>} A promise that resolves when the food item is deleted.
+ * @throws {Error} An error is thrown if the food item fails to delete.
+ */
+const deleteFoodItem = async (foodItemId: number) => {
+    const url = `http://localhost:8000/api/menu/${foodItemId}/delete`;
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.ok) {
+            alert("Food item deleted successfully");
+            // update ui
+        } else {
+            throw new Error(`Failed to delete food item: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
 
+export { deleteFoodItem };
