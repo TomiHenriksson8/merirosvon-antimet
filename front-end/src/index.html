@@ -51,9 +51,9 @@
     <section class="container">
         <div class="slider-wrapper">
             <div class="slider">
-                <img id="slide-1" src="./assets/images/slider1.png" alt="3D rendering of an imaginary orange planet in space" />
-                <img id="slide-2" src="./assets/images/slider-img.png" />
-                <img id="slide-3" src="./assets/images/slider-img.png" />
+                <div class="slide" id="slide-1" style="background-image: url('./assets/images/slider2-mobile.png');"></div>
+                <div class="slide" id="slide-2" style="background-image: url('./assets/images/slider2-mobile.png');"></div>
+                <div class="slide" id="slide-3" style="background-image: url('./assets/images/slider2-mobile.png');"></div>
             </div>
             <div class="slider-nav">
                 <a href="#slide-1"></a>
@@ -70,8 +70,7 @@
         <div class="info">
             <h2>Tervetuloa meidän Ravintolaan</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime possimus enim earum minus, totam nemo iusto error qui! Blanditiis ullam rerum similique voluptate beatae est autem quibusdam delectus asperiores optio.
-            Qui nihil tenetur blanditiis saepe fugiat repudiandae, sequi officiis ratione ullam, voluptates commodi maiores? Enim reiciendis exercitationem delectus provident commodi at magnam, expedita fuga, dolorum aliquid dicta saepe necessitatibus doloremque!
-            Placeat, totam optio iusto aut accusantium odit voluptatum sed commodi nesciunt quis fugiat quidem adipisci sit soluta provident deleniti est nulla delectus illum pariatur assumenda eveniet? Id accusantium eaque consectetur?</p>
+            Qui nihil tenetur blanditiis saepe fugiat repudiandae, sequi officiis ratione ullam, voluptates commodi maiores? </p>
         </div>
         
         <hr class="horizontal-line">
@@ -82,8 +81,8 @@
                 <h2>Tuoretta ruokaa edulliseen hintaan</h2>
                 <div class="menu-filter-btn">
                     <button><span></span>Kaikki<span></span></button>
-                    <button><span></span>Pizzat<span></span></button>
-                    <button><span></span>Burgerit<span></span></button>
+                    <button><span></span>Pizza<span></span></button>
+                    <button><span></span>Burger<span></span></button>
                     <button><span></span>Salaatit<span></span></button>
                     <!-- Lisää Lisää myöhemmin  -->
                     <button><span></span>Juomat<span></span></button>
@@ -100,9 +99,9 @@
                     <!-- Leaflet map will be injected here -->
                 </div>
                 <div class="restaurant-info">
-                    <h2>About Our Restaurant</h2>
-                    <p>kfoddddfdsfksdlfksdlfksdlfksdlö</p>
-                    <p>dskflsdökflsödkfsdlfksdlfksdlff</p>
+                    <h2>Tietoa Ravintolastamme</h2>
+                    <p>Tervetuloa nauttimaan ainutlaatuisista makuelämyksistä! Meidän ravintolamme tarjoaa laadukkaat raaka-aineet, käsintehtyjä herkkuja ja unohtumattoman tunnelman.</p>
+                    <p>Yhdistämme perinteiset reseptit moderniin keittiöön, luoden upeita ruokakokemuksia jokaiseen makuun.</p>
                     <!-- Add more content about your restaurant here -->
                 </div>
             </div>
@@ -131,14 +130,16 @@
         </div>
     </footer>
     <dialog id="profileModal" style="display: none;">
+        <span class="close-btn">x</span>
         <div class="side-bar">
             <ul>
                 <li id="profileLink"><i class='bx bx-user'>Profiili</i></li>
-                <li id="orderHistoryLink"><i class='bx bx-book'>Tilaus Historia</i></li>
+                <li id="orderHistoryLink"><i class='bx bx-book'>Historia</i></li>
             
             </ul>
         </div>
         <div class="order-history-container" style="display: none;">
+            <h1>Historia</h1>
             <h2>Tilaus Historia</h2>
             <!-- GENERATE ORDER HISTORY -->
         </div>
@@ -194,6 +195,7 @@
         </div>
     </dialog>
     <dialog id="signUpModal">
+        <span class="close-btn">x</span>
         <div class="signup-container">
             <h1>Rekisteröidy</h1>
             
@@ -211,7 +213,7 @@
                     <label for="signUp-email">Sähköposti</label>
                 </div>
                 <div class="form-control">
-                    <input type="submit" value="Sign Up" class="button">
+                    <input type="submit" value="Rekisteröidy" class="button">
                 </div>
             </form>
         </div>

@@ -44,6 +44,24 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+const profileMobileNav = document.getElementById('profile') as HTMLAnchorElement;
+const cartMobileNav = document.getElementById('cart') as HTMLAnchorElement;
+
+profileMobileNav.addEventListener("click", (event) => {
+    event.preventDefault(); 
+    profileModal.showModal();
+    document.body.classList.add('no-scroll');
+    profileModal.style.display = "flex";
+});
+
+cartMobileNav.addEventListener("click", (event) => {
+    event.preventDefault(); 
+    shoppingCarttModal.showModal();
+    document.body.classList.add('no-scroll');
+    shoppingCarttModal.style.display = "grid";
+});
+
+
 /**
  * Manages the display and interaction with the sign-up modal.
  */
@@ -64,7 +82,20 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape" && signUpModal.open) {
         signUpModal.close();
         signUpModal.style.display = "none";
+        document.body.classList.remove('no-scroll');
     }
+});
+
+const closeButtonForDialogs = document.querySelectorAll(".close-btn") as NodeListOf<HTMLButtonElement>;
+
+closeButtonForDialogs.forEach((button) => {
+    button.onclick = () => {
+        profileModal.close();
+        profileModal.style.display = "none";
+        signUpModal.close();
+        signUpModal.style.display = "none";
+        document.body.classList.remove('no-scroll');
+    };
 });
 
 
@@ -73,7 +104,6 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
  */
 const shoppingCarttModal = document.getElementById("shoppingCart") as HTMLDialogElement;
 const cartIcon = document.getElementById("cart-icon") as HTMLAnchorElement;
-const closeCart = document.querySelector(".close") as HTMLAnchorElement;
 
 cartIcon.addEventListener("click", (event) => {
     event.preventDefault(); 
@@ -135,5 +165,8 @@ const createPanelButton = (buttonText: string, pageUrl: string): HTMLButtonEleme
     });
     return button;
 };
+
+declare var Email: any;
+
 
 export { generateRoleSpecificUI };

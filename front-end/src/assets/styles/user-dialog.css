@@ -11,8 +11,15 @@
     border-radius: 10px;
 }
 
+#signUpModal {
+    flex-direction: column;
+    max-width: 450px;
+    align-items: center;
+}
+
 #profileModal h1,
-#signUpModal h1 {
+#signUpModal h1,
+.order-history-container h1 {
     font-size: 24px;
     color: black;
     margin-bottom: 20px;
@@ -20,7 +27,8 @@
 }
 
 #profileModal h2,
-#signUpModal h2 {
+#signUpModal h2,
+.order-history-container h2 {
     font-size: 20px;
     color: black;
     margin-top: 20px;
@@ -33,11 +41,22 @@
     display: none;
 }
 
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: #aaa;
+}
+
 .side-bar {
 	flex: 0 0 150px;
 	background: rgb(212, 212, 212);
-    
 }
+
 
 
 
@@ -58,6 +77,12 @@
 .profile-container {
 	flex-grow: 1;
 	margin: 5px 25px 25px 5px;
+}
+
+.order-history-container {
+    min-height: 445px;
+    margin: 5px 25px 25px 5px;
+    width: 100%;
 }
 
 #avatar-target {
@@ -85,8 +110,8 @@
     border-radius: 5px;
 }
 
-.button {
-    width: 100%;
+.button,
+#logout-button {
     background-color: #007bff;
     color: #fff;
     padding: 10px 20px;
@@ -96,14 +121,21 @@
     cursor: pointer;
 }
 
-.button:hover {
+.button:hover,
+#logout-button:hover {
     background-color: #0056b3;
 }
 
-.button:active {
+.button:active,
+#logout-button:active {
     background-color: #0056b3;
     box-shadow: 0 5px #003366;
     transform: translateY(4px);
+}
+
+#logout-button {
+    margin-top: 10px;
+    margin-left: 40px;
 }
 
 #profile-form .form-control label,
@@ -122,11 +154,30 @@
 }
 
 #profile-form .button,
-#signUp-form .button {
+#signUp-form .button,
+#logout-button {
     color: #fff;
 }
 
-#profile-form .button:hover,
+#profile-form .button:hover #logout-button:hover,
 #signUp-form .button:hover {
     background-color: #0056b3;
+}
+
+/*  BREAKPOINTS  */
+
+@media (max-width: 768px) {
+
+    #profileModal,
+    #signUpModal {
+        flex-direction: column;
+    }
+
+    .side-bar {
+        flex: 0 0 100%;
+    }
+
+    .profile-container {
+        margin: 5px 5px 25px 5px;
+    }
 }
