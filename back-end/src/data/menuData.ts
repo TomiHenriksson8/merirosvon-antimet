@@ -35,6 +35,23 @@ const fetchFoodItemById = async (id: number): Promise<RowDataPacket[]> => {
 };
 
 /**
+ * Retrieves the total number of food items in the database.
+ * @returns {Promise<number>} A promise that resolves to the count of food items.
+ * @throws {Error} An error that contains the error code and message.
+ */
+const fetchFoodItemCount = async (): Promise<number> => {
+  try {
+      const sql = 'SELECT COUNT(*) AS itemCount FROM FoodItem';
+      const [rows] = await promisePool.query<RowDataPacket[]>(sql);
+      return rows[0].itemCount;
+  } catch (error) {
+      console.error('Error fetching food item count:', error);
+      throw error;
+  }
+};
+
+
+/**
  * Retrieves food items by category
  * @param {string} category - The food item category
  * @returns {Promise<RowDataPacket[]>} A promise that resolves to the food items
@@ -90,18 +107,25 @@ const updateExistingFoodItem = async (id: number, foodItem: any): Promise<void> 
  * @throws {Error} An error that contains the error code and message
  */
 const deleteFoodItemById = async (id: number): Promise<void> => {
-    try {
-      const sql = 'DELETE FROM FoodItem WHERE id = ?';
-      await promisePool.query(sql, [id]);
-    } catch (error) {
-      throw error;
-    }
-  };
+  try {
+    const deleteOrderDetails = 'DELETE FROM orderdetails WHERE foodItemId = ?';
+    const deleteCartItems = 'DELETE FROM cart WHERE foodItemId = ?';
+
+    await promisePool.query(deleteOrderDetails, [id]);
+    await promisePool.query(deleteCartItems, [id]);
+
+    const sql = 'DELETE FROM FoodItem WHERE id = ?';
+    await promisePool.query(sql, [id]);
+  } catch (error) {
+    throw error;
+  }
+}
   
 
 export { 
   fetchAllFoodItems,
   fetchFoodItemById,
+  fetchFoodItemCount,
   fetchFoodItemsByCategory,
   addNewFoodItem,
   updateExistingFoodItem,

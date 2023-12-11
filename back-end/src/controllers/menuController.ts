@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { FoodItem } from '../models/FoodItem';
-import { addNewFoodItem, deleteFoodItemById, fetchAllFoodItems, fetchFoodItemById, fetchFoodItemsByCategory, updateExistingFoodItem } from '../data/menuData';
+import { addNewFoodItem, deleteFoodItemById, fetchAllFoodItems, fetchFoodItemById, fetchFoodItemsByCategory, fetchFoodItemCount, updateExistingFoodItem } from '../data/menuData';
+
 
 /**
  * @api {get} /menu Get all food items
@@ -41,6 +42,25 @@ const getFoodItemByIdHandler = async (req: Request, res: Response) => {
     } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
     }
+};
+
+/**
+ * @api {get} /menu/count Get food items count
+ * @apiName  GetFoodItemsCount
+ * @apiGroup Menu
+ * @apiPermission open to all
+ * @apiSuccess {Number} foodItemCount Food items count
+ * @apiError ( 500 ) InternalServerError There was an issue getting the food items count
+ * @apiError ( 404 ) NotFound Food items not found
+ */
+const getFoodItemsCountHandler = async (req: Request, res: Response) => {
+  try {
+    const foodItemCount = await fetchFoodItemCount();
+    res.status(200).json({ itemCount: foodItemCount });
+  } catch (error) {
+    console.error('Error in getFoodItemsCountHandler:', error);
+    res.status(500).json({ message: 'Internal server error', error});
+  }
 };
 
 /**
@@ -131,4 +151,4 @@ const deleteFoodItemHandler = async (req: Request, res: Response) => {
 };
   
 
-export { getFoodItems, getFoodItemByIdHandler, addFoodItemHandler, getFoodItemsByCategoryHandler, updateFoodItemHandler, deleteFoodItemHandler};
+export { getFoodItems, getFoodItemByIdHandler, addFoodItemHandler, getFoodItemsCountHandler, getFoodItemsByCategoryHandler, updateFoodItemHandler, deleteFoodItemHandler};
