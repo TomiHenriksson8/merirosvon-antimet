@@ -166,7 +166,19 @@ const createPanelButton = (buttonText: string, pageUrl: string): HTMLButtonEleme
     return button;
 };
 
-declare var Email: any;
+// register service worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(err => {
+          console.log('Service Worker registration failed:', err);
+        });
+    });
+  }
+  
 
 
 export { generateRoleSpecificUI };

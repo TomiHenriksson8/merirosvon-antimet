@@ -2,6 +2,7 @@ import { getCurrentUser } from '../../utils/utils.js';
 import { DetailedOrder, OrdersResponse, GroupedOrders } from '../../interfaces/Order.js';
 import { User } from '../../interfaces/User.js';
 
+
 /**
  * Redirects to the appropriate page based on the user's role.
  */
@@ -36,7 +37,7 @@ const showAmountOfUsers = async () => {
     const url = 'http://localhost:8000/api/users/latest/id';
     const token = localStorage.getItem('token');
     if (!token) {
-        console.error("No token found");
+        // console.error("No token found");
         return;
     }
     try {
@@ -87,7 +88,7 @@ const showAmountOfOrders = async () => {
             amountOfOrdersElement.innerHTML = `Total Orders: ${latestOrderId}`;
         }
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
     }
 };
 
@@ -114,7 +115,7 @@ const showAmountOfFoodItems = async () => {
             amountOfFoodItemsElement.innerHTML = `Food Items Count: ${FoodItemsCount}`;
         }
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
     }
 };
 
@@ -143,7 +144,7 @@ const getOrders = async (): Promise<OrdersResponse> => {
         const responseData: OrdersResponse = await response.json();
         return responseData;
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         throw error;
     }
 };
@@ -232,7 +233,7 @@ row.insertCell().textContent = formattedDate;
 });
         tableContainer.appendChild(table);
     } catch (error) {
-        console.error('Error displaying orders:', error);
+        //console.error('Error displaying orders:', error);
     }
 };
 

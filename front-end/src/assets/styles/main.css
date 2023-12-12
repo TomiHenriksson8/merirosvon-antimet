@@ -397,22 +397,23 @@ button:has(:last-child:active)::before {
 
 .menu-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, auto));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-auto-rows: minmax(300px, auto);
     grid-gap: 1.5rem;
-    align-items: center;
+    align-items: start; 
 }
 
 .box {
     position: relative;
     margin-top: 4rem;
-    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; 
     background: var(--clr-primary-200);
     padding: 20px;
     border-radius: 0.5rem;
+    min-height: 90%;
 }
 
 .box-img {

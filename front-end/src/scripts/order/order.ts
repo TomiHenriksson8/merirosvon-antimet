@@ -81,7 +81,7 @@ const getOrderForOHistory = async () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
     };
     const orderHistory = await response.json();
-    console.log(orderHistory);
+    // console.log(orderHistory);
     return orderHistory;
 };
 
@@ -133,7 +133,7 @@ const groupOrders = (order: DetailedOrder[]): GroupedOrders => {
             });
         }
     } catch (error) {
-        console.error('Error displaying orders:', error);
+        // console.error('Error displaying orders:', error);
     }
 };
 
