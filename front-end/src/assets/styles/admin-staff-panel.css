@@ -97,11 +97,11 @@ span {
 
 .addFoodItems {
     background-color: #c1b9b962; /* Change as per your color scheme */
-    padding: 20px;
+    padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px; /* Adjust width as needed */
-    margin: 0 auto; /* Center align the form */
+    max-width: 500px; 
+    margin: 0 auto; 
 }
 
 .addFoodItems span {

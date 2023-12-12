@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cypress": "^13.6.1",
     "http-server": "^14.1.1",
     "jsdoc": "^4.0.2",
     "typescript": "^5.2.2"
