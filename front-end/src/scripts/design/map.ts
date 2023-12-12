@@ -1,32 +1,34 @@
-/**
- * Class to initialize and manage a map using Leaflet.js.
- */
 declare var L: any;
 
 class MapInitializer {
     private map: any;
 
-    /**
-     * Initializes a new instance of the MapInitializer class.
-     * @param {string} mapId The DOM element ID where the map will be initialized.
-     */
     constructor(private mapId: string) {
         this.initMap();
+        this.setupResizeListener();
     }
 
-    /**
-     * Initializes the map with a default view and tile layer using Leaflet.js.
-     * @private
-     */
     private initMap(): void {
-        // Setting a default view for the map (London, in this case).
-        this.map = L.map(this.mapId).setView([51.505, -0.09], 13); 
+        // Determine the initial zoom level based on screen width
+        const isSmallScreen = window.innerWidth < 600;
+        const zoomLevel = isSmallScreen ? 12 : 13;
 
-        // Adding a tile layer from OpenStreetMap.
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        }).addTo(this.map);
+        // Initialize the map with the dynamic zoom level and new coordinates
+        this.map = L.map(this.mapId).setView([60.223904, 24.758388], zoomLevel);
+
+        // Add tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
+
+        // Add a marker at the specified coordinates
+        L.marker([60.223904, 24.758388]).addTo(this.map)
+    }
+
+    private setupResizeListener(): void {
+        // Adjust map size on window resize
+        window.addEventListener('resize', () => {
+            this.map.invalidateSize();
+        });
     }
 }
 
-// Creating an instance of MapInitializer to initialize the map.
 new MapInitializer('map');

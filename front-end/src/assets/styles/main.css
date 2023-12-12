@@ -4,9 +4,17 @@
 }
 
 :root {
-    --paaVari: rgba(0, 0, 0, 0.884);
-    --vari2: rgb(37, 37, 37);
-    --aksentti: rgb(126, 126, 126);
+    --clr-neutral-100: #fff;
+    --clr-primary-200: #FEEEE7;
+    --clr-primary-400: #FFC49A;
+    --clr-primary-500: #8DD4F6;
+    --clr-primary-600: #105F7D;
+    --clr-primary-800: #252525;
+    --clr-neutral-900: #000;
+    
+    --clr-dark-overlay: rgba(0, 0, 0, 0.884); 
+    --clr-dark-solid: #252525;                
+    --clr-accent-gray: #7E7E7E; 
 }
 
 * {
@@ -16,7 +24,6 @@
     text-decoration: none;
     box-sizing: border-box;
     font-family: 'alice';
-
 }
 
 html {
@@ -25,7 +32,7 @@ html {
 
 body {
     min-height: 100vh;
-    background: linear-gradient(to bottom, #8dd4f6, #0a4055);
+    background: linear-gradient(to bottom, var(--clr-primary-500), var(--clr-primary-600));
 }
 
 .no-scroll {
@@ -51,7 +58,7 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--paaVari);
+    background: var(--clr-dark-overlay);
     backdrop-filter: blur(50px);
     z-index: -1;
 }
@@ -82,7 +89,7 @@ header {
 
 .logo {
     font-size: 2rem;
-    color: #fff;
+    color: var(--clr-neutral-100);
     text-decoration: none;
     font-weight: 700;
 
@@ -95,7 +102,7 @@ a img {
 
 .navbar a {
     font-size: 1.15rem;
-    color: #fff;
+    color: var(--clr-neutral-100);
     text-decoration: none;
     font-weight: 500;
     margin-left: 2.5rem;
@@ -107,7 +114,7 @@ a img {
 
 .log-cart a {
     font-size: 1.15rem;
-    color: #fff;
+    color: var(--clr-neutral-100);
     text-decoration: none;
     font-weight: 700;
     margin-left: .75rem;
@@ -132,7 +139,7 @@ a img {
     position: absolute;
     right: 5%;
     font-size: 2.8rem;
-    color: #fff;
+    color: var(--clr-neutral-100);
     cursor: pointer;
     display: none;
 }
@@ -141,28 +148,12 @@ a img {
     position: relative;
 }
 
-.log-cart span {
-    display: flex;
-    width: 28px;
-    height: 28px;
-    background: red;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    border-radius: 50%;
-    position: absolute;
-    top: 9px;
-    right: -20px;
-
-}
-
 .test {
     display: grid;
     height: 100vh;
     place-items: center;
     margin-bottom: 12rem;
 }
-
 
 .container {
     margin-top: 6.5rem;
@@ -213,7 +204,7 @@ a img {
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background-color: #000000;
+    background-color: var(--clr-neutral-900);
     opacity: 0.75;
     transition: opacity ease 250ms;
 }
@@ -223,11 +214,10 @@ a img {
 }
 
 
-
 main {
     width: 100%;
     margin-top: 18.7rem;
-    background: #fff;
+    background: var(--clr-neutral-100);
     padding-bottom: 50px;
 }
 
@@ -242,7 +232,6 @@ main {
     background-color: transparent;
 
 }
-
 
 @keyframes animate {
 
@@ -301,14 +290,9 @@ main {
     z-index: 1001;
 }
 
-.about-us {
-    background: linear-gradient(to bottom, #0a779b, #105e7c);
-    width: 100%;
-}
-
 .menu {
     padding: 75px;
-    background: #ffc49a;
+    background: var(--clr-primary-400);
     z-index: 1000;
 }
 
@@ -339,9 +323,9 @@ main {
 button {
     font: inherit;
     padding: 0.75rem 3rem;
-    background: var(--vari2);
-    border: 0.15rem solid var(--aksentti);
-    color: white;
+    background: var(--clr-dark-solid);
+    border: 0.15rem solid var(--clr-accent-gray);
+    color: var(--clr-neutral-100);
     border-radius: 100vw;
     cursor: pointer;
     transition: background-color 250ms;
@@ -426,7 +410,7 @@ button:has(:last-child:active)::before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #feeee7;
+    background: var(--clr-primary-200);
     padding: 20px;
     border-radius: 0.5rem;
 }
@@ -443,11 +427,11 @@ button:has(:last-child:active)::before {
 
 .box h2 {
     font-size: 1.3rem;
-    color: black;
+    color: var(--clr-neutral-900);
 }
 
 .box h3 {
-    color: black;
+    color: var(--clr-neutral-900);
     font-size: 1rem;
     font-weight: 400;
     margin: 4px 0 10px;
@@ -471,46 +455,38 @@ button:has(:last-child:active)::before {
     text-decoration: none;
 }
 
+.about-us {
+    background: linear-gradient(to bottom, #0a779b, #105e7c);
+    padding: 2rem;
+    color: var(--clr-neutral-100);
+}
+
 .about-us-content {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 50px;
+    align-items: flex-start; 
+    gap: 1rem;
 }
 
 .map-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex: 1 1 300px; 
+    height: 300px; 
 }
 
 .restaurant-info {
-    padding-left: 70px;
-    width: 45%;
+    flex: 1 1 300px;
+    padding: 1rem;
 }
-
-#map {
-    height: 400px;
-    width: 100%;
-    margin-right: 30px;
-    margin-left: 100px;
-    margin-bottom: 50px;
-    margin-top: 50px;
-    padding: 0;
-}
-
-
 
 footer {
-    background: var(--paaVari);
-    color: #fff;
+    background: var(--clr-dark-overlay);
+    color: var(--clr-neutral-100);
 }
 
 footer h4 {
     margin: 0.5rem;
 }
-
 
 .footer-content {
     display: grid;
@@ -527,7 +503,6 @@ footer h4 {
     text-align: center;
     margin: 1rem;
 }
-
 
 footer img {
     width: 70px;
@@ -554,17 +529,13 @@ footer img {
 
 }
 
-
-
 .footer-social a {
     color: inherit;
     font-size: 1.6rem;
     margin-bottom: .5rem;
     margin-top: 0.5rem;
-
-
-
 }
+
 
 /* BREAKPOINTS */
 
@@ -788,20 +759,21 @@ footer img {
     
     .about-us-content {
         flex-direction: column;
-        align-items: flex-start;
     }
 
     .map-container,
     .restaurant-info {
-        width: 100%;
-        padding-left: 0;
-        margin-left: 0;
-        margin-right: 0;
+        width: 100%; /* Full width on smaller screens */
+        flex-basis: auto; /* Reset flex basis */
     }
 
-    #map {
-        width: 100%;
-        margin-top: 20px;
+    .map-container {
+        order: 2; /* Map after the text */
+        height: 250px; /* Adjust height for smaller screens */
+    }
+
+    .restaurant-info {
+        order: 1; /* Text before the map */
     }
 
     .footer-info p {

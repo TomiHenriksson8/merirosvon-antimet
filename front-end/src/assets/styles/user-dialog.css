@@ -7,7 +7,7 @@
     margin: auto;
     flex-direction: row;
     align-items: stretch;
-    background-color: white;
+    background-color: var(--clr-neutral-100);
     border-radius: 10px;
 }
 
@@ -21,7 +21,7 @@
 #signUpModal h1,
 .order-history-container h1 {
     font-size: 24px;
-    color: black;
+    color: var(--clr-neutral-900);
     margin-bottom: 20px;
     text-align: center;
 }
@@ -30,7 +30,7 @@
 #signUpModal h2,
 .order-history-container h2 {
     font-size: 20px;
-    color: black;
+    color: var(--clr-neutral-900);
     margin-top: 20px;
     margin-bottom: 15px;
     border-bottom: 1px solid #333;
@@ -49,12 +49,12 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
-    color: #aaa;
+    color: rgb(121, 0, 0);
 }
 
 .side-bar {
 	flex: 0 0 150px;
-	background: #f7f7f7;
+	background: var(--clr-primary-200);
 }
 
 
@@ -71,7 +71,7 @@
 
 .side-bar ul li:hover {
 	background: #b4b4b4;
-	color: #000;
+	color: var(--clr-neutral-900);
 }
 
 .profile-container {
@@ -109,8 +109,8 @@
 
 .button,
 #logout-button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--clr-primary-600);
+    color: var(--clr-neutral-100);
     padding: 10px 20px;
     text-align: center;
     font-size: 16px;
@@ -120,7 +120,7 @@
 
 .button:hover,
 #logout-button:hover {
-    background-color: #0056b3;
+    background-color: #002f62;
 }
 
 .button:active,
@@ -137,7 +137,7 @@
 
 #profile-form .form-control label,
 #signUp-form .form-control label {
-    color: black;
+    color: var(--clr-neutral-900);
     font-weight: bold;
 }
 
@@ -153,12 +153,12 @@
 #profile-form .button,
 #signUp-form .button,
 #logout-button {
-    color: #fff;
+    color: var(--clr-neutral-100);
 }
 
 #profile-form .button:hover #logout-button:hover,
 #signUp-form .button:hover {
-    background-color: #0056b3;
+    background-color: #002f62;
 }
 
 .order-history-container {
@@ -169,7 +169,7 @@
 }
 
 .order-history-card {
-    background-color: #fff;
+    background-color: var(--clr-neutral-100);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -188,7 +188,6 @@
     margin-bottom: 8px;
 }
 
-/* If you have additional itemsHtml that needs styling, you can add it here */
 .order-history-card .items-list {
     background: #f7f7f7;
     padding: 15px;
@@ -196,21 +195,18 @@
     margin-top: 15px;
 }
 
-/* Adding a class for the price for additional styling */
 .order-history-card .total-price {
     font-weight: bold;
-    color: #4caf50; /* Green color for price */
+    color: #4caf50; 
 }
 
-/* Styling for the order status */
 .order-history-card .order-status {
     padding: 5px 10px;
     border-radius: 4px;
     font-weight: bold;
-    display: inline-block; /* To shape it like a tag or badge */
+    display: inline-block; 
 }
 
-/* Color-coding the status based on its value */
 .order-history-card .order-status.pending {
     background-color: #ffeb3b;
     color: #333;
@@ -218,12 +214,12 @@
 
 .order-history-card .order-status.completed {
     background-color: #4caf50;
-    color: #fff;
+    color: var(--clr-neutral-100);
 }
 
 .order-history-card .order-status.cancelled {
     background-color: #f44336;
-    color: #fff;
+    color: var(--clr-neutral-100);
 }
 
 
@@ -237,15 +233,15 @@
     }
 
     #profileModal .side-bar {
-        order: -1; /* Ensures the sidebar is placed at the top in column layout */
-        flex: 0 0 auto; /* Adjusts to content height instead of stretching */
-        width: 100%; /* Full width for smaller screens */
+        order: -1; 
+        flex: 0 0 auto; 
+        width: 100%; 
     }
 
     #profileModal .profile-container,
     #profileModal .order-history-container {
         margin: 5px;
-        width: auto; /* Reset the width to adjust to padding */
+        width: auto; 
     }
 
     .close-btn {
@@ -268,22 +264,21 @@
         text-align: center;
     }
 
-    /* If the logout button is wrapped within a container, make sure to target that */
     #logout-button {
-        margin: 10px 0; /* Add margin for spacing around the button */
+        margin: 10px 0;
     }
 
     .form-control {
-        margin: 0 auto 20px; /* Center the form controls and add margin to the bottom */
-        max-width: 300px; /* Or any max-width that fits your design */
+        margin: 0 auto 20px; 
+        max-width: 300px; 
     }
 
     .form-control input {
-        width: 100%; /* Make the input full width within .form-control */
+        width: 100%; 
     }
 
     .profile-container {
-        width: 100%; /* Adjust the width of the profile container */
-        margin: 5px; /* Adjust the margin as needed */
+        width: 100%; 
+        margin: 5px; 
     }
 }
