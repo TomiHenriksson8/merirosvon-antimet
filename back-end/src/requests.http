@@ -55,7 +55,7 @@ Content-Type: application/json
 GET {{host}}/api/menu HTTP/1.1
 
 ### GET Menu by ID
-GET {{host}}/api/menu/6 HTTP/1.1
+GET {{host}}/api/menu/1 HTTP/1.1
 
 ### GET Count of FoodItems
 GET {{host}}/api/menu/count HTTP/1.1

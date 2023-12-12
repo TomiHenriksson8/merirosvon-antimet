@@ -30,6 +30,16 @@ const fetchAllUsers = async (): Promise<any> => {
  */
 const createUser = async (user: User): Promise<User> => {
   const { username, email, password } = user;
+
+  // Check if user already exists
+  const userExistsSql = `SELECT * FROM Users WHERE username = ? OR email = ?`;
+  const [existingUsers] = await promisePool.query<RowDataPacket[]>(userExistsSql, [username, email]);
+
+  if (existingUsers.length > 0) {
+    throw new Error('Username or email already in use');
+  }
+
+  // If user does not exist, proceed to create a new user
   const sql = `INSERT INTO Users (username, email, password, role) VALUES (?, ?, ?, 'user')`;
   await promisePool.query(sql, [username, email, password]);
   return { ...user };

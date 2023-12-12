@@ -135,7 +135,7 @@ const createOrderController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'Cannot create an order with an empty cart.' });
         }
         const orderId = await createOrderFromCart(userId);
-        res.status(200).json({ message: 'Order created successfully', orderId: orderId });
+        res.status(200).json({ message: 'Order created successfully'});
     } catch (error) {
         console.error('Error in createOrderController:', error);
         res.status(500).json({ message: 'Internal server error' });
