@@ -34,7 +34,7 @@ body {
 
 header {
     position: fixed;
-    top: -5px;
+    top: 0;
     left: 0;
     width: 100%;
     padding: 1.3rem 10%;
@@ -50,7 +50,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 95%;
+    height: 100%;
     background: var(--paaVari);
     backdrop-filter: blur(50px);
     z-index: -1;
@@ -637,6 +637,10 @@ footer img {
 
 @media (max-width: 813px) {
 
+    body {
+        background: none;
+    }
+
     .logo {
         display: none;
     }
@@ -853,13 +857,22 @@ footer img {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 483px) {
     .menu-filter-btn button {
         padding: 0.6rem 0.8rem;
     }
     
     .slider {
         aspect-ratio: 1.3 / 1;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-links {
+        display: none;
     }
     
 }

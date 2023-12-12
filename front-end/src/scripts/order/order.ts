@@ -122,13 +122,14 @@ const groupOrders = (order: DetailedOrder[]): GroupedOrders => {
                 }).join('');
                 orderHistoryContainer.innerHTML += `
                     <div class="order-history-card">
-                        <h3>Order ID: ${orderId}</h3>
-                        <p>Order date: ${orderDate}</p>
-                        <p>Total price: $${parseFloat(orderDetails[0].totalPrice).toFixed(2)}</p>
-                        <p>Order status: ${orderDetails[0].orderStatus}</p>
-                        ${itemsHtml}
+                    <h3>Order ID: ${orderId}</h3>
+                    <p>Order date: ${orderDate}</p>
+                    <p class="total-price">Total price: $${parseFloat(orderDetails[0].totalPrice).toFixed(2)}</p>
+                    <p class="order-status ${orderDetails[0].orderStatus.toLowerCase()}">Order status: ${orderDetails[0].orderStatus}</p>
+                    <div class="items-list">
+                        ${itemsHtml} <!-- Ensure this variable contains HTML with item details -->
                     </div>
-                `;
+                </div>`;
             });
         }
     } catch (error) {

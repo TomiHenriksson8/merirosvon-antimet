@@ -64,8 +64,25 @@
             <!-- ORDERS TABLE -->
         </div>
         <section class="menu" id="menu">
-            <div class="heading">
-                <span>Food Categories</span>
+            <div class="addFoodItems">
+                <span>Add Food Item</span>
+                <form id="add-food-item-form">
+                    <input type="text" id="name" placeholder="Food Item Name">
+                    <input type="text" id="description" placeholder="Description">
+                
+                    <!-- Number input for price -->
+                    <input type="number" id="price" placeholder="Price" step="0.01" min="0">
+                
+                    <!-- Dropdown for category selection -->
+                    <input type="text" id="category" placeholder="Category">
+                
+                    <input type="text" id="imageUrl" placeholder="Path to food item image">
+                    <button type="submit">Add To Menu</button>
+                </form>
+            </div>
+            
+            
+                <span class="panel-span">Food Categories</span>
                 <div class="menu-filter-btn">
                     <button><span></span>Kaikki<span></span></button>
                     <button><span></span>Pizza<span></span></button>
@@ -74,23 +91,9 @@
                     <!-- Lisää Lisää myöhemmin  -->
                     <button><span></span>Juomat<span></span></button>
                 </div>
-                <span>Food Items</span>
+                <span class="panel-span">Food Items</span>
                 <!-- add option to add food items to database and delete from the ui  ( ADMIN ROLE ONLY ) -->
-                <div class="addFoodItems">
-                    <form id="add-food-item-form">
-                        <input type="text" id="name" placeholder="Food Item Name">
-                        <input type="text" id="description" placeholder="Description">
-                    
-                        <!-- Number input for price -->
-                        <input type="number" id="price" placeholder="Price" step="0.01" min="0">
-                    
-                        <!-- Dropdown for category selection -->
-                        <input type="text" id="category" placeholder="Category">
-                    
-                        <input type="text" id="imageUrl" placeholder="Path to food item image">
-                        <button type="submit">Add To Menu</button>
-                    </form>
-                </div>
+                
                 <div class="menu-container">
                     <!-- Menu Items -->
                 </div>

@@ -194,7 +194,23 @@ const displayOrders = async () => {
         userInfoCell.appendChild(userInfoLink);
 
         row.insertCell().textContent = orders[0].totalPrice.toString();
-        row.insertCell().textContent = orders[0].orderDate;
+        // Example orderDate from your orders array
+        const isoDate = orders[0].orderDate; // "2023-11-27T11:08:05.000Z"
+
+        // Convert to a Date object
+        const dateObject = new Date(isoDate);
+
+        // Format the date to a more readable form, e.g., "27.11.2023"
+        const formattedDate = dateObject.toLocaleDateString('fi-FI', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+// Insert the formatted date into the table cell
+row.insertCell().textContent = formattedDate;
 
         const statusDropdown = document.createElement('select');
         ['completed', 'pending', 'cancelled'].forEach(status => {

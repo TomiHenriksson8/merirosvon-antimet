@@ -9,6 +9,7 @@
     align-items: stretch;
     background-color: white;
     border-radius: 10px;
+    position: relative;
 }
 
 #signUpModal {
@@ -54,7 +55,7 @@
 
 .side-bar {
 	flex: 0 0 150px;
-	background: rgb(212, 212, 212);
+	background: #f7f7f7;
 }
 
 
@@ -77,19 +78,16 @@
 .profile-container {
 	flex-grow: 1;
 	margin: 5px 25px 25px 5px;
+    overflow-y: auto;
 }
 
 .order-history-container {
     min-height: 445px;
     margin: 5px 25px 25px 5px;
+    overflow-y: auto;
     width: 100%;
 }
 
-#avatar-target {
-    max-width: 80%;
-    height: auto;
-    border-radius: 50px;
-}
 
 .form-control {
     margin-bottom: 20px;
@@ -164,6 +162,72 @@
     background-color: #0056b3;
 }
 
+.order-history-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.order-history-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.order-history-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-history-card p {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+/* If you have additional itemsHtml that needs styling, you can add it here */
+.order-history-card .items-list {
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+/* Adding a class for the price for additional styling */
+.order-history-card .total-price {
+    font-weight: bold;
+    color: #4caf50; /* Green color for price */
+}
+
+/* Styling for the order status */
+.order-history-card .order-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block; /* To shape it like a tag or badge */
+}
+
+/* Color-coding the status based on its value */
+.order-history-card .order-status.pending {
+    background-color: #ffeb3b;
+    color: #333;
+}
+
+.order-history-card .order-status.completed {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.order-history-card .order-status.cancelled {
+    background-color: #f44336;
+    color: #fff;
+}
+
+
 /*  BREAKPOINTS  */
 
 @media (max-width: 768px) {
@@ -173,11 +237,54 @@
         flex-direction: column;
     }
 
-    .side-bar {
-        flex: 0 0 100%;
+    #profileModal .side-bar {
+        order: -1; /* Ensures the sidebar is placed at the top in column layout */
+        flex: 0 0 auto; /* Adjusts to content height instead of stretching */
+        width: 100%; /* Full width for smaller screens */
+    }
+
+    #profileModal .profile-container,
+    #profileModal .order-history-container {
+        margin: 5px;
+        width: auto; /* Reset the width to adjust to padding */
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 50px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        color: #aaa;
+    }
+
+    #profile-info, 
+    #logout-button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* If the logout button is wrapped within a container, make sure to target that */
+    #logout-button {
+        margin: 10px 0; /* Add margin for spacing around the button */
+    }
+
+    .form-control {
+        margin: 0 auto 20px; /* Center the form controls and add margin to the bottom */
+        max-width: 300px; /* Or any max-width that fits your design */
+    }
+
+    .form-control input {
+        width: 100%; /* Make the input full width within .form-control */
     }
 
     .profile-container {
-        margin: 5px 5px 25px 5px;
+        width: 100%; /* Adjust the width of the profile container */
+        margin: 5px; /* Adjust the margin as needed */
     }
 }
