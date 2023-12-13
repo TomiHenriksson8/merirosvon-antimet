@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Tervetuloa Merirosvon Antimet ravintolaan – ainutlaatuisia makuelämyksiä, käsintehtyjä herkkuja ja merellistä.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0000FF">
     <!-- MANIFEST -->
@@ -15,7 +16,6 @@
     <!-- ICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- JS Files -->
-    <!-- <script src="scripts/design/scroll-parallax.js"></script> -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="scripts/design/carousel.js" defer></script>
     <script type="module" src="scripts/design/map.js"></script>
@@ -30,7 +30,7 @@
 <body id="home">
     <header class="header">
         <div class="logo-container">
-            <a href="#"><img src="./assets/images/logo-white.png" alt=""></a>
+            <a href="#home"><img src="./assets/images/logo-white.png" alt="Merirosvon Antimet Logo"></a>
             <a href="#home" class="logo">Merirosvon Antimet</a>
         </div>
         <input type="checkbox" id="check">
@@ -47,8 +47,8 @@
         </nav>
         <div class="log-cart">
             <div id="panelAdminAndStaff"></div>
-            <a href="#"><img id="profile-icon" src="./assets/images/profile-pirate.png" alt=""></a>
-            <a href="#"><img id="cart-icon" src="./assets/images/cart-pirate.png" alt=""></a>
+            <a href="#"><img id="profile-icon" src="./assets/images/profile-pirate.png" alt="Käyttäjäprofiilin ikoni"></a>
+            <a href="#"><img id="cart-icon" src="./assets/images/cart-pirate.png" alt="Ostoskorin ikoni"></a>
         </div> 
     </header>
     <section class="container">
@@ -59,9 +59,9 @@
                 <div class="slide" id="slide-3" style="background-image: url('./assets/images/slider1-mobile.png');"></div>
             </div>
             <div class="slider-nav">
-                <a href="#slide-1"></a>
-                <a href="#slide-2"></a>
-                <a href="#slide-3"></a>
+                <a href="#slide-1" aria-label="Siirry diaan yksi"></a>
+                <a href="#slide-2" aria-label="Siirry diaan kaksi"></a>
+                <a href="#slide-3" aria-label="Siirry diaan kolme"></a>
             </div>
         </div>
     </section>
@@ -71,7 +71,7 @@
             <div class="boat-wave"></div>
         </section>
         <div class="info">
-            <h2>Tervetuloa meidän Ravintolaan</h2>
+            <h1>Tervetuloa meidän Ravintolaan</h1>
             <p>Tervetuloa nauttimaan ainutlaatuisista makuelämyksistä! Meidän ravintolamme tarjoaa laadukkaat
                 raaka-aineet, käsintehtyjä herkkuja ja unohtumattoman tunnelman.
                 Yhdistämme perinteiset reseptit moderniin keittiöön, luoden upeita ruokakokemuksia jokaiseen makuun.
@@ -124,7 +124,7 @@
                 <p>Merien makuja vuodesta 1678!</p>
             </div>
             <div class="footer-links">
-                <h4>Linkit</h4>
+                <h2>Linkit</h2>
                 <ul>
                     <li><a href="#home">Etusivu</a></li>
                     <li><a href="#menu">Menu</a></li>
@@ -132,10 +132,10 @@
                 </ul>
             </div>
             <div class="footer-social">
-                <h4>Seuraa Meitä</h4>
-                <a href=""><i class='bx bxl-twitter'></i></a>
-                <a href=""><i class='bx bxl-instagram-alt' ></i></a>
-                <a href=""><i class='bx bxl-youtube' ></i></a>
+                <h2>Seuraa Meitä</h2>
+                <a href="" aria-label="Seuraa meitä Twitterissä"><i class='bx bxl-twitter'></i></a>
+                <a href="" aria-label="Seuraa meitä Instagramissa"><i class='bx bxl-instagram-alt' ></i></a>
+                <a href="" aria-label="Seuraa meitä YouTubessa"><i class='bx bxl-youtube' ></i></a>
             </div>
         </div>
     </footer>
@@ -187,7 +187,7 @@
                             <label for="profile-email">Sähköposti</label>
                         </div>
                         <div class="form-control">
-                            <input type="submit" value="Update" class="button">
+                            <input type="submit" value="Päivitä" class="button">
                         </div>
                     </form>
                 </section>                

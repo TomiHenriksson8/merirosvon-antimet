@@ -4,6 +4,10 @@ main {
     width: 100%;
 }
 
+button #exit-panel {
+    color: red;
+}
+
 .menu {
     background-color: inherit;
 }

@@ -208,7 +208,7 @@ const updateCartTotalInUI = async () => {
   const total = await fetchCartTotal(currentUser.id);
   const cartTotalElement = document.getElementById('cart-total');
   if (cartTotalElement) {
-    cartTotalElement.textContent = `$${total.toFixed(2)}`;
+    cartTotalElement.textContent = `${total.toFixed(2)}€`;
   }
 };
 
@@ -236,7 +236,7 @@ const fetchCartTotal = async (userId: number): Promise<number> => {
     const data = await response.json();
     return parseFloat(data.total);
   } catch (error) {
-    console.error('Error fetching cart total:', error);
+    // console.error('Error fetching cart total:', error);
     return 0;
   }
 };
@@ -249,7 +249,7 @@ const fetchCartTotal = async (userId: number): Promise<number> => {
 const renderCartItems = (cartItems: CartItem[]): void => {
   const cartContainer = document.querySelector(".cart-items");
   if (!cartContainer) {
-    console.error("Cart container element not found.");
+    // console.error("Cart container element not found.");
     return;
   }
   cartContainer.innerHTML = "";
@@ -259,7 +259,7 @@ const renderCartItems = (cartItems: CartItem[]): void => {
         <img src="${item.imageUrl}" alt="${item.name}">
         <div class="item-details">
           <h4>${item.name}</h4>
-          <p>${item.description}</p>
+          
           <p>
             <button class="quantity-btn minus-btn" data-id="${item.id}" aria-label="Decrease quantity">
               <i class='bx bxs-minus-circle'></i>
@@ -269,7 +269,7 @@ const renderCartItems = (cartItems: CartItem[]): void => {
               <i class='bx bxs-plus-circle'></i>
             </button>
           </p>
-          <p>Price: $${item.price}</p>
+          <p>Hinta: $${item.price}</p>
         </div>
         <button class="delete-cart-item" data-id="${item.id}"><span>X</span></button>
       </div>
