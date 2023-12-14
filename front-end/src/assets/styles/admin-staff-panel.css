@@ -1,11 +1,38 @@
 main {
     text-align: center;
-    margin-top: 6rem;
+    margin-top: 8.1rem;
     width: 100%;
 }
 
-button #exit-panel {
-    color: red;
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.3rem 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1002;
+}
+
+#exit-panel {
+    cursor: pointer;
+    width: 400px;
+    text-align: center;
+
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--clr-dark-overlay);
+    backdrop-filter: blur(50px);
+    z-index: -1;
 }
 
 .menu {
@@ -13,7 +40,7 @@ button #exit-panel {
 }
 
 .panelInfo span {
-    font-size: 1.5rem; /* use made  css  variable later */;
+    font-size: 1.5rem; 
 }
 
 .boxes {
@@ -30,9 +57,9 @@ dashboard-box {
 #users-box {
     background-color: #4caf50;
     padding: 30px 50px;
-    border: 1px solid #252525;
+    border: 1px solid var(--clr-neutral-900);
     border-radius: 10px;
-    color: #fff; 
+    color: var(--clr-neutral-100); 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -41,7 +68,7 @@ dashboard-box {
     padding: 30px 50px;
     border: 1px solid #252525;
     border-radius: 10px;
-    color: #fff; 
+    color: var(--clr-neutral-100); 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
 }
 
@@ -50,7 +77,7 @@ dashboard-box {
     padding: 30px 50px;
     border: 1px solid #252525;
     border-radius: 10px;
-    color: #fff; 
+    color: var(--clr-neutral-100); 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -71,7 +98,7 @@ dashboard-box {
 
 #orders-table-container th,
 #orders-table-container td {
-    border: 1px solid black; 
+    border: 1px solid var(--clr-neutral-900); 
     padding: 8px;
     text-align: left; 
 }
@@ -100,7 +127,7 @@ span {
 }
 
 .addFoodItems {
-    background-color: #c1b9b962; /* Change as per your color scheme */
+    background-color: #c1b9b962; 
     padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -113,7 +140,7 @@ span {
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.5rem;
-    color: #333; /* Dark grey color for text */
+    color: #333; 
 }
 
 #add-food-item-form {
@@ -138,7 +165,7 @@ span {
 #add-food-item-form button {
     padding: 10px 20px;
     background-color: #5cb85c; 
-    color: white;
+    color: var(--clr-neutral-100);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -150,7 +177,7 @@ span {
 }
 
 #add-food-item-form button:hover {
-    background-color: #4cae4c; /* Darker green on hover */
+    background-color: #4cae4c; 
 }
 
 
@@ -161,37 +188,48 @@ span {
         border-collapse: collapse; 
         width: 100%;  
     }
+
+    #exit-panel {
+        cursor: pointer;
+        width: 200px;
+        text-align: center;
+    
+    }
 }
 
 @media screen and (max-width: 768px) {
     .boxes {
         flex-direction: column;
-        gap: 10px; /* Reduced gap for smaller screens */
+        gap: 10px; 
     }
 
     .dashboard-box {
-        width: 100%; /* Full width for each box in a column layout */
+        width: 100%; 
     }
 
     #orders-box, #users-box, #food-items-box {
-        padding: 20px 30px; /* Adjust padding for smaller screens */
+        padding: 20px 30px; 
+    }
+
+    #orders-table-container {
+        overflow-x: auto;
+        justify-content: normal; 
     }
 
     #orders-table-container table {
-        width: 100%; /* Use full width for the table */
+        width: 100%; 
     }
 
     #orders-table-container th, #orders-table-container td {
-        padding: 5px; /* Smaller padding for table cells */
+        padding: 5px; 
     }
-
-    /*#orders-table-container tr:nth-child(1),*/ 
+ 
     #orders-table-container td:nth-child(1) {
         display: none;
     }
 
     .panelInfo span {
-        font-size: 1.2rem; /* Smaller font size for panel info */
+        font-size: 1.2rem; 
     }
 }
 
@@ -209,12 +247,10 @@ span {
     }
 
     #orders-table-container th, #orders-table-container td {
-        padding: 4px; /* Even smaller padding for very small screens */
+        padding: 4px; 
     }
 
     .panelInfo span {
-        font-size: 1rem; /* Further reduce font size */
+        font-size: 1rem; 
     }
-
-    /* Additional adjustments as needed for smaller screens */
 }

@@ -68,10 +68,10 @@ document.getElementById("signUp-form")?.addEventListener("submit", async (event)
     const formData = getSignUpFormData();
     try {
         await fetchPostNewUser(formData);
-        console.log("User registered successfully!");
+        // console.log("User registered successfully!");
         showPopup('popup-lr-ok-container', 'Rekisteröityminen onnistui', 'Tilisi on luotu onnistuneesti!', './assets/images/success.png');
     } catch (error) {
-        console.error("Error registering user:", error);
+        // console.error("Error registering user:", error);
         showPopup('popup-fail-lr-container', 'Rekisteröityminen epäonnistui', 'Tilin luominen ei onnistunut. Yritä uudelleen myöhemmin.', './assets/images/failure.png');
     }
 });
@@ -97,7 +97,7 @@ const fetchLoginUser = async (loginData: LoginUser) => {
             showPopup('popup-fail-o-container', 'Kirjautuminen epäonnistui', 'Virheellinen Käyttäjänimi tai Salasana.' , './assets/images/popupfail.png');
         }
     } catch (error) {
-        console.error("Error during login:", error);
+        // console.error("Error during login:", error);
         showPopup('popup-fail-o-container', 'Kirjautumisvirhe', 'Kirjautumisen aikana tapahtui virhe. Yritä uudelleen.', './assets/images/popupfail.png');
     }
 };
@@ -123,7 +123,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
             localStorage.setItem('user', JSON.stringify(user));
             updateProfileInfo(user.username, user.email);
             prefillProfileForm();
-            console.log("User logged in successfully!", user);
+            // console.log("User logged in successfully!", user);
             showPopup('popup-lr-ok-container', 'Kirjautuminen Onnistui', 'Olet kirjautunut sisään onnistuneesti. Tervetuloa takaisin!', './assets/images/success.png');
             document.getElementById('profile-form-section')!.style.display = 'block';
             document.getElementById('login-header')!.style.display = 'none';
@@ -132,7 +132,7 @@ document.getElementById("login-form")?.addEventListener("submit", async (event) 
             generateRoleSpecificUI();
         }
     } catch (error) {
-        console.error("Error logging in:", error);
+        // console.error("Error logging in:", error);
         showPopup('popup-fail-lr-container', 'Kirjautuminen Epäonnistui', 'Kirjautumisyrityksesi epäonnistui. Tarkista tunnistetietosi ja yritä uudelleen.', './assets/images/failure.png');
     }
 });
@@ -160,7 +160,7 @@ const prefillProfileForm = () => {
 const updateProfileInfo = (username: string, email: string) => {
     const usernameTarget = document.getElementById("username-target");
     const emailTarget = document.getElementById("email-target");
-    console.log("Updating profile info:", username, email);
+    // console.log("Updating profile info:", username, email);
     if (usernameTarget) {
         usernameTarget.textContent = username;
     }
@@ -173,7 +173,7 @@ document.getElementById('logout-button')?.addEventListener('click', () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     updateProfileInfo('', '');
-    console.log("User logged out successfully");
+    // console.log("User logged out successfully");
     document.getElementById('profile-form-section')!.style.display = 'none';
     document.getElementById('login-header')!.style.display = 'block';
     document.getElementById('login-form')!.style.display = 'block';
@@ -189,7 +189,7 @@ document.getElementById('logout-button')?.addEventListener('click', () => {
 const fetchUpdateUserProfile = async (userId: number, updatedData: { username?: string; email?: string, role: string }) => {
     const token = localStorage.getItem('token');
     try {
-        console.log("Updating user profile:", userId, updatedData);
+        // console.log("Updating user profile:", userId, updatedData);
         const response = await fetch(`http://localhost:8000/api/users/${userId}`, {
             method: 'PUT',
             headers: { 
@@ -208,7 +208,7 @@ const fetchUpdateUserProfile = async (userId: number, updatedData: { username?: 
         }
         throw new Error('Invalid response from server');
     } catch (error) {
-        console.error("Error updating user profile:", error);
+        // console.error("Error updating user profile:", error);
         throw error;
     }
 };
@@ -225,7 +225,7 @@ document.getElementById("profile-form")?.addEventListener("submit", async (event
 
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (!currentUser.id) {
-        console.error("No user logged in or user ID missing");
+        // console.error("No user logged in or user ID missing");
         return;
     }
     const updatedData = {
@@ -238,9 +238,9 @@ document.getElementById("profile-form")?.addEventListener("submit", async (event
         const updatedUser = await fetchUpdateUserProfile(currentUser.id, updatedData);
         localStorage.setItem('user', JSON.stringify({ ...currentUser, username: updatedUser.username, email: updatedUser.email }));
         updateProfileInfo(updatedUser.username, updatedUser.email);
-        console.log("Profile updated successfully!", updatedUser);
+        // console.log("Profile updated successfully!", updatedUser);
     } catch (error) {
-        console.error("Error updating profile:", error);
+        // console.error("Error updating profile:", error);
     }
 });
 

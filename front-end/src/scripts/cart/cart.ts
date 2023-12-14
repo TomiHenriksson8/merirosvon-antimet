@@ -10,7 +10,6 @@ import { showPopup } from "../order/order.js";
 const attachAddToCartListener = () => {
   // console.log("Attaching add to cart listeners");
   const addToCartButtons = document.querySelectorAll(".add-to-cart");
-
   // console.log(`Found ${addToCartButtons.length} add-to-cart buttons`);
   addToCartButtons.forEach((button) => {
     button.addEventListener("click", async (event) => {
@@ -26,7 +25,7 @@ const attachAddToCartListener = () => {
         try {
           await addToCart(parseInt(foodItemId), 1);
         } catch (error) {
-          console.error(error);
+          // console.error(error);
         }
       }
     });
@@ -70,14 +69,14 @@ const addToCart = async (foodItemId: number, quantity: number): Promise<void> =>
         }),
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // throw new Error(`HTTP error! Status: ${response.status}`);
       }
     }
     const updatedCartItems = await fetchCartItems();
     renderCartItems(updatedCartItems);
     updateCartTotalInUI();
   } catch (error) {
-    console.error("Error processing cart item:", error);
+    // console.error("Error processing cart item:", error);
   }
 };
 
@@ -106,7 +105,7 @@ const addOrUpdateCartItemQuantity = async (foodItemId: number, quantity: number)
       await addToCart(foodItemId, quantity);
     }
   } catch (error) {
-    console.error('Error processing cart item:', error);
+    // console.error('Error processing cart item:', error);
   }
 };
 
@@ -136,10 +135,10 @@ const decreaseOrRemoveCartItem = async (foodItemId: number, quantity: number): P
       renderCartItems(updatedCartItems);
       updateCartTotalInUI();
     } else {
-      console.error('Item not found in cart:', foodItemId);
+      // console.error('Item not found in cart:', foodItemId);
     }
   } catch (error) {
-    console.error('Error processing cart item:', error);
+    // console.error('Error processing cart item:', error);
   }
 };
 
@@ -170,10 +169,10 @@ const updateCartItemQuantity = async (foodItemId: number, newQuantity: number): 
       })
     });
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      // throw new Error(`HTTP error! Status: ${response.status}`);
     }
   } catch (error) {
-    console.error('Error', error)
+    // console.error('Error', error)
   }
 };
 
@@ -196,7 +195,7 @@ const fetchCartItems = async (): Promise<CartItem[]> => {
     }
   });
   if (!response.ok) {
-    throw new Error(`Could not fetch cart items, received status ${response.status}`);
+    // throw new Error(`Could not fetch cart items, received status ${response.status}`);
   }
   const cartItems: CartItem[] = await response.json();
   return cartItems;
@@ -208,7 +207,7 @@ const fetchCartItems = async (): Promise<CartItem[]> => {
 const updateCartTotalInUI = async () => {
   const currentUser = getCurrentUser();
   if (!currentUser || !currentUser.id) {
-    console.error("User is not logged in.");
+    // console.error("User is not logged in.");
     return;
   }
   const total = await fetchCartTotal(currentUser.id);
@@ -300,10 +299,10 @@ const attachQuantityEventListeners = () => {
         if (!isNaN(foodItemId)) {
           decreaseOrRemoveCartItem(foodItemId, 1);
         } else {
-          console.error('Invalid foodItemId:', foodItemIds);
+          // console.error('Invalid foodItemId:', foodItemIds);
         }
       } else {
-        console.error('Could not get data-id attribute from the button');
+        // console.error('Could not get data-id attribute from the button');
       }
     });
   });
@@ -315,10 +314,10 @@ const attachQuantityEventListeners = () => {
         if (!isNaN(foodItemId)) {
           addOrUpdateCartItemQuantity(foodItemId, 1);
         } else {
-          console.error('Invalid foodItemId:', foodItemIds);
+          // console.error('Invalid foodItemId:', foodItemIds);
         }
       } else {
-        console.error('Could not get data-id attribute from the button');
+        // console.error('Could not get data-id attribute from the button');
       }
     });
   });
@@ -364,14 +363,14 @@ const deleteCartItem = async (itemId: string): Promise<void> => {
       body: JSON.stringify({ userId: currentUser.id, foodItemId: itemId }),
     });
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      // throw new Error(`HTTP error! Status: ${response.status}`);
     }
     // console.log(`Item ${itemId} deleted successfully from the cart.`);
     const updatedCartItems = await fetchCartItems();
     await updateCartTotalInUI();
     renderCartItems(updatedCartItems);
   } catch (error) {
-    console.error("Error deleting item from cart:", error);
+    // console.error("Error deleting item from cart:", error);
   }
 };
 
@@ -431,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
           })
         });
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          // throw new Error(`HTTP error! Status: ${response.status}`);
         }
         showPopup(
           'popup-ok-o-container', 
@@ -440,7 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
           './assets/images/popupok.png'
         );
       } catch (error) {
-        console.error('Error creating order:', error);
+        // console.error('Error creating order:', error);
         showPopup(
           'popup-fail-o-container', 
           'Jokin Meni Vikaan', 

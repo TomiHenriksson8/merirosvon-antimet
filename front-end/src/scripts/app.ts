@@ -48,7 +48,8 @@ const profileMobileNav = document.getElementById('profile') as HTMLAnchorElement
 const cartMobileNav = document.getElementById('cart') as HTMLAnchorElement;
 
 profileMobileNav.addEventListener("click", (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
+    renderOrderHistory(); 
     profileModal.showModal();
     document.body.classList.add('no-scroll');
     profileModal.style.display = "flex";
@@ -86,6 +87,12 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
     }
 });
 
+/**
+ * Attaches click event listeners to close buttons of dialogues.
+ * 
+ * When a button is clicked, it closes and hides profile and sign-up modals
+ * and enables scrolling on the body.
+ */
 const closeButtonForDialogs = document.querySelectorAll(".close-btn") as NodeListOf<HTMLButtonElement>;
 
 closeButtonForDialogs.forEach((button) => {
@@ -120,6 +127,21 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+/**
+ * 
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const closeIcon = document.getElementById('close-icon');
+    const navbarLinks = document.querySelectorAll('.navbar a');
+
+    navbarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (closeIcon && window.innerWidth <= 826) { // Assuming 768px is your mobile breakpoint
+                closeIcon.click();
+            }
+        });
+    });
+});
 
 
 /**
@@ -133,7 +155,7 @@ const generateRoleSpecificUI = (): void => {
     }
 
     const container = document.getElementById('panelAdminAndStaff') as HTMLDivElement;
-    console.log(container);
+    // console.log(container);
     if (!container) {
         console.error('Container for role-specific UI not found');
         return;
@@ -171,10 +193,10 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js')
         .then(registration => {
-          console.log('Service Worker registered with scope:', registration.scope);
+          // console.log('Service Worker registered with scope:', registration.scope);
         })
         .catch(err => {
-          console.log('Service Worker registration failed:', err);
+          // console.log('Service Worker registration failed:', err);
         });
     });
   }

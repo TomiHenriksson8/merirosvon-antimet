@@ -10,7 +10,6 @@ const imgs = document.querySelectorAll('.slider img');
 
 // Calculate the width of a single image, assuming all images have the same width.
 let width = imgs.length > 0 && imgs[0] instanceof HTMLElement ? imgs[0].clientWidth : 0;
-console.log(width);
 
 /**
  * Event listener for the 'next' button to slide to the next image.

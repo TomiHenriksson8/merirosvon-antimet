@@ -14,7 +14,7 @@ const fetchAndDisplayMenu = async () => {
         renderMenu(menuItems);
         attachShoppingCartListener();
     } catch (error) {
-        console.error('Error fetching menu:', error);
+        // console.error('Error fetching menu:', error);
     }
 };
 
@@ -105,7 +105,7 @@ menuFilterContainer.addEventListener('click', async (event) => {
                 const menuItems: MenuItem[] = await response.json();
                 renderMenu(menuItems);
             } catch (error) {
-                console.error('Error fetching menu by category:', error);
+                // console.error('Error fetching menu by category:', error);
             }
         }
     }

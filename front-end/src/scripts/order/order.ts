@@ -78,10 +78,10 @@ const getOrderForOHistory = async () => {
         }
     }, );
     if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // throw new Error(`HTTP error! Status: ${response.status}`);
     };
     const orderHistory = await response.json();
-    console.log(orderHistory);
+    // console.log(orderHistory);
     return orderHistory;
 };
 
@@ -104,19 +104,25 @@ const renderOrderHistory = async () => {
     const orderHistoryContainer = document.querySelector('.order-history-container') as HTMLElement;
     const token = localStorage.getItem('token');
     if (!orderHistoryContainer) {
-        console.error('Order history container not found');
+        // console.error('Order history container not found');
         return;
     }
 
     try {
         const response = await getOrderForOHistory();
         if (!response || !response.order) {
-            throw new Error('No orders found for the user');
+            // throw new Error('No orders found for the user');
         }
         const groupedOrders = groupOrders(response.order);
         orderHistoryContainer.innerHTML = '';
         Object.entries(groupedOrders).forEach(([orderId, orderDetails]) => {
-            const orderDate = new Date(orderDetails[0].orderDate).toLocaleDateString();
+            const orderDate = new Date(orderDetails[0].orderDate).toLocaleString('fi-FI', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+              });
             let itemsHtml = orderDetails.map((item: DetailedOrder) => {
                 const itemPrice = parseFloat(item.foodItemPrice).toFixed(2);
                 return `
@@ -130,11 +136,10 @@ const renderOrderHistory = async () => {
             if (orderDetails[0].orderStatus === 'accepted') {
                 estimatedPickupTimeHtml = `<p class="estimated-pickup-time">Arvioitu noutoaika:<br> <span id=o-status>${orderDetails[0].estimatedPickupTime} minuuttia</span></p>`;
             }
-
             orderHistoryContainer.innerHTML += `
                 <div class="order-history-card">
                     <h3>Tilaus ID: ${orderId}</h3>
-                    <p>Tilaus päivä: ${orderDate}</p>
+                    <p>Tilattu: ${orderDate}</p>
                     <p class="total-price">Hinta: ${parseFloat(orderDetails[0].totalPrice).toFixed(2)}€</p>
                     <p class="order-status ${orderDetails[0].orderStatus.toLowerCase()}">Tilauksen Tila: ${orderDetails[0].orderStatus}</p>
                     ${estimatedPickupTimeHtml}
@@ -145,7 +150,7 @@ const renderOrderHistory = async () => {
         });
     } catch (error) {
         if (!token) {
-            console.error('Error displaying orders:', error);
+            // console.error('Error displaying orders:', error);
             orderHistoryContainer.innerHTML = `
             <p>Kirjaudu sisään nähdäksesi tilaushistorian.</p>`;
         } else {

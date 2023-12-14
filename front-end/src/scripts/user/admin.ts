@@ -2,6 +2,8 @@ import { getCurrentUser } from '../../utils/utils.js';
 import { DetailedOrder, OrdersResponse, GroupedOrders } from '../../interfaces/Order.js';
 import { User } from '../../interfaces/User.js';
 
+const token = localStorage.getItem('token');
+const user = getCurrentUser();
 
 /**
  * Redirects to the appropriate page based on the user's role.
@@ -49,7 +51,7 @@ const showAmountOfUsers = async () => {
             }
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData = await response.json();
         const latestUserId = responseData.latestUserId;
@@ -58,11 +60,14 @@ const showAmountOfUsers = async () => {
             amountOfUsersElement.innerHTML = `Total Users: ${latestUserId}`;
         }
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
     }
 };
 
-showAmountOfUsers();
+
+if (token && user?.role === 'admin') {
+    showAmountOfUsers();
+}
 
 /**
  * Displays the total number of orders.
@@ -79,7 +84,7 @@ const showAmountOfOrders = async () => {
             }
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData = await response.json();
         const latestOrderId = responseData.latestOrderId;
@@ -92,7 +97,10 @@ const showAmountOfOrders = async () => {
     }
 };
 
-showAmountOfOrders();
+if (token && user?.role === 'admin') {
+    showAmountOfOrders();
+};
+
 
 const showAmountOfFoodItems = async () => {
     const url = 'http://localhost:8000/api/menu/count';
@@ -106,7 +114,7 @@ const showAmountOfFoodItems = async () => {
             }
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData = await response.json();
         const FoodItemsCount = responseData.itemCount;
@@ -139,7 +147,7 @@ const getOrders = async (): Promise<OrdersResponse> => {
             }
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData: OrdersResponse = await response.json();
         return responseData;
@@ -156,13 +164,13 @@ const displayOrders = async () => {
     try {
         const ordersData = await getOrders();
         if (!ordersData || ordersData.orders.length === 0) {
-            console.error('Failed to retrieve orders data');
+            // console.error('Failed to retrieve orders data');
             return;
         }
 
         const tableContainer = document.getElementById('orders-table-container') as HTMLDivElement;
         if (!tableContainer) {
-            console.error('Table container not found');
+            // console.error('Table container not found');
             return;
         }
 
@@ -248,7 +256,9 @@ row.insertCell().textContent = formattedDate;
     }
 };
 
-displayOrders();
+if (token && user?.role === 'admin') {
+    displayOrders(); 
+}
 
 /**
  * Updates the estimated pickup time of an order.
@@ -270,12 +280,12 @@ const updateEstimatedPickupTime = async (orderId: number, estimatedPickupTime: n
             body: JSON.stringify({ estimatedPickupTime })
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            // throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const responseData = await response.json();
-        console.log('Update successful:', responseData);
+        // console.log('Update successful:', responseData);
     } catch (error) {
-        console.error('Error updating estimated pickup time:', error);
+        // console.error('Error updating estimated pickup time:', error);
     }
 };
 
@@ -298,12 +308,12 @@ async function updateOrderStatus(orderId: number, newStatus: string) {
             body: JSON.stringify({ newStatus })
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            // throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const responseData = await response.json();
-        console.log('Update successful:', responseData);
+        // console.log('Update successful:', responseData);
     } catch (error) {
-        console.error('Error updating order status:', error);
+        // console.error('Error updating order status:', error);
     }
 }
 
@@ -321,12 +331,12 @@ const fetchUserInfoById = async (userId: number): Promise<User | null> => {
             }
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // throw new Error(`HTTP error! status: ${response.status}`);
         }
         const userInfo: User = await response.json();
         return userInfo;
     } catch (error) {
-        console.error("Error fetching user info:", error);
+        // console.error("Error fetching user info:", error);
         return null;
     }
 };
@@ -338,13 +348,12 @@ const fetchUserInfoById = async (userId: number): Promise<User | null> => {
 const displayUserInfo = async (userId: number) => {
     const userInfo = await fetchUserInfoById(userId);
     if (userInfo) {
-        // Display user information in your preferred way
-        // For example, you might use a modal or an alert for simplicity
         alert(`Name: ${userInfo.username}\nEmail: ${userInfo.email}`);
     }
 };
 
 // ADD FOOD ITEM
+
 /**
  * Handles the submission of a new food item.
  * @param {Event} event - The event object.
@@ -387,12 +396,12 @@ async function addFoodItemToBackend(name: string, description: string, price: st
             body: JSON.stringify(data)
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData = await response.json();
-        console.log('Success:', responseData);
+        // console.log('Success:', responseData);
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
     }
 }
 const form = document.getElementById('add-food-item-form');
@@ -423,12 +432,12 @@ const deleteFoodItem = async (foodItemId: number) => {
         });
         if (response.ok) {
             alert("Food item deleted successfully");
-            // update ui
+            // update ui here  :/
         } else {
             throw new Error(`Failed to delete food item: ${response.status}`);
         }
     } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
     }
 };
 

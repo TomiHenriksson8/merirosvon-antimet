@@ -97,7 +97,6 @@
     width: 100%;
 }
 
-
 .form-control {
     margin-bottom: 20px;
 }
@@ -225,7 +224,6 @@
 }
 
 #o-status {
-    /*color: var(--clr-neutral-900);*/
     font-weight: bold;
 }
 
@@ -245,7 +243,6 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-
 }
 
 .empty-order-history img {
@@ -255,8 +252,8 @@
 
 .empty-order-history p {
     font-size: 1.2rem;
-    color: var(--clr-neutral-900); /* Use a variable or replace with your preferred color */
-    margin-bottom: 0; /* Remove bottom margin if not needed */
+    color: var(--clr-neutral-900);
+    margin-bottom: 0;
 }
 
 

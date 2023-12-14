@@ -66,7 +66,7 @@ header {
 .logo-container {
     display: flex;
     align-items: center;
-    flex: 0; /* Do not let the logo container grow */
+    flex: 0;
 }
 
 .logo-container a {
@@ -87,8 +87,8 @@ a img {
 
 .navbar {
     display: flex;
-    justify-content: center; /* This will center the nav items */
-    flex: 1; /* Let the navbar grow to use available space */
+    justify-content: center;
+    flex: 1;
     margin-left: -5.5rem;
 }
 
@@ -106,7 +106,7 @@ a img {
 }
 
 .log-cart {
-    flex: 0; /* Do not let the log-cart container grow */
+    flex: 0;
     display: flex;
     align-items: center;
     margin-left: .75rem;
@@ -181,14 +181,13 @@ a img {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2; /* Above the .boat-image but below the actual slides */
-    pointer-events: none; /* Allows click events to pass through to elements below */
+    z-index: 2;
+    pointer-events: none;
 }
 
-/* Ensure the actual slide elements are above the pseudo-element */
 .slide, .slider a {
     position: relative;
-    z-index: 3; /* Above the pseudo-element so they're clickable */
+    z-index: 3;
 }
 
 .slider::-webkit-scrollbar {
@@ -262,8 +261,6 @@ main {
         transform: translateY(-20px);
     }
 }
-
-
 
 .info {
     margin-top: 1.5rem;
@@ -355,7 +352,6 @@ button {
     border-radius: 100vw;
     cursor: pointer;
     transition: background-color 250ms;
-
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -364,7 +360,6 @@ button {
 button:hover,
 button:focus-visible {
     background: rgb(52, 52, 52);
-    ;
 }
 
 button>span {
@@ -398,7 +393,6 @@ button::before {
     inset: 0;
     margin: auto;
     opacity: 0;
-
     transition: transform 1000ms, opacity 1000ms;
 }
 
@@ -680,13 +674,10 @@ footer img {
         display: none;
     }
 
-
-
     #profile,
     #cart {
         display: block;
     }
-
 
     #check:checked~.icons #menu-icon {
         display: none;
@@ -709,15 +700,15 @@ footer img {
         background: rgba(0, 0, 0, .1);
         backdrop-filter: blur(50px);
         box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
-        display: none; /* Start with navbar not displayed */
+        display: none; 
         flex-direction: column;
-        align-items: center; /* Center align the items */
+        align-items: center; 
         transition: .3s ease;
     }
 
     #check:checked ~ .navbar {
-        display: flex; /* Display the navbar when checked */
-        padding: 2rem 0; /* Add some padding to the container */
+        display: flex; 
+        padding: 2rem 0;
     }
 
     .navbar a {
@@ -733,7 +724,6 @@ footer img {
         color: var(--clr-neutral-100);
     }
     
-
     a img {
         width: 70px;
         margin-top: 0;
@@ -763,7 +753,6 @@ footer img {
         height: 1rem;
     }
     
-    
     .info {
         padding: 2rem;
     }
@@ -781,7 +770,6 @@ footer img {
         height: 50px;
         border: 0 none;
         background: url(../images/rope-lineb.png);
-        
         margin-top: 0;
         position: relative;
         z-index: 1001;
