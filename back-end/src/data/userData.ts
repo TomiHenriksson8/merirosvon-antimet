@@ -38,7 +38,6 @@ const createUser = async (user: User): Promise<User> => {
   if (existingUsers.length > 0) {
     throw new Error('Username or email already in use');
   }
-
   // If user does not exist, proceed to create a new user
   const sql = `INSERT INTO Users (username, email, password, role) VALUES (?, ?, ?, 'user')`;
   await promisePool.query(sql, [username, email, password]);

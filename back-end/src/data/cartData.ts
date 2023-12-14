@@ -1,6 +1,7 @@
 import { promisePool } from "../database/database";
 import { RowDataPacket } from "mysql2";
 
+
 /**
  * Rerieves the cart items for a user
  * @param {number} userId - The user ID 

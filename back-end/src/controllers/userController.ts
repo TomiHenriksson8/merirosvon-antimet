@@ -14,6 +14,7 @@ import { createSecureServer } from "http2"; // ?? check this
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+
 /**
  * @api {get} /users Get all users
  * @apiName  GetUsers
@@ -83,7 +84,6 @@ const loginUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
-
     if (
       typeof user.password === "string" &&
       (await bcrypt.compare(password, user.password))
@@ -230,6 +230,7 @@ const handleUpdateUserRequest = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 export {
   registerUser,

@@ -8,6 +8,10 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 /**
+ * @apiDefine Merirosvon Antimet
+ */
+
+/**
  * This is the main server file for the application.
  * It sets up the Express server, configures middleware,
  * and defines the main routes for the API.
@@ -19,7 +23,7 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-app.use('/doc', express.static(path.join(__dirname, '../apidoc')));
+app.use('/api/doc', express.static(path.join(__dirname, '../apidoc')));
 
 app.use('/api/users', UserRouter);
 app.use('/api/menu', menuRouter);

@@ -60,12 +60,6 @@ CREATE TABLE OrderDetails (
     FOREIGN KEY (foodItemId) REFERENCES FoodItem(id)
 );
 
--- Insert test users
-INSERT INTO Users (username, email, password, role) VALUES 
-('john_doe', 'john.doe@example.com', 'hashed_password', 'user'),
-('jane_staff', 'jane.staff@example.com', 'hashed_password', 'staff'),
-('admin_user', 'admin@example.com', 'hashed_password', 'admin');
-
 -- Insert food items
 INSERT INTO FoodItem (name, description, price, category, imageUrl) VALUES 
 ('Pizza Margherita', 'Klassinen pizza mozzarella juustolla, tomaattikastikkeella sekä tuoreella basilikalla.', 9.99, 'Pizza', './assets/images/pizzamar.png'),
@@ -80,16 +74,4 @@ INSERT INTO FoodItem (name, description, price, category, imageUrl) VALUES
 ('Jäämeren jäävesi', 'Kimpale pohjoisnapaa lasissa', 7.99, 'Juomat', './assets/images/juomajää.png'),
 ('Cola', 'Cola-juomaa', 3.99, 'Juomat', './assets/images/juomacola.png');
 
--- Insert a test cart item for user 1
-INSERT INTO Cart (userId, foodItemId, quantity) VALUES 
-(1, 1, 2); -- User 1 adds 2 Margherita Pizzas to their cart
 
--- Insert a test order for user 1
-INSERT INTO `Order` (userId, totalPrice, orderDate, orderStatus) VALUES 
-(1, 23.97, NOW(), 'completed');
-
--- Insert test order details for order 1
-INSERT INTO OrderDetails (orderId, foodItemId, quantity) VALUES 
-(1, 1, 1), -- Order 1 contains 1 Margherita Pizza
-(1, 2, 1), -- Order 1 contains 1 Veggie Burger
-(1, 3, 1); -- Order 1 contains 1 Caesar Salad

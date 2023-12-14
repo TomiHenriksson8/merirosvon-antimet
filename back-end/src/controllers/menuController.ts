@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { FoodItem } from '../models/FoodItem';
 import { addNewFoodItem, deleteFoodItemById, fetchAllFoodItems, fetchFoodItemById, fetchFoodItemsByCategory, fetchFoodItemCount, updateExistingFoodItem } from '../data/menuData';
 
 

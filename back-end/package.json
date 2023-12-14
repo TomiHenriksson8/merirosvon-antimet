@@ -7,7 +7,7 @@
     "test": "jest",
     "test:file": "jest --",
     "test:watch": "jest --watch",
-    "test:e2e": "cypress run --spec 'tests/end2end/*.spec.js'",
+    "generate-docs": "apidoc -i src/ -o apidoc/",
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
     "build": "tsc -p ."

@@ -116,7 +116,6 @@ const updateOrderStatus = async (orderId: number, newStatus: string): Promise<nu
     }
 };
 
-
 /**
  * Updates the estimated pickup time of an order
  * @param {number} orderId - The order id
@@ -138,7 +137,6 @@ const updateOrderEstimatedPickupTime = async (orderId: number, estimatedPickupTi
         throw error;
     }
 };
-
 
 /**
  * Creates an order from the user's cart

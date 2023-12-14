@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+
 /**
  * Middleware to authenticate a user based on a JWT token.
  * @param {Request} req - The Express request object.
@@ -36,7 +37,6 @@ export const authorize = (roles: Array<'user' | 'admin' | 'staff'>) => {
     if (!roles.includes((req as any).user.role)) {
       return res.status(403).json({ message: 'Forbidden' });
     }
-
     next(); 
   };
 };
