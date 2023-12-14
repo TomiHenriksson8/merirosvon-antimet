@@ -168,7 +168,7 @@ const displayOrders = async () => {
 
         const table = document.createElement('table');
         const headerRow = table.insertRow();
-        ['Order ID', 'User Info', 'Total Price', 'Order Date', 'Order Status', 'Item Details'].forEach(text => {
+        ['Order ID', 'User Info', 'Total Price', 'Order Date', 'Order Status', 'Estimated PT', 'Item Details'].forEach(text => {
             const cell = headerRow.insertCell();
             cell.textContent = text;
         });
@@ -195,13 +195,10 @@ const displayOrders = async () => {
         userInfoCell.appendChild(userInfoLink);
 
         row.insertCell().textContent = orders[0].totalPrice.toString();
-        // Example orderDate from your orders array
-        const isoDate = orders[0].orderDate; // "2023-11-27T11:08:05.000Z"
+        const isoDate = orders[0].orderDate; 
 
-        // Convert to a Date object
         const dateObject = new Date(isoDate);
 
-        // Format the date to a more readable form, e.g., "27.11.2023"
         const formattedDate = dateObject.toLocaleDateString('fi-FI', {
         year: 'numeric',
         month: '2-digit',
@@ -210,11 +207,11 @@ const displayOrders = async () => {
         minute: '2-digit'
     });
 
-// Insert the formatted date into the table cell
+
 row.insertCell().textContent = formattedDate;
 
         const statusDropdown = document.createElement('select');
-        ['completed', 'pending', 'cancelled'].forEach(status => {
+        ['completed', 'pending', 'accepted', 'cancelled'].forEach(status => {
             const option = document.createElement('option');
             option.value = status;
             option.textContent = status;
@@ -227,7 +224,21 @@ row.insertCell().textContent = formattedDate;
         });
         const statusCell = row.insertCell();
         statusCell.appendChild(statusDropdown);
-        // Concatenate item details
+        // make and drop down whit esitmated time
+        const estimatedTimeDropdown = document.createElement('select');
+            [5, 10, 15, 20, 25, 30, 45, 55].forEach(time => {
+                const option = document.createElement('option');
+                option.value = time.toString();
+                option.textContent = `${time} minuuttia`;
+                option.selected = orders[0].estimatedPickupTime === time;
+                estimatedTimeDropdown.appendChild(option);
+            });
+            estimatedTimeDropdown.addEventListener('change', (event) => {
+                const target = event.target as HTMLSelectElement;
+                updateEstimatedPickupTime(parseInt(orderId), parseInt(target.value));
+            });
+            const estimatedTimeCell = row.insertCell();
+            estimatedTimeCell.appendChild(estimatedTimeDropdown);
         const itemDetails = orders.map((item: DetailedOrder) => `${item.foodItemName} (x${item.quantity}) - ${item.foodItemPrice} each`).join(', ');
         row.insertCell().textContent = itemDetails;
 });
@@ -238,6 +249,35 @@ row.insertCell().textContent = formattedDate;
 };
 
 displayOrders();
+
+/**
+ * Updates the estimated pickup time of an order.
+ * @param {number} orderId - The ID of the order to update.
+ * @param {number} estimatedPickupTime - The new estimated pickup time.
+ * @returns {Promise<void>} A promise that resolves when the estimated pickup time is updated.
+ * @throws {Error} An error is thrown if the estimated pickup time fails to update.
+ */
+const updateEstimatedPickupTime = async (orderId: number, estimatedPickupTime: number) => {
+    const url = `http://localhost:8000/api/order/estimatedpt/${orderId}`;
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ estimatedPickupTime })
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const responseData = await response.json();
+        console.log('Update successful:', responseData);
+    } catch (error) {
+        console.error('Error updating estimated pickup time:', error);
+    }
+};
 
 /**
  * Updates the status of an order.

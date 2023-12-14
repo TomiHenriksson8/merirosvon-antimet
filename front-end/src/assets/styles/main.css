@@ -93,7 +93,7 @@ a img {
 }
 
 .navbar a {
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     color: var(--clr-neutral-100);
     text-decoration: none;
     font-weight: 700;
@@ -128,14 +128,14 @@ a img {
     display: none;
 }
 
-#profile-icon {
-    margin-right: 1rem;
-}
-
 #profile-icon,
 #cart-icon {
-    width: 30px;
+    width: 40px;
     filter: invert(1);
+}
+
+#profile-icon {
+    margin-right: 1rem;
 }
 
 .icons {
@@ -149,13 +149,6 @@ a img {
 
 .log-cart {
     position: relative;
-}
-
-.test {
-    display: grid;
-    height: 100vh;
-    place-items: center;
-    margin-bottom: 12rem;
 }
 
 .container {
@@ -181,6 +174,23 @@ a img {
     scrollbar-width: none;
 }
 
+.slider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2; /* Above the .boat-image but below the actual slides */
+    pointer-events: none; /* Allows click events to pass through to elements below */
+}
+
+/* Ensure the actual slide elements are above the pseudo-element */
+.slide, .slider a {
+    position: relative;
+    z-index: 3; /* Above the pseudo-element so they're clickable */
+}
+
 .slider::-webkit-scrollbar {
     display: none;
 }
@@ -191,6 +201,9 @@ a img {
     background-size: cover;
     background-position: center;
     height: 100%;
+    display: block; 
+    text-decoration: none;
+    pointer-events: auto; 
 }
 
 .slider-nav {
@@ -200,7 +213,7 @@ a img {
     bottom: 1.25rem;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 3;
 }
 
 .slider-nav a {
@@ -227,6 +240,8 @@ main {
 .boat-wave {
     margin-top: 20rem;
     position: absolute;
+    z-index: 10; 
+    pointer-events: none;
     width: 100%;
     height: 1000px;
     top: -338px;
@@ -252,28 +267,29 @@ main {
 
 .info {
     margin-top: 1.5rem;
-    padding: 75px 75px 10px 75px; /* Consider reducing this if it's too spacious, or use percentages for responsiveness */
+    padding: 75px 75px 10px 75px; 
     position: relative;
-    max-width: 1200px; /* Ensures that the content does not stretch too wide on larger screens */
-    margin-left: auto; /* These two lines center the .info box */
+    max-width: 1200px; 
+    margin-left: auto; 
     margin-right: auto;
 }
 
-.info h1 { /* Adjusted to h2 since your HTML shows h2 */
-    font-size: 2.5rem; /* Adjusted for better hierarchy */
+.info h1 { 
+    font-size: 2.5rem; 
     font-weight: 700;
-    color: #333; /* Darker color for better contrast and readability */
+    text-align: center;
+    color: #333; 
     margin-bottom: 1rem;
-    line-height: 1.2; /* Improves readability */
+    line-height: 1.2; 
 }
 
 .info p {
-    font-size: 1rem; /* Smaller font size for body text */
-    font-weight: 400; /* Regular weight for body text */
-    color: #666; /* Lighter than the heading for hierarchy */
+    font-size: 1rem; 
+    font-weight: 400; 
+    color: #666; 
     margin-bottom: 1.5rem;
-    line-height: 1.6; /* Increases line height for better readability */
-    text-align: justify; /* Justifies the text for a cleaner look */
+    line-height: 1.6; 
+    text-align: justify;
 }
 
 .horizontal-line {
@@ -424,6 +440,12 @@ button:has(:last-child:active)::before {
     padding: 20px;
     border-radius: 0.5rem;
     min-height: 90%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .box-img {
@@ -459,7 +481,7 @@ button:has(:last-child:active)::before {
     position: absolute;
     right: 0;
     top: 0;
-    font-size: 20px;
+    font-size: 22px;
     padding: 7px 10px;
     border-radius: 0 0.5rem 0 0.5rem;
     cursor: pointer;
@@ -490,13 +512,23 @@ button:has(:last-child:active)::before {
     padding: 1rem;
 }
 
+.restaurant-info h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.restaurant-info p {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+}
+
 footer {
     background: var(--clr-dark-overlay);
     color: var(--clr-neutral-100);
 }
 
-footer h4 {
-    margin: 0.5rem;
+footer h2 {
+    font-size: 1.2rem;
 }
 
 .footer-content {
@@ -512,7 +544,7 @@ footer h4 {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: 1rem;
+    margin: 2rem 1rem;
 }
 
 footer img {
@@ -521,8 +553,9 @@ footer img {
     margin-bottom: 15px;
 }
 
-.footer-social {
-    margin-top: 1rem;
+.footer-social,
+.footer-links {
+    margin-top: 2.7rem;
 }
 
 .footer-links ul {
@@ -537,13 +570,11 @@ footer img {
 .footer-links ul li a {
     text-decoration: none;
     color: inherit;
-
 }
 
 .footer-social a {
     color: inherit;
     font-size: 1.6rem;
-    margin-bottom: .5rem;
     margin-top: 0.5rem;
 }
 
@@ -585,6 +616,18 @@ footer img {
         grid-gap: 1.5rem;
         align-items: center;
     }
+
+    .logo {
+        font-size: 1.5rem;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    #profile-icon,
+    #cart-icon {
+        width: 30px;
+    }
 }
 
 @media (max-width: 1020px) {
@@ -594,13 +637,6 @@ footer img {
     
     .header {
         padding: 1.3rem 5%;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-        color: #fff;
-        text-decoration: none;
-        font-weight: 700;
     }
 
     #profile,
@@ -617,7 +653,7 @@ footer img {
     }
 }
 
-@media (max-width: 813px) {
+@media (max-width: 825px) {
 
     body {
         background: none;
@@ -733,7 +769,7 @@ footer img {
     }
 
     .info h1 { 
-        font-size: 1.5rem; 
+        font-size: 1.8rem; 
         font-weight: 700;
         color: #333; 
         margin-bottom: 1rem;
@@ -793,21 +829,21 @@ footer img {
 
     .map-container,
     .restaurant-info {
-        width: 100%; /* Full width on smaller screens */
-        flex-basis: auto; /* Reset flex basis */
+        width: 100%; 
+        flex-basis: auto; 
     }
 
     .map-container {
-        order: 2; /* Map after the text */
-        height: 250px; /* Adjust height for smaller screens */
+        order: 2; 
+        height: 250px; 
     }
 
     .restaurant-info {
-        order: 1; /* Text before the map */
+        order: 1; 
     }
 
     .footer-info p {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .footer-links ul li {

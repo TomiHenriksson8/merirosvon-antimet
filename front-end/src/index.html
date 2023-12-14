@@ -54,9 +54,9 @@
     <section class="container">
         <div class="slider-wrapper">
             <div class="slider">
-                <div class="slide" id="slide-1" style="background-image: url('./assets/images/slider1-mobile.png');"></div>
-                <div class="slide" id="slide-2" style="background-image: url('./assets/images/slider1-mobile.png');"></div>
-                <div class="slide" id="slide-3" style="background-image: url('./assets/images/slider1-mobile.png');"></div>
+                <a href="#menu" class="slide" id="slide-1" style="background-image: url('./assets/images/slider1-mobile.png');"></a>
+                <a href="#open" class="slide" id="slide-2" style="background-image: url('./assets/images/slider2.png');"></a>
+                <a href="#menu" class="slide" id="slide-3" style="background-image: url('./assets/images/slider3.png');"></a>
             </div>
             <div class="slider-nav">
                 <a href="#slide-1" aria-label="Siirry diaan yksi"></a>
@@ -107,11 +107,11 @@
                 <div class="map-container" id="map">
                     <!-- Leaflet map will be injected here -->
                 </div>
-                <div class="restaurant-info">
+                <div id="open" class="restaurant-info">
                     <h2>Tietoa Ravintolastamme</h2>
                     <p> Aukioloajat:</p>
                     <p>Maanantai - Perjantai: klo 11:00 - 23:00</p>
-                    <p>Launtai - Sunnuntai: klo 13:00 - 02:00</p>
+                    <p>Lauantai - Sunnuntai: klo 13:00 - 02:00</p>
                     <!-- Add more content about your restaurant here -->
                 </div>
             </div>
@@ -119,10 +119,6 @@
     </main>
     <footer>
         <div class="footer-content">
-            <div class="footer-info">
-                <img src="./assets/images/logo-white.png" alt="">
-                <p>Merien makuja vuodesta 1678!</p>
-            </div>
             <div class="footer-links">
                 <h2>Linkit</h2>
                 <ul>
@@ -130,6 +126,10 @@
                     <li><a href="#menu">Menu</a></li>
                     <li><a href="#info">Tietoa meistä</a></li>
                 </ul>
+            </div>
+            <div class="footer-info">
+                <img src="./assets/images/logo-white.png" href="#home" alt="Merirosvon Antimet Logo">
+                <p>Merien makuja vuodesta 1678!</p>
             </div>
             <div class="footer-social">
                 <h2>Seuraa Meitä</h2>
@@ -143,14 +143,12 @@
         <span class="close-btn">x</span>
         <div class="side-bar">
             <ul>
-                <li id="profileLink"><i class='bx bx-user'>Profiili</i></li>
-                <li id="orderHistoryLink"><i class='bx bx-book'>Historia</i></li>
+                <li id="profileLink"><i class='bx bx-user'></i>Profiili</li>
+                <li id="orderHistoryLink"><i class='bx bx-book'></i>Tilaukset</li>
             
             </ul>
         </div>
         <div class="order-history-container" style="display: none;">
-            <h1>Historia</h1>
-            <h2>Tilaus Historia</h2>
             <!-- GENERATE ORDER HISTORY -->
         </div>
         <div class="profile-container">
@@ -247,12 +245,12 @@
     </div>    
     <dialog id="shoppingCart">
         <div class="cart">
-            <h3>Ostoskori</h3>
+            <h3><span>Ostoskori</span></h3>
             <div class="cart-items">
                 <!-- Cart items will be dynamically inserted here -->
             </div>
             <div class="cart-summary">
-                <p>Total: <span id="cart-total">0.00€</span></p>
+                <p>Yhteensä: <span id="cart-total">0.00€</span></p>
             </div>
             <div class="cart-actions">
                 <button class="button close-cart">Sulje</button>

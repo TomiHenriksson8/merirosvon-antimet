@@ -9,6 +9,7 @@
     align-items: stretch;
     background-color: var(--clr-neutral-100);
     border-radius: 10px;
+    border: none;
 }
 
 #signUpModal {
@@ -44,8 +45,9 @@
 .close-btn {
     position: absolute;
     top: 10px;
-    right: 10px;
-    font-size: 24px;
+    right: 1.2rem;
+    font-size: 2rem;
+    font-weight: 700;
     cursor: pointer;
     background-color: transparent;
     border: none;
@@ -57,26 +59,34 @@
 	background: var(--clr-primary-200);
 }
 
+.bx-user {
+    margin-right: 10px;
+}
 
-
+.bx-user,
+.bx-book {
+    font-size: 2rem;
+    margin-right: 5px;
+}
 
 .side-bar ul li a  {
 	margin: 5px;
 }
 
 .side-bar ul li {
-	text-align: left;
-	font-size: 20px;
+	font-size: 1.3rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    padding-left: 0.5rem;
 }
 
 .side-bar ul li:hover {
-	background: #b4b4b4;
-	color: var(--clr-neutral-900);
+	background: #feded1;
 }
 
 .profile-container {
 	flex-grow: 1;
-	margin: 5px 25px 25px 5px;
+	margin: 5px 25px 25px 25px;
     overflow-y: auto;
 }
 
@@ -123,16 +133,13 @@
     background-color: #002f62;
 }
 
-.button:active,
-#logout-button:active {
-    background-color: #0056b3;
-    box-shadow: 0 5px #003366;
-    transform: translateY(4px);
+.profile-bottom-sections p {
+    margin-left: 0.5rem;
 }
 
 #logout-button {
-    margin-top: 10px;
-    margin-left: 40px;
+    margin-top: 0.7rem;
+    margin-left: 1.5rem;
 }
 
 #profile-form .form-control label,
@@ -212,6 +219,16 @@
     color: #333;
 }
 
+.order-history-card .order-status.accepted {
+    background-color: var(--clr-primary-600);
+    color: var(--clr-neutral-100);
+}
+
+#o-status {
+    /*color: var(--clr-neutral-900);*/
+    font-weight: bold;
+}
+
 .order-history-card .order-status.completed {
     background-color: #4caf50;
     color: var(--clr-neutral-100);
@@ -220,6 +237,26 @@
 .order-history-card .order-status.cancelled {
     background-color: #f44336;
     color: var(--clr-neutral-100);
+}
+
+.empty-order-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.empty-order-history img {
+    max-width: 300px;
+    margin-top: 3rem; 
+}
+
+.empty-order-history p {
+    font-size: 1.2rem;
+    color: var(--clr-neutral-900); /* Use a variable or replace with your preferred color */
+    margin-bottom: 0; /* Remove bottom margin if not needed */
 }
 
 
@@ -244,15 +281,22 @@
         width: auto; 
     }
 
+    .bx-book, .bx-user {
+        font-size: 1.3rem;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        padding-left: 0.5rem;
+    }
+
     .close-btn {
         position: absolute;
-        top: 50px;
+        top: 98px;
         right: 10px;
-        font-size: 24px;
+        font-size: 2rem;
+        font-weight: 500;
         cursor: pointer;
         background-color: transparent;
         border: none;
-        color: #aaa;
     }
 
     #profile-info, 

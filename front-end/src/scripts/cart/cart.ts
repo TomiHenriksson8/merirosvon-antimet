@@ -8,12 +8,18 @@ import { showPopup } from "../order/order.js";
  * Attaches click event listeners to "Add to Cart" buttons.
  */
 const attachAddToCartListener = () => {
-  console.log("Attaching add to cart listeners");
+  // console.log("Attaching add to cart listeners");
   const addToCartButtons = document.querySelectorAll(".add-to-cart");
-  console.log(`Found ${addToCartButtons.length} add-to-cart buttons`);
+
+  // console.log(`Found ${addToCartButtons.length} add-to-cart buttons`);
   addToCartButtons.forEach((button) => {
     button.addEventListener("click", async (event) => {
       event.preventDefault();
+      const token = localStorage.getItem('token');
+      if (!token) {
+        showPopup('popup-fail-o-container', 'Toimintoa ei voi suorittaa', 'Sinun on oltava kirjautunut sisään lisätäksesi tuotteita ostoskoriin.', './assets/images/cart-add-error.png');
+        return;
+      }
       const foodItemElement = (event.target as HTMLElement).closest(".box");
       const foodItemId = foodItemElement?.getAttribute("data-id");
       if (foodItemId) {
@@ -271,7 +277,7 @@ const renderCartItems = (cartItems: CartItem[]): void => {
           </p>
           <p>Hinta: $${item.price}</p>
         </div>
-        <button class="delete-cart-item" data-id="${item.id}"><span>X</span></button>
+        <button class="delete-cart-item" data-id="${item.id}">X</button>
       </div>
     `;
     cartContainer.innerHTML += cartItemHtml;
@@ -360,7 +366,7 @@ const deleteCartItem = async (itemId: string): Promise<void> => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    console.log(`Item ${itemId} deleted successfully from the cart.`);
+    // console.log(`Item ${itemId} deleted successfully from the cart.`);
     const updatedCartItems = await fetchCartItems();
     await updateCartTotalInUI();
     renderCartItems(updatedCartItems);
@@ -382,14 +388,14 @@ const attachShoppingCartListener = () => {
   ) as HTMLButtonElement | null;
   if (shoppingCartButton && shoppingCartDialog && closeCartButton) {
     shoppingCartButton.addEventListener("click", async () => {
-      console.log("Cart icon clicked");
+      // console.log("Cart icon clicked");
       try {
         const cartItems = await fetchCartItems();
         renderCartItems(cartItems);
         await updateCartTotalInUI();
         shoppingCartDialog.showModal();
       } catch (error) {
-        console.error("Error fetching or rendering cart items:", error);
+        // console.error("Error fetching or rendering cart items:", error);
       }
     });
     closeCartButton.addEventListener("click", () => {
@@ -398,9 +404,9 @@ const attachShoppingCartListener = () => {
       shoppingCartDialog.style.display = "none";
     });
   } else {
-    console.error(
+    /*console.error(
       "One or more elements are missing: shopping cart button, dialog, or close button"
-    );
+    );*/
   }
 };
 
@@ -427,10 +433,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        showPopup('popup-ok-o-container', 'Order Placed Successfully!', 'Thank you for your order! We are currently processing it and will send you a confirmation email shortly. You can view your order details and status in your account.', './assets/images/popupok.png')
+        showPopup(
+          'popup-ok-o-container', 
+          'Tilaus Vastaanotettu!', 
+          'Kiitos tilauksestasi! Tilaustasi käsitellään parhaillaan ja arvioitu noutoaika ilmoitetaan tilauksen hyväksynnän yhteydessä. Voit seurata tilauksesi tilaa ja tarkastella yksityiskohtia sekä arvioitua noutoaikaa profiilisi tilaushistoriasta.', 
+          './assets/images/popupok.png'
+        );
       } catch (error) {
         console.error('Error creating order:', error);
-        showPopup('popup-fail-o-container', 'Something Went Wrong', "We''re sorry, but there was a problem processing your order. Please check your information and try again. If the problem persists, please contact our support team.", './assets/images/popupfail.png');
+        showPopup(
+          'popup-fail-o-container', 
+          'Jokin Meni Vikaan', 
+          'Pahoittelemme, mutta tilauksesi käsittelyssä ilmeni ongelma. Tarkista tietosi ja yritä uudelleen.', 
+          './assets/images/popupfail.png'
+      );
       }
     }
   });

@@ -94,11 +94,11 @@ const fetchLoginUser = async (loginData: LoginUser) => {
             localStorage.setItem('token', responseData.token); 
             return responseData.user;
         } else {
-            alert(responseData.message || 'Login failed. Please try again.');
+            showPopup('popup-fail-o-container', 'Kirjautuminen epäonnistui', 'Virheellinen Käyttäjänimi tai Salasana.' , './assets/images/popupfail.png');
         }
     } catch (error) {
         console.error("Error during login:", error);
-        alert('An error occurred during login. Please try again.');
+        showPopup('popup-fail-o-container', 'Kirjautumisvirhe', 'Kirjautumisen aikana tapahtui virhe. Yritä uudelleen.', './assets/images/popupfail.png');
     }
 };
 

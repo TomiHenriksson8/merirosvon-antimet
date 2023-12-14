@@ -4,6 +4,7 @@ interface DetailedOrder {
     totalPrice: string;
     orderDate: string;
     orderStatus: string;
+    estimatedPickupTime: number;
     foodItemId: number;
     foodItemName: string;
     foodItemPrice: string;
