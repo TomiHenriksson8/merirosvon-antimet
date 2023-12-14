@@ -15,7 +15,8 @@ const fetchAllOrders = async (): Promise<any> => {
                 o.userId, 
                 o.totalPrice, 
                 o.orderDate, 
-                o.orderStatus, 
+                o.orderStatus,
+                o.estimatedPickupTime, 
                 od.foodItemId, 
                 f.name AS foodItemName, 
                 f.price AS foodItemPrice, 
@@ -50,7 +51,8 @@ const fetchOrdersByUserId = async (userId: number): Promise<any> => {
                 o.userId, 
                 o.totalPrice, 
                 o.orderDate, 
-                o.orderStatus, 
+                o.orderStatus,
+                o.estimatedPickupTime, 
                 od.foodItemId, 
                 f.name AS foodItemName, 
                 f.price AS foodItemPrice, 
@@ -97,7 +99,7 @@ const fetchOrderCount = async (): Promise<number> => {
  */
 const updateOrderStatus = async (orderId: number, newStatus: string): Promise<number> => {
     try {
-        const validStatuses = ['pending', 'completed', 'cancelled'];
+        const validStatuses = ['pending', 'accepted', 'completed', 'cancelled'];
         if (!validStatuses.includes(newStatus)) {
             throw new Error('Invalid order status');
         }
@@ -113,6 +115,30 @@ const updateOrderStatus = async (orderId: number, newStatus: string): Promise<nu
         throw error;
     }
 };
+
+
+/**
+ * Updates the estimated pickup time of an order
+ * @param {number} orderId - The order id
+ * @param {number} estimatedPickupTime - The new estimated pickup time
+ * @returns {Promise<number>} A promise that resolves to the number of affected rows
+ * @throws {Error} An error that contains the error code and message
+ */
+const updateOrderEstimatedPickupTime = async (orderId: number, estimatedPickupTime: number): Promise<number> => {
+    try {
+        const sql = `
+            UPDATE \`Order\`
+            SET estimatedPickupTime = ?
+            WHERE orderId = ?;
+        `;
+        const [result] = await promisePool.query<ResultSetHeader>(sql, [estimatedPickupTime, orderId]);
+        return result.affectedRows; 
+    } catch (error) {
+        console.error('Error updating order estimated pickup time:', error);
+        throw error;
+    }
+};
+
 
 /**
  * Creates an order from the user's cart
@@ -164,5 +190,6 @@ export {
     fetchAllOrders,
     fetchOrdersByUserId,
     updateOrderStatus,
+    updateOrderEstimatedPickupTime,
     createOrderFromCart
 };

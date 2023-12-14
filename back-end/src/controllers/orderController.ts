@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { fetchAllOrders, fetchOrderCount, updateOrderStatus, createOrderFromCart, fetchOrdersByUserId,  } from "../data/orderData";
+import { fetchAllOrders, fetchOrderCount, updateOrderStatus, createOrderFromCart, fetchOrdersByUserId, updateOrderEstimatedPickupTime,  } from "../data/orderData";
 import { listCartItems } from "../data/cartData";
 import { CustomRequest } from "../models/User";
 
@@ -115,6 +115,39 @@ const changeOrderStatusController = async (req: Request, res: Response) => {
 };
 
 /**
+ * @api {put} /order/estimatedpt/:orderid Change order estimated pickup time.
+ * @apiName  ChangeOrderEstimatedPickupTime
+ * @apiGroup Order
+ * @apiPermission admin, staff
+ * @apiParam {Number} orderid Order ID
+ * @apiParam {Number} estimatedPickupTime New estimated pickup time
+ * @apiSuccess {String} message Order estimated pickup time updated successfully
+ */
+const changeOrderEstimatedPickupTime = async (req: Request, res: Response) => {
+    const { orderid } = req.params;
+    const { estimatedPickupTime } = req.body;
+
+    try {
+        const numericOrderId = parseInt(orderid, 10);
+        const numericEstimatedPickupTime = parseInt(estimatedPickupTime, 10);
+
+        if (isNaN(numericOrderId) || isNaN(numericEstimatedPickupTime) || numericEstimatedPickupTime < 0) {
+            return res.status(400).json({ message: "Invalid parameters provided." });
+        }
+
+        const affectedRows = await updateOrderEstimatedPickupTime(numericOrderId, numericEstimatedPickupTime);
+        if (affectedRows === 0) {
+            return res.status(404).json({ message: "Order not found or no changes made." });
+        }
+
+        res.json({ message: `Order estimated pickup time updated successfully for order ID ${numericOrderId}.` });
+    } catch (error) {
+        console.error('Error in changeOrderEstimatedPickupTime:', error);
+        res.status(500).json({ message: "Internal server error when updating order estimated pickup time." });
+    }
+};
+
+/**
  * @api {post} /order Create new order
  * @apiName  CreateOrder
  * @apiGroup Order
@@ -142,4 +175,4 @@ const createOrderController = async (req: Request, res: Response) => {
     }
 };
 
-export { getOrderCount, getAllOrders, getOrderById, changeOrderStatusController, createOrderController };
+export { getOrderCount, getAllOrders, getOrderById, changeOrderStatusController, changeOrderEstimatedPickupTime, createOrderController };

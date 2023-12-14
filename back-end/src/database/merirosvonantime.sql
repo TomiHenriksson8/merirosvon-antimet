@@ -45,7 +45,8 @@ CREATE TABLE `Order` (
     userId INT,
     totalPrice DECIMAL(10,2) NOT NULL,
     orderDate DATETIME NOT NULL,
-    orderStatus ENUM('pending', 'completed', 'cancelled') NOT NULL,
+    orderStatus ENUM('pending', 'completed', 'accepted', 'cancelled') NOT NULL,
+    estimatedPickupTime INT,
     FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
@@ -65,11 +66,19 @@ INSERT INTO Users (username, email, password, role) VALUES
 ('jane_staff', 'jane.staff@example.com', 'hashed_password', 'staff'),
 ('admin_user', 'admin@example.com', 'hashed_password', 'admin');
 
--- Insert test food items
+-- Insert food items
 INSERT INTO FoodItem (name, description, price, category, imageUrl) VALUES 
-('Margherita Pizza', 'Classic Margherita with mozzarella cheese and basil.', 9.99, 'Pizza', './assets/images/menu-placeholder.png'),
-('Veggie Burger', 'A healthy veggie burger loaded with fresh vegetables.', 7.99, 'Burger', './assets/images/menu-placeholder.png'),
-('Caesar Salad', 'Fresh romaine lettuce with Caesar dressing.', 5.99, 'Salad', 'images/caesarsalad.jpg');
+('Pizza Margherita', 'Klassinen pizza mozzarella juustolla, tomaattikastikkeella sekä tuoreella basilikalla.', 9.99, 'Pizza', './assets/images/pizzamar.png'),
+('Pizza Sardiini ja makrilli', 'Merellinen pizza jossa on sardiineja ja makrilli.', 9.99, 'Pizza', './assets/images/sardiinipizza.png'),
+('Pizza Kasvi', 'Vegaaneille sopiva juustoton pizza, jossa päivän kasvi.', 9.99, 'Pizza', './assets/images/kasvipizza.png'),
+('Kapteenin hampurilainen', 'Naudanlihapihvi, cheddarjuustoa, majoneesia, tomaattia ja jäävuorisalaattia.', 7.99, 'Burger', './assets/images/hampurikap.png'),
+('Merirosvon kasvispurilainen', 'Merirosvon vegepihvi, vuustokastiketta, BBQ-kastiketta, coleslawia ja majoneesia', 7.99, 'Burger', './assets/images/hampurimeriros.png'),
+('Kalapuri auts!', 'Rapea seitipihvi, valkosipuli-kastiketta ja salaattia.', 7.99, 'Burger', './assets/images/hampurikala.png'),
+('Maakrapun kanasalaatti', 'kananrintaa ja salaattia', 5.99, 'Salaatit', './assets/images/salaattikana.png'),
+('Merenpohjan salaatti', 'Merilevää ja merisuolaa', 5.99, 'Salaatit', './assets/images/salaattimeri.png'),
+('Itämeren vettä', 'Tynnyri rehevää vettä', 2.99, 'Juomat', './assets/images/juomatynnyri.png'),
+('Jäämeren jäävesi', 'Kimpale pohjoisnapaa lasissa', 7.99, 'Juomat', './assets/images/juomajää.png'),
+('Cola', 'Cola-juomaa', 3.99, 'Juomat', './assets/images/juomacola.png');
 
 -- Insert a test cart item for user 1
 INSERT INTO Cart (userId, foodItemId, quantity) VALUES 
