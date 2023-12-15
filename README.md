@@ -24,6 +24,9 @@ cd <repository-name>/back-end
 ### Install dependencies
 npm install
 
+### Build the project
+npm run build
+
 ### Start the development server
 npm run dev
 
@@ -40,11 +43,6 @@ npm run build
 ### Start the application
 npm start
 
-
-## Built With
-
-coming soon...
-
 ## Version
 
-Coming soon...
+1.0.0
