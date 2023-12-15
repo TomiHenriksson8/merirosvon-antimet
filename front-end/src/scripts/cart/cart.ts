@@ -56,7 +56,7 @@ const addToCart = async (foodItemId: number, quantity: number): Promise<void> =>
       const updatedQuantity = existingItem.quantity + quantity;
       await updateCartItemQuantity(foodItemId, updatedQuantity);
     } else {
-      const response = await fetch("http://localhost:8000/api/cart/add", {
+      const response = await fetch("ucad-server1.northeurope.cloudapp.azure.com/api/cart/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -156,7 +156,7 @@ const updateCartItemQuantity = async (foodItemId: number, newQuantity: number): 
     throw new Error('User is not logged in or user ID/token is not available.');
   }
   try {
-    const response = await fetch('http://localhost:8000/api/cart/update', {
+    const response = await fetch('ucad-server1.northeurope.cloudapp.azure.com/api/cart/update', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -189,7 +189,7 @@ const fetchCartItems = async (): Promise<CartItem[]> => {
     throw new Error("User is not logged in or token is not available.");
   }
 
-  const response = await fetch(`http://localhost:8000/api/cart/${currentUser.id}`, {
+  const response = await fetch(`ucad-server1.northeurope.cloudapp.azure.com/${currentUser.id}`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -230,7 +230,7 @@ const fetchCartTotal = async (userId: number): Promise<number> => {
     throw new Error("User token is not available.");
   }
   try {
-    const response = await fetch(`http://localhost:8000/api/cart/total/${userId}`, {
+    const response = await fetch(`ucad-server1.northeurope.cloudapp.azure.com/api/cart/total/${userId}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -354,7 +354,7 @@ const deleteCartItem = async (itemId: string): Promise<void> => {
     return;
   }
   try {
-    const response = await fetch(`http://localhost:8000/api/cart/remove/${currentUser.id}/${itemId}`, {
+    const response = await fetch(`ucad-server1.northeurope.cloudapp.azure.com/${currentUser.id}/${itemId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem('token');
     if (user) {
       try {
-        const response = await fetch('http://localhost:8000/api/order/create', {
+        const response = await fetch('ucad-server1.northeurope.cloudapp.azure.com/api/order/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

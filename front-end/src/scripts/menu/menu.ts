@@ -9,7 +9,7 @@ import { deleteFoodItem } from '../user/admin.js';
  */
 const fetchAndDisplayMenu = async () => {
     try {
-        const response = await fetch('http://localhost:8000/api/menu');
+        const response = await fetch('ucad-server1.northeurope.cloudapp.azure.com/api/menu');
         const menuItems: MenuItem[] = await response.json(); 
         renderMenu(menuItems);
         attachShoppingCartListener();
@@ -96,7 +96,7 @@ menuFilterContainer.addEventListener('click', async (event) => {
             fetchAndDisplayMenu();
         } else {
             try {
-                const response = await fetch(`http://localhost:8000/api/menu/category/${buttonText}`);
+                const response = await fetch(`ucad-server1.northeurope.cloudapp.azure.com/api/menu/category/${buttonText}`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

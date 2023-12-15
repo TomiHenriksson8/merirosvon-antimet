@@ -36,7 +36,7 @@ document.getElementById("profile-icon")?.addEventListener("click", () => {
  * @returns {Promise<User>} A promise that resolves to the registered user.
  */
 const fetchPostNewUser = async (newUser: User) => {
-    const response = await fetch('http://localhost:8000/api/users/register', {
+    const response = await fetch('ucad-server1.northeurope.cloudapp.azure.com/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUser)
@@ -83,7 +83,7 @@ document.getElementById("signUp-form")?.addEventListener("submit", async (event)
  */
 const fetchLoginUser = async (loginData: LoginUser) => {
     try {
-        const response = await fetch('http://localhost:8000/api/users/login', {
+        const response = await fetch('ucad-server1.northeurope.cloudapp.azure.com/api/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData),
@@ -190,7 +190,7 @@ const fetchUpdateUserProfile = async (userId: number, updatedData: { username?: 
     const token = localStorage.getItem('token');
     try {
         // console.log("Updating user profile:", userId, updatedData);
-        const response = await fetch(`http://localhost:8000/api/users/${userId}`, {
+        const response = await fetch(`ucad-server1.northeurope.cloudapp.azure.com/api/users/${userId}`, {
             method: 'PUT',
             headers: { 
                 'Content-Type': 'application/json',

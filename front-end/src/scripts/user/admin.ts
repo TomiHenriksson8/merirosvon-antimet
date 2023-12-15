@@ -36,7 +36,7 @@ document.getElementById('exit-panel')?.addEventListener('click', () => {
  * Displays the total number of users.
  */
 const showAmountOfUsers = async () => {
-    const url = 'http://localhost:8000/api/users/latest/id';
+    const url = 'ucad-server1.northeurope.cloudapp.azure.com/api/users/latest/id';
     const token = localStorage.getItem('token');
     if (!token) {
         // console.error("No token found");
@@ -73,7 +73,7 @@ if (token && user?.role === 'admin') {
  * Displays the total number of orders.
  */
 const showAmountOfOrders = async () => {
-    const url = 'http://localhost:8000/api/order/latest/id';
+    const url = 'ucad-server1.northeurope.cloudapp.azure.com/api/order/latest/id';
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(url, {
@@ -103,7 +103,7 @@ if (token && user?.role === 'admin') {
 
 
 const showAmountOfFoodItems = async () => {
-    const url = 'http://localhost:8000/api/menu/count';
+    const url = 'ucad-server1.northeurope.cloudapp.azure.com/api/menu/count';
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(url, {
@@ -136,7 +136,7 @@ showAmountOfFoodItems();
  * @returns {Promise<OrdersResponse>} A promise that resolves to the orders response.
  */
 const getOrders = async (): Promise<OrdersResponse> => {
-    const url = 'http://localhost:8000/api/order/all';
+    const url = 'ucad-server1.northeurope.cloudapp.azure.com/api/order/all';
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(url, {
@@ -268,7 +268,7 @@ if (token && user?.role === 'admin') {
  * @throws {Error} An error is thrown if the estimated pickup time fails to update.
  */
 const updateEstimatedPickupTime = async (orderId: number, estimatedPickupTime: number) => {
-    const url = `http://localhost:8000/api/order/estimatedpt/${orderId}`;
+    const url = `ucad-server1.northeurope.cloudapp.azure.com/api/order/estimatedpt/${orderId}`;
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(url, {
@@ -296,7 +296,7 @@ const updateEstimatedPickupTime = async (orderId: number, estimatedPickupTime: n
  */
 async function updateOrderStatus(orderId: number, newStatus: string) {
     console.log(`Update status for order ${orderId} to ${newStatus}`);
-    const url = `http://localhost:8000/api/order/status/${orderId}`;
+    const url = `ucad-server1.northeurope.cloudapp.azure.com/api/order/status/${orderId}`;
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(url, {
@@ -325,7 +325,7 @@ async function updateOrderStatus(orderId: number, newStatus: string) {
 const fetchUserInfoById = async (userId: number): Promise<User | null> => {
     const token = localStorage.getItem('token'); 
     try {
-        const response = await fetch(`http://localhost:8000/api/users/${userId}`, {
+        const response = await fetch(`ucad-server1.northeurope.cloudapp.azure.com/api/users/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}` 
             }
@@ -377,7 +377,7 @@ const handleFoodItemSubmission = async(event: Event) => {
  * @param {string} imageUrl - The image URL of the food item.
  */
 async function addFoodItemToBackend(name: string, description: string, price: string, category: string, imageUrl: string) {
-    const url = 'http://localhost:8000/api/menu/add';
+    const url = 'ucad-server1.northeurope.cloudapp.azure.com/api/menu/add';
     const token = localStorage.getItem('token');
     const data = {
         name: name,
@@ -416,7 +416,7 @@ if (form) {
  * @throws {Error} An error is thrown if the food item fails to delete.
  */
 const deleteFoodItem = async (foodItemId: number) => {
-    const url = `http://localhost:8000/api/menu/${foodItemId}/delete`;
+    const url = `ucad-server1.northeurope.cloudapp.azure.com/api/menu/${foodItemId}/delete`;
     const token = localStorage.getItem('token');
     if (!token) {
         console.error("No token found");

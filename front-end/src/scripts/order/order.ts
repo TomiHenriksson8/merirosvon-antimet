@@ -70,7 +70,7 @@ const getOrderForOHistory = async () => {
     if (!user || !user.id || !token) {
         throw new Error('User not found or token not set');
     }
-    const response = await fetch(`http://localhost:8000/api/order/${user.id}`, {
+    const response = await fetch(`ucad-server1.northeurope.cloudapp.azure.com/api/order/${user.id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
