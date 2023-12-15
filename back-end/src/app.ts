@@ -1,5 +1,5 @@
 import express from 'express';
-import UserRouter from './routes/userRoutes';
+import router from './routes/userRoutes';
 import menuRouter from './routes/menuRoutes';
 import cartRouter from './routes/cartRoutes';
 import orderRouter from './routes/orderRoutes';
@@ -25,7 +25,7 @@ app.use(express.json());
 
 app.use('/api/doc', express.static(path.join(__dirname, '../apidoc')));
 
-app.use('/api/users', UserRouter);
+app.use('/api/users', router);
 app.use('/api/menu', menuRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter)
